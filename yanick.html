@@ -1,0 +1,1898 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saxara — Maîtrisez le saxophone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Geist:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Lexend:wght@100..900&family=Momo+Signature&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --black: #0a0a0a;
+        --white: #f8f6f1;
+        --off-white: #ede9e0;
+        --gray-100: #e5e1d8;
+        --gray-300: #b8b4ac;
+        --gray-500: #7c7972;
+        --gray-700: #3d3c3a;
+        --gold: #c8993a;
+        --gold-light: #e4bc74;
+        --gold-dark: #8a6520;
+        --font-display: "Geist", sans-serif;
+        --font-body: "DM Sans", sans-serif;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--font-body);
+        font-weight: 300;
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ─── SCROLLBAR ─── */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--black);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gold-dark);
+        border-radius: 2px;
+      }
+
+      /* ─── SELECTION ─── */
+      ::selection {
+        background: var(--gold);
+        color: var(--black);
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 60px;
+        transition:
+          background 0.5s var(--ease-out),
+          backdrop-filter 0.5s var(--ease-out),
+          padding 0.4s var(--ease-out);
+      }
+      nav.scrolled {
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 16px 60px;
+        border-bottom: 1px solid rgba(200, 153, 58, 0.15);
+      }
+      .nav-logo {
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 300;
+        letter-spacing: 0.12em;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 40px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        color: var(--gray-300);
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: color 0.2s;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s var(--ease-out);
+      }
+      .nav-links a:hover {
+        color: var(--white);
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-cta {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--black);
+        background: var(--gold);
+        border: none;
+        padding: 10px 24px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.2s var(--ease-out);
+      }
+      .nav-cta:hover {
+        background: var(--gold-light);
+        transform: translateY(-1px);
+      }
+      .nav-hamburger {
+        display: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .nav-hamburger span {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background: var(--white);
+        transition: all 0.3s;
+      }
+
+      /* ─── HERO ─── */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        padding: 120px 40px 80px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 50% 40%,
+            rgba(200, 153, 58, 0.08) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 80% 80%,
+            rgba(200, 153, 58, 0.04) 0%,
+            transparent 60%
+          );
+      }
+
+      .hero-bg::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%; /* Ajuste la largeur */
+        height: 100%;
+        background-image: url("./yanick_gold2.png");
+        background-size: cover;
+        background-position: center right;
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        z-index: 1;
+      }
+
+      .hero-grain {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        background-size: 200px;
+      }
+      .hero-line-left,
+      .hero-line-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(200, 153, 58, 0.3) 30%,
+          rgba(200, 153, 58, 0.3) 70%,
+          transparent
+        );
+        z-index: 1;
+      }
+      .hero-line-left {
+        left: 60px;
+      }
+      .hero-line-right {
+        right: 60px;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+      }
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 32px;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+      }
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(56px, 8vw, 110px);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 36px;
+        opacity: 0;
+        animation: fadeUp 1s var(--ease-out) 0.4s forwards;
+      }
+      .hero-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .hero-subtitle {
+        font-size: clamp(15px, 1.8vw, 18px);
+        color: var(--gray-300);
+        max-width: 520px;
+        margin: 0 auto 52px;
+        font-weight: 300;
+        line-height: 1.7;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 0.6s forwards;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 0.8s forwards;
+      }
+      .btn-gold {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--black);
+        background: var(--gold);
+        border: none;
+        padding: 16px 40px;
+        cursor: pointer;
+        transition:
+          background 0.25s,
+          transform 0.25s var(--ease-out),
+          box-shadow 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-gold::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-light);
+        transform: translateX(-101%);
+        transition: transform 0.4s var(--ease-out);
+      }
+      .btn-gold:hover::before {
+        transform: translateX(0);
+      }
+      .btn-gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(200, 153, 58, 0.3);
+      }
+      .btn-gold span {
+        position: relative;
+        z-index: 1;
+      }
+      .btn-outline {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--white);
+        background: transparent;
+        border: 1px solid rgba(248, 246, 241, 0.3);
+        padding: 16px 40px;
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          color 0.25s,
+          transform 0.25s var(--ease-out);
+      }
+      .btn-outline:hover {
+        border-color: var(--white);
+        transform: translateY(-2px);
+      }
+      .hero-scroll {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 1.2s forwards;
+      }
+      .hero-scroll-line {
+        width: 1px;
+        height: 48px;
+        background: linear-gradient(to bottom, var(--gold), transparent);
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scaleY(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scaleY(1.2);
+        }
+      }
+      .hero-sax {
+        position: absolute;
+        right: 8%;
+        bottom: 0;
+        z-index: 1;
+        opacity: 0.07;
+        animation: fadeUp 1.5s var(--ease-out) 0.3s forwards;
+        pointer-events: none;
+      }
+
+      /* ─── SECTION COMMONS ─── */
+      section {
+        padding: 120px 60px;
+      }
+      .section-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 20px;
+        display: block;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(38px, 5vw, 62px);
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 24px;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .section-subtitle {
+        font-size: 16px;
+        color: var(--gray-300);
+        max-width: 520px;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s var(--ease-out),
+          transform 0.9s var(--ease-out);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+
+      /* ─── FORMATIONS ─── */
+      #formations {
+        background: var(--black);
+      }
+      .formations-header {
+        max-width: 1200px;
+        margin: 0 auto 80px;
+      }
+      .formations-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .formation-card {
+        position: relative;
+        padding: 52px 44px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px solid rgba(248, 246, 241, 0.06);
+        transition: border-color 0.4s var(--ease-out);
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .formation-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(200, 153, 58, 0.06) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.4s var(--ease-out);
+      }
+      .formation-card:hover {
+        border-color: rgba(200, 153, 58, 0.3);
+      }
+      .formation-card:hover::before {
+        opacity: 1;
+      }
+      .formation-number {
+        font-family: var(--font-display);
+        font-size: 80px;
+        font-weight: 300;
+        color: rgba(200, 153, 58, 0.12);
+        line-height: 1;
+        margin-bottom: 24px;
+        transition: color 0.4s;
+      }
+      .formation-card:hover .formation-number {
+        color: rgba(200, 153, 58, 0.22);
+      }
+      .formation-level {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 16px;
+      }
+      .formation-name {
+        font-family: var(--font-display);
+        font-size: 32px;
+        font-weight: 300;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        letter-spacing: -0.01em;
+      }
+      .formation-desc {
+        font-size: 14px;
+        color: var(--gray-300);
+        line-height: 1.7;
+        margin-bottom: 32px;
+      }
+      .formation-meta {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 36px;
+      }
+      .formation-meta-item {
+        font-size: 12px;
+        color: var(--gray-500);
+      }
+      .formation-meta-item strong {
+        display: block;
+        color: var(--white);
+        font-size: 15px;
+        font-weight: 400;
+        margin-bottom: 2px;
+      }
+      .formation-link {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: gap 0.3s var(--ease-out);
+      }
+      .formation-link:hover {
+        gap: 16px;
+      }
+      .formation-link::after {
+        content: "→";
+      }
+      .formation-card.featured {
+        background: linear-gradient(
+          160deg,
+          rgba(200, 153, 58, 0.08) 0%,
+          rgba(200, 153, 58, 0.02) 100%
+        );
+        border-color: rgba(200, 153, 58, 0.25);
+      }
+      .formation-badge {
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        background: var(--gold);
+        color: var(--black);
+        padding: 5px 14px;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+
+      /* ─── APERÇU COURS ─── */
+      #apercu {
+        background: #0e0d0b;
+      }
+      .apercu-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .apercu-header {
+        margin-bottom: 72px;
+      }
+      .apercu-modules {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+      .module-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 28px;
+        padding: 36px 40px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .module-item:hover {
+        border-color: rgba(200, 153, 58, 0.2);
+        background: rgba(200, 153, 58, 0.03);
+      }
+      .module-num {
+        font-family: var(--font-display);
+        font-size: 13px;
+        color: var(--gold);
+        font-weight: 300;
+        flex-shrink: 0;
+        padding-top: 4px;
+      }
+      .module-content {
+      }
+      .module-title {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 8px;
+        letter-spacing: -0.01em;
+      }
+      .module-desc {
+        font-size: 13px;
+        color: var(--gray-500);
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+      .module-duration {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--gold-dark);
+      }
+      .module-play {
+        margin-left: auto;
+        flex-shrink: 0;
+        padding-top: 4px;
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(200, 153, 58, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold);
+        font-size: 12px;
+        transition: all 0.3s;
+      }
+      .module-item:hover .module-play {
+        background: var(--gold);
+        color: var(--black);
+        border-color: var(--gold);
+      }
+      .apercu-video {
+        margin-top: 2px;
+        aspect-ratio: 16/7;
+        background: #111;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .apercu-video-bg {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(200, 153, 58, 0.05) 0%,
+          transparent 50%
+        );
+      }
+      .apercu-video-play {
+        width: 72px;
+        height: 72px;
+        border: 1px solid rgba(200, 153, 58, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s var(--ease-out);
+      }
+      .apercu-video:hover .apercu-video-play {
+        transform: scale(1.08);
+        border-color: var(--gold);
+        background: rgba(200, 153, 58, 0.1);
+      }
+      .apercu-video-play svg {
+        color: var(--gold);
+      }
+      .apercu-video-label {
+        position: absolute;
+        bottom: 32px;
+        left: 40px;
+        font-size: 13px;
+        color: var(--gray-300);
+        letter-spacing: 0.05em;
+      }
+      .apercu-video-label strong {
+        display: block;
+        font-size: 18px;
+        color: var(--white);
+        font-weight: 400;
+        margin-bottom: 4px;
+      }
+
+      /* ─── BÉNÉFICES ─── */
+      #benefices {
+        background: var(--black);
+        position: relative;
+        overflow: hidden;
+      }
+      .benefices-glow {
+        position: absolute;
+        top: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 800px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          ellipse,
+          rgba(200, 153, 58, 0.06) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .benefices-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 100px;
+        align-items: start;
+        position: relative;
+      }
+      .benefices-left {
+      }
+      .benefices-list {
+        list-style: none;
+        margin-top: 56px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .benefice-item {
+        padding: 32px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        gap: 28px;
+        align-items: flex-start;
+        transition: background 0.3s;
+      }
+      .benefice-item:first-child {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .benefice-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        border: 1px solid rgba(200, 153, 58, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold);
+        font-size: 16px;
+      }
+      .benefice-text h4 {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 6px;
+      }
+      .benefice-text p {
+        font-size: 14px;
+        color: var(--gray-300);
+        line-height: 1.65;
+      }
+      .benefices-right {
+        padding-top: 120px;
+      }
+      .stat-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .stat-card {
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.01);
+        transition: border-color 0.3s;
+        cursor: default;
+      }
+      .stat-card:hover {
+        border-color: rgba(200, 153, 58, 0.2);
+      }
+      .stat-card-num {
+        font-family: var(--font-display);
+        font-size: 56px;
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+      .stat-card-label {
+        font-size: 14px;
+        color: var(--gray-300);
+        font-weight: 300;
+      }
+
+      /* ─── TÉMOIGNAGES ─── */
+      #temoignages {
+        background: #0e0d0b;
+      }
+      .temoignages-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .temoignages-header {
+        margin-bottom: 72px;
+      }
+      .temoignages-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+      }
+      .temoignage-card {
+        padding: 44px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        position: relative;
+        overflow: hidden;
+        transition: border-color 0.3s;
+      }
+      .temoignage-card:hover {
+        border-color: rgba(200, 153, 58, 0.2);
+      }
+      .temoignage-quote {
+        font-family: var(--font-display);
+        font-size: 56px;
+        color: rgba(200, 153, 58, 0.2);
+        line-height: 0.8;
+        margin-bottom: 24px;
+        font-weight: 300;
+      }
+      .temoignage-text {
+        font-size: 15px;
+        color: var(--gray-100);
+        line-height: 1.75;
+        margin-bottom: 32px;
+        font-weight: 300;
+        font-style: italic;
+        font-family: var(--font-display);
+      }
+      .temoignage-author {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .temoignage-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: var(--black);
+        font-weight: 500;
+      }
+      .temoignage-name {
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 2px;
+      }
+      .temoignage-role {
+        font-size: 12px;
+        color: var(--gray-500);
+      }
+      .temoignage-stars {
+        display: flex;
+        gap: 3px;
+        margin-bottom: 24px;
+      }
+      .star {
+        color: var(--gold);
+        font-size: 12px;
+      }
+
+      /* ─── PRIX ─── */
+      #prix {
+        background: var(--black);
+      }
+      .prix-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .prix-header {
+        text-align: center;
+        margin-bottom: 80px;
+      }
+      .prix-header .section-subtitle {
+        margin: 0 auto;
+      }
+      .prix-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+      }
+      .prix-card {
+        padding: 52px 44px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        position: relative;
+        overflow: hidden;
+        transition: border-color 0.4s var(--ease-out);
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .prix-card:hover {
+        border-color: rgba(200, 153, 58, 0.25);
+      }
+      .prix-card.highlighted {
+        background: linear-gradient(
+          160deg,
+          rgba(200, 153, 58, 0.1) 0%,
+          rgba(200, 153, 58, 0.03) 100%
+        );
+        border-color: rgba(200, 153, 58, 0.35);
+      }
+      .prix-badge {
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        background: var(--gold);
+        color: var(--black);
+        padding: 5px 14px;
+        display: inline-block;
+        margin-bottom: 28px;
+      }
+      .prix-name {
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 300;
+        margin-bottom: 12px;
+        letter-spacing: -0.01em;
+      }
+      .prix-desc {
+        font-size: 13px;
+        color: var(--gray-500);
+        margin-bottom: 36px;
+        line-height: 1.6;
+      }
+      .prix-amount {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        margin-bottom: 8px;
+      }
+      .prix-currency {
+        font-size: 18px;
+        color: var(--gold);
+        font-weight: 300;
+      }
+      .prix-number {
+        font-family: var(--font-display);
+        font-size: 64px;
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -2px;
+      }
+      .prix-period {
+        font-size: 13px;
+        color: var(--gray-500);
+      }
+      .prix-note {
+        font-size: 12px;
+        color: var(--gray-700);
+        margin-bottom: 44px;
+      }
+      .prix-features {
+        list-style: none;
+        margin-bottom: 48px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .prix-feature {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 14px;
+        color: var(--gray-300);
+      }
+      .prix-feature-check {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        border: 1px solid rgba(200, 153, 58, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: var(--gold);
+      }
+      .prix-feature.inactive {
+        color: var(--gray-700);
+      }
+      .prix-feature.inactive .prix-feature-check {
+        border-color: rgba(255, 255, 255, 0.08);
+        color: var(--gray-700);
+      }
+      .prix-btn {
+        width: 100%;
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 16px;
+        cursor: pointer;
+        transition: all 0.25s var(--ease-out);
+      }
+      .prix-btn-outline {
+        background: transparent;
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .prix-btn-outline:hover {
+        border-color: var(--white);
+      }
+      .prix-btn-gold {
+        background: var(--gold);
+        color: var(--black);
+        border: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .prix-btn-gold::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-light);
+        transform: translateX(-101%);
+        transition: transform 0.4s var(--ease-out);
+      }
+      .prix-btn-gold:hover::before {
+        transform: translateX(0);
+      }
+      .prix-btn-gold span {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ─── CTA FINAL ─── */
+      #cta-final {
+        background: #0e0d0b;
+        text-align: center;
+        padding: 160px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          ellipse,
+          rgba(200, 153, 58, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      #cta-final .section-title {
+        font-size: clamp(42px, 6vw, 76px);
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+      #cta-final .section-subtitle {
+        margin: 0 auto 52px;
+        position: relative;
+        z-index: 1;
+      }
+      #cta-final .btn-gold {
+        position: relative;
+        z-index: 1;
+        font-size: 14px;
+        padding: 18px 48px;
+      }
+      .cta-guarantee {
+        margin-top: 24px;
+        font-size: 12px;
+        color: var(--gray-700);
+        letter-spacing: 0.06em;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        padding: 56px 60px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--black);
+      }
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 32px;
+      }
+      .footer-logo {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .footer-logo span {
+        color: var(--gold);
+      }
+      .footer-nav {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+      .footer-nav a {
+        font-size: 12px;
+        color: var(--gray-500);
+        text-decoration: none;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .footer-nav a:hover {
+        color: var(--white);
+      }
+      .footer-copy {
+        font-size: 12px;
+        color: var(--gray-700);
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 1024px) {
+        nav {
+          padding: 20px 32px;
+        }
+        nav.scrolled {
+          padding: 14px 32px;
+        }
+        section {
+          padding: 90px 32px;
+        }
+        .hero-line-left {
+          left: 32px;
+        }
+        .hero-line-right {
+          right: 32px;
+        }
+        .formations-grid {
+          grid-template-columns: 1fr;
+          gap: 2px;
+        }
+        .benefices-inner {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+        .benefices-right {
+          padding-top: 0;
+        }
+        .stat-cards {
+          flex-direction: row;
+        }
+        .apercu-modules {
+          grid-template-columns: 1fr;
+        }
+        .temoignages-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .prix-grid {
+          grid-template-columns: 1fr;
+          max-width: 480px;
+          margin: 0 auto;
+        }
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 24px;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+        .nav-hamburger {
+          display: flex;
+        }
+        nav {
+          padding: 18px 24px;
+        }
+        nav.scrolled {
+          padding: 14px 24px;
+        }
+        section {
+          padding: 72px 24px;
+        }
+        .hero-line-left,
+        .hero-line-right {
+          display: none;
+        }
+        .temoignages-grid {
+          grid-template-columns: 1fr;
+        }
+        .stat-cards {
+          flex-direction: column;
+        }
+        .apercu-video {
+          aspect-ratio: 16/9;
+        }
+        footer {
+          padding: 40px 24px;
+        }
+        .footer-nav {
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        .hero-sax {
+          display: none;
+        }
+      }
+
+      /* ─── MOBILE MENU ─── */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 40px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s var(--ease-out);
+      }
+      .mobile-menu.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .mobile-menu a {
+        font-family: var(--font-display);
+        font-size: 36px;
+        font-weight: 300;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: -0.01em;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-menu-close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 24px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .mobile-menu-close:hover {
+        color: var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
+      <a href="#formations" onclick="closeMobileMenu()">Formations</a>
+      <a href="#apercu" onclick="closeMobileMenu()">Aperçu</a>
+      <a href="#benefices" onclick="closeMobileMenu()">Méthode</a>
+      <a href="#temoignages" onclick="closeMobileMenu()">Témoignages</a>
+      <a href="#prix" onclick="closeMobileMenu()">Tarifs</a>
+    </div>
+
+    <!-- NAV -->
+    <nav id="navbar">
+      <a href="#" class="nav-logo">Yanick <span>C</span>oderre</a>
+      <ul class="nav-links">
+        <li><a href="#formations">Formations</a></li>
+        <li><a href="#apercu">Aperçu</a></li>
+        <li><a href="#benefices">Méthode</a></li>
+        <li><a href="#temoignages">Témoignages</a></li>
+        <li><a href="#prix">Tarifs</a></li>
+      </ul>
+      <button
+        class="nav-cta"
+        onclick="
+          document.getElementById('prix').scrollIntoView({ behavior: 'smooth' })
+        "
+      >
+        Commencer
+      </button>
+      <button
+        class="nav-hamburger"
+        onclick="openMobileMenu()"
+        aria-label="Menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-line-left"></div>
+      <div class="hero-line-right"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">École de saxophone en ligne</p>
+        <h1 class="hero-title">
+          Jouez juste.<br />
+          <em>Apprenez vite.</em>
+        </h1>
+        <p class="hero-subtitle">
+          Des formations conçues par un musicien de scène,<br />
+          pour vous conduire jusqu'aux feux des projecteurs.
+        </p>
+        <div class="hero-actions">
+          <button
+            class="btn-gold"
+            onclick="
+              document
+                .getElementById('formations')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            <span>Commencer maintenant</span>
+          </button>
+          <button
+            class="btn-outline"
+            onclick="
+              document
+                .getElementById('apercu')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Voir un extrait gratuit
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span>Défiler</span>
+      </div>
+    </section>
+
+    <!-- FORMATIONS -->
+    <section id="formations">
+      <div class="formations-header reveal">
+        <span class="section-eyebrow">Votre parcours</span>
+        <h2 class="section-title">
+          Trois niveaux.<br /><em>Une seule destination.</em>
+        </h2>
+      </div>
+      <div class="formations-grid">
+        <div class="formation-card reveal reveal-delay-1">
+          <div class="formation-number">01</div>
+          <p class="formation-level">Débutant</p>
+          <h3 class="formation-name">Premières Notes</h3>
+          <p class="formation-desc">
+            Posture parfaite, embouchure, premières gammes. Vous jouez votre
+            premier morceau complet en moins de 30 jours.
+          </p>
+          <div class="formation-meta">
+            <div class="formation-meta-item"><strong>18</strong> Leçons</div>
+            <div class="formation-meta-item"><strong>8h</strong> Contenu</div>
+            <div class="formation-meta-item"><strong>PDF</strong> Inclus</div>
+          </div>
+          <a href="#prix" class="formation-link">Découvrir</a>
+        </div>
+        <div class="formation-card featured reveal reveal-delay-2">
+          <div class="formation-badge">Le plus choisi</div>
+          <div class="formation-number">02</div>
+          <p class="formation-level">Intermédiaire</p>
+          <h3 class="formation-name">Expression Jazz</h3>
+          <p class="formation-desc">
+            Improvisation, phrasé jazz, lecture de grille. Trouvez votre voix et
+            jouez sur n'importe quelle grille harmonique.
+          </p>
+          <div class="formation-meta">
+            <div class="formation-meta-item"><strong>32</strong> Leçons</div>
+            <div class="formation-meta-item"><strong>18h</strong> Contenu</div>
+            <div class="formation-meta-item">
+              <strong>Backing</strong> Tracks
+            </div>
+          </div>
+          <a href="#prix" class="formation-link">Découvrir</a>
+        </div>
+        <div class="formation-card reveal reveal-delay-3">
+          <div class="formation-number">03</div>
+          <p class="formation-level">Avancé</p>
+          <h3 class="formation-name">Maîtrise Totale</h3>
+          <p class="formation-desc">
+            Techniques avancées, altissimo, style, scène. Pour ceux qui veulent
+            jouer professionnellement ou enregistrer un album.
+          </p>
+          <div class="formation-meta">
+            <div class="formation-meta-item"><strong>48</strong> Leçons</div>
+            <div class="formation-meta-item"><strong>34h</strong> Contenu</div>
+            <div class="formation-meta-item">
+              <strong>Coaching</strong> Live
+            </div>
+          </div>
+          <a href="#prix" class="formation-link">Découvrir</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- APERÇU COURS -->
+    <section id="apercu">
+      <div class="apercu-inner">
+        <div class="apercu-header reveal">
+          <span class="section-eyebrow">Aperçu des cours</span>
+          <h2 class="section-title">
+            Ce que vous<br /><em>allez apprendre.</em>
+          </h2>
+        </div>
+        <div class="apercu-modules">
+          <div class="module-item reveal reveal-delay-1">
+            <span class="module-num">01</span>
+            <div class="module-content">
+              <h4 class="module-title">Anatomie et assemblage</h4>
+              <p class="module-desc">
+                Comprendre votre instrument, choisir l'anche, régler la
+                ligature.
+              </p>
+              <span class="module-duration">32 min</span>
+            </div>
+            <div class="module-play">▶</div>
+          </div>
+          <div class="module-item reveal reveal-delay-2">
+            <span class="module-num">02</span>
+            <div class="module-content">
+              <h4 class="module-title">La colonne d'air</h4>
+              <p class="module-desc">
+                Exercices de souffle, soutien diaphragmatique, projection
+                sonore.
+              </p>
+              <span class="module-duration">48 min</span>
+            </div>
+            <div class="module-play">▶</div>
+          </div>
+          <div class="module-item reveal reveal-delay-1">
+            <span class="module-num">03</span>
+            <div class="module-content">
+              <h4 class="module-title">Doigtés fondamentaux</h4>
+              <p class="module-desc">
+                Les deux octaves essentielles, fluidité et précision des clés.
+              </p>
+              <span class="module-duration">56 min</span>
+            </div>
+            <div class="module-play">▶</div>
+          </div>
+          <div class="module-item reveal reveal-delay-2">
+            <span class="module-num">04</span>
+            <div class="module-content">
+              <h4 class="module-title">Phrasing & Articulation</h4>
+              <p class="module-desc">
+                Slur, staccato, accent — donner du relief à votre jeu.
+              </p>
+              <span class="module-duration">44 min</span>
+            </div>
+            <div class="module-play">▶</div>
+          </div>
+        </div>
+        <div
+          class="apercu-video reveal"
+          onclick="alert('Aperçu vidéo — à connecter à votre hébergeur vidéo.')"
+        >
+          <div class="apercu-video-bg"></div>
+          <div class="apercu-video-play">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <div class="apercu-video-label">
+            <strong>Leçon gratuite : Votre premier Do</strong>
+            Durée : 18 min · Niveau débutant
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÉNÉFICES -->
+    <section id="benefices">
+      <div class="benefices-glow"></div>
+      <div class="benefices-inner">
+        <div class="benefices-left">
+          <div class="reveal">
+            <span class="section-eyebrow">La méthode Saxara</span>
+            <h2 class="section-title">Apprendre<br /><em>différemment.</em></h2>
+            <p class="section-subtitle">
+              Une pédagogie conçue pour les esprits modernes — structurée,
+              progressive et profondément musicale.
+            </p>
+          </div>
+          <ul class="benefices-list">
+            <li class="benefice-item reveal reveal-delay-1">
+              <div class="benefice-icon">◈</div>
+              <div class="benefice-text">
+                <h4>Progression rapide et mesurée</h4>
+                <p>
+                  Chaque leçon construit sur la précédente. Vous progressez de
+                  façon visible, semaine après semaine.
+                </p>
+              </div>
+            </li>
+            <li class="benefice-item reveal reveal-delay-2">
+              <div class="benefice-icon">◎</div>
+              <div class="benefice-text">
+                <h4>Accès illimité à vie</h4>
+                <p>
+                  Achetez une fois, gardez pour toujours. Revenez sur une leçon
+                  autant de fois que nécessaire.
+                </p>
+              </div>
+            </li>
+            <li class="benefice-item reveal reveal-delay-3">
+              <div class="benefice-icon">◇</div>
+              <div class="benefice-text">
+                <h4>Retours de professionnels</h4>
+                <p>
+                  Envoyez vos enregistrements. Recevez des commentaires ciblés
+                  de musiciens de scène en 48h.
+                </p>
+              </div>
+            </li>
+            <li class="benefice-item reveal reveal-delay-4">
+              <div class="benefice-icon">◉</div>
+              <div class="benefice-text">
+                <h4>Partitions &amp; backing tracks inclus</h4>
+                <p>
+                  Chaque module est accompagné de PDF, grilles harmoniques et
+                  pistes d'accompagnement.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="benefices-right">
+          <div class="stat-cards">
+            <div class="stat-card reveal reveal-delay-1">
+              <div class="stat-card-num">4 800+</div>
+              <div class="stat-card-label">Élèves actifs dans 32 pays</div>
+            </div>
+            <div class="stat-card reveal reveal-delay-2">
+              <div class="stat-card-num">98%</div>
+              <div class="stat-card-label">
+                De satisfaction sur les formations
+              </div>
+            </div>
+            <div class="stat-card reveal reveal-delay-3">
+              <div class="stat-card-num">12</div>
+              <div class="stat-card-label">
+                Professeurs issus de scènes internationales
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section id="temoignages">
+      <div class="temoignages-inner">
+        <div class="temoignages-header reveal">
+          <span class="section-eyebrow">Témoignages</span>
+          <h2 class="section-title">Ce qu'ils<br /><em>en disent.</em></h2>
+        </div>
+        <div class="temoignages-grid">
+          <div class="temoignage-card reveal reveal-delay-1">
+            <div class="temoignage-stars">
+              <span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span>
+            </div>
+            <div class="temoignage-quote">"</div>
+            <p class="temoignage-text">
+              En six mois avec Saxara, j'ai progressé plus qu'en deux ans de
+              cours particuliers. La structure pédagogique est d'une clarté
+              remarquable.
+            </p>
+            <div class="temoignage-author">
+              <div class="temoignage-avatar">CB</div>
+              <div>
+                <p class="temoignage-name">Camille B.</p>
+                <p class="temoignage-role">Alto — niveau intermédiaire</p>
+              </div>
+            </div>
+          </div>
+          <div class="temoignage-card reveal reveal-delay-2">
+            <div class="temoignage-stars">
+              <span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span>
+            </div>
+            <div class="temoignage-quote">"</div>
+            <p class="temoignage-text">
+              Les retours personnalisés changent tout. Mon professeur a
+              identifié en trente secondes une mauvaise habitude que j'avais
+              depuis des années.
+            </p>
+            <div class="temoignage-author">
+              <div class="temoignage-avatar">TV</div>
+              <div>
+                <p class="temoignage-name">Thomas V.</p>
+                <p class="temoignage-role">Ténor — débutant</p>
+              </div>
+            </div>
+          </div>
+          <div class="temoignage-card reveal reveal-delay-3">
+            <div class="temoignage-stars">
+              <span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span>
+            </div>
+            <div class="temoignage-quote">"</div>
+            <p class="temoignage-text">
+              La qualité vidéo est exceptionnelle — plusieurs angles simultanés,
+              sous-titres, et les partitions sont parfaitement synchronisées.
+              Rien ne compare.
+            </p>
+            <div class="temoignage-author">
+              <div class="temoignage-avatar">SM</div>
+              <div>
+                <p class="temoignage-name">Sarah M.</p>
+                <p class="temoignage-role">Soprano — avancée</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIX -->
+    <section id="prix">
+      <div class="prix-inner">
+        <div class="prix-header reveal">
+          <span class="section-eyebrow">Tarifs</span>
+          <h2 class="section-title">Simple.<br /><em>Transparent.</em></h2>
+          <p class="section-subtitle">
+            Un accès à vie, sans abonnement. Investissez une fois dans votre
+            musique.
+          </p>
+        </div>
+        <div class="prix-grid">
+          <div class="prix-card reveal reveal-delay-1">
+            <p class="prix-name">Premières Notes</p>
+            <p class="prix-desc">Pour ceux qui débutent de zéro.</p>
+            <div class="prix-amount">
+              <span class="prix-currency">€</span>
+              <span class="prix-number">89</span>
+            </div>
+            <p class="prix-note">Accès à vie · Paiement unique</p>
+            <ul class="prix-features">
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> 18 leçons vidéo HD
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Partitions PDF
+                incluses
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Forum communautaire
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Accès mobile &amp;
+                tablette
+              </li>
+              <li class="prix-feature inactive">
+                <span class="prix-feature-check">–</span> Backing tracks
+              </li>
+              <li class="prix-feature inactive">
+                <span class="prix-feature-check">–</span> Retours personnalisés
+              </li>
+            </ul>
+            <button class="prix-btn prix-btn-outline">
+              Choisir cette formule
+            </button>
+          </div>
+          <div class="prix-card highlighted reveal reveal-delay-2">
+            <div class="prix-badge">Recommandé</div>
+            <p class="prix-name">Parcours Complet</p>
+            <p class="prix-desc">Les trois niveaux en un seul accès.</p>
+            <div class="prix-amount">
+              <span class="prix-currency">€</span>
+              <span class="prix-number">249</span>
+            </div>
+            <p class="prix-note">Accès illimité · Toutes formations</p>
+            <ul class="prix-features">
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> 98 leçons vidéo 4K
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Toutes les partitions
+                PDF
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> 60+ backing tracks
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Retours personnalisés
+                (2/mois)
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Accès aux sessions
+                live
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Mises à jour à vie
+              </li>
+            </ul>
+            <button class="prix-btn prix-btn-gold">
+              <span>Commencer maintenant</span>
+            </button>
+          </div>
+          <div class="prix-card reveal reveal-delay-3">
+            <p class="prix-name">Coaching Pro</p>
+            <p class="prix-desc">Pour les musiciens qui visent la scène.</p>
+            <div class="prix-amount">
+              <span class="prix-currency">€</span>
+              <span class="prix-number">490</span>
+            </div>
+            <p class="prix-note">Suivi sur 6 mois · Coaching individuel</p>
+            <ul class="prix-features">
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Tout le parcours
+                complet
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> 1 session live /
+                semaine
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Retours illimités
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Plan d'étude
+                personnalisé
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Préparation à la scène
+              </li>
+              <li class="prix-feature">
+                <span class="prix-feature-check">✓</span> Accès groupe privé
+              </li>
+            </ul>
+            <button class="prix-btn prix-btn-outline">
+              Choisir cette formule
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="cta-final">
+      <div class="cta-glow"></div>
+      <span class="section-eyebrow reveal">Rejoignez Saxara</span>
+      <h2 class="section-title reveal">
+        Votre première note<br /><em>vous attend.</em>
+      </h2>
+      <p class="section-subtitle reveal">
+        4 800 musiciens ont déjà choisi d'apprendre autrement.<br />Il est temps
+        d'en faire partie.
+      </p>
+      <button
+        class="btn-gold reveal"
+        onclick="
+          document.getElementById('prix').scrollIntoView({ behavior: 'smooth' })
+        "
+      >
+        <span>Choisir ma formation</span>
+      </button>
+      <p class="cta-guarantee reveal">
+        Satisfait ou remboursé sous 30 jours — sans condition.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <a href="#" class="footer-logo">SAX<span>A</span>RA</a>
+        <ul class="footer-nav">
+          <li><a href="#formations">Formations</a></li>
+          <li><a href="#apercu">Aperçu</a></li>
+          <li><a href="#benefices">Méthode</a></li>
+          <li><a href="#temoignages">Témoignages</a></li>
+          <li><a href="#prix">Tarifs</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 Saxara. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // ─── NAV SCROLL
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 60);
+      });
+
+      // ─── REVEAL ON SCROLL
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      );
+      reveals.forEach((el) => observer.observe(el));
+
+      // ─── MOBILE MENU
+      function openMobileMenu() {
+        document.getElementById("mobileMenu").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileMenu() {
+        document.getElementById("mobileMenu").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      // ─── SMOOTH ANCHOR WITH OFFSET
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            const offset = 80;
+            const top =
+              target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: "smooth" });
+          }
+        });
+      });
+
+      // ─── PARALLAX SUBTLE ON HERO
+      window.addEventListener("scroll", () => {
+        const hero = document.getElementById("hero");
+        const scrollY = window.scrollY;
+        if (scrollY < window.innerHeight) {
+          const content = hero.querySelector(".hero-content");
+          if (content)
+            content.style.transform = `translateY(${scrollY * 0.12}px)`;
+        }
+      });
+    </script>
+  </body>
+</html>
