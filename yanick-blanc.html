@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saxophonia — Maîtrisez le saxophone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --white:    #ffffff;
+      --off:      #f5f5f7;
+      --off2:     #e8e8ed;
+      --off3:     #d1d1d6;
+      --text-1:   #1d1d1f;
+      --text-2:   #6e6e73;
+      --text-3:   #aeaeb2;
+      --gold:     #b07d2e;
+      --gold-bg:  #faf3e4;
+      --gold-mid: #e8c96a;
+      --blue-bg:  #eaf4ff;
+      --blue:     #0071e3;
+      --warm:     #fff9f0;
+      --warm2:    #fdf0d8;
+      --blush:    #fff0f3;
+      --sage:     #f0f6f2;
+      --slate:    #f0f3f7;
+
+      --ff-display: 'Cormorant Garamond', serif;
+      --ff-body:    'DM Sans', sans-serif;
+      --ease: cubic-bezier(.25,.46,.45,.94);
+      --ease-b: cubic-bezier(.34,1.56,.64,1);
+      --pad: clamp(5rem,10vw,9rem);
+      --w: 1120px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--white);
+      color: var(--text-1);
+      font-family: var(--ff-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container { width: min(var(--w), 100% - 3rem); margin-inline: auto; }
+
+    .label {
+      font-family: var(--ff-body);
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .75s var(--ease), transform .75s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+    .d4 { transition-delay: .4s; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      font-family: var(--ff-body);
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+    }
+    .btn--dark {
+      background: var(--text-1);
+      color: var(--white);
+      padding: .95rem 2rem;
+      border-radius: 40px;
+    }
+    .btn--dark:hover { background: #333; transform: translateY(-2px); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--text-1);
+      padding: .9rem 2rem;
+      border-radius: 40px;
+      border: 1px solid var(--off3);
+    }
+    .btn--ghost:hover { border-color: var(--text-1); transform: translateY(-2px); }
+    .btn--blue {
+      background: var(--blue);
+      color: var(--white);
+      padding: .95rem 2rem;
+      border-radius: 40px;
+    }
+    .btn--blue:hover { background: #0062c4; transform: translateY(-2px); }
+    .btn svg { width: 13px; height: 13px; transition: transform .3s var(--ease); }
+    .btn:hover svg { transform: translateX(3px); }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 0;
+      transition: background .4s, backdrop-filter .4s, border-color .4s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,.07);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      letter-spacing: .04em;
+      color: var(--text-1);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+    .nav-links a {
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      font-weight: 400;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text-1); }
+    .nav-cta {
+      background: var(--text-1);
+      color: var(--white);
+      padding: .5rem 1.3rem;
+      border-radius: 40px;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: #333; }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+    .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--text-1); transition: all .3s; }
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(20px);
+      z-index: 99;
+      flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--ff-display); font-size: 2.2rem; color: var(--text-1); font-weight: 300; transition: color .2s; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 1.8rem; right: 1.8rem; background: none; border: none; color: var(--text-2); font-size: 1.5rem; cursor: pointer; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Apple-style soft color blobs */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(230,210,160,.35) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(200,220,255,.25) 0%, transparent 70%);
+      bottom: 0; left: -80px;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding-top: 6rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .8s var(--ease) .3s forwards;
+    }
+    .eyebrow-line { width: 2rem; height: 1px; background: var(--gold); }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.06;
+      letter-spacing: -.015em;
+      color: var(--text-1);
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .8s var(--ease) .5s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-2);
+      max-width: 420px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp .8s var(--ease) .65s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .8s var(--ease) .8s forwards;
+    }
+    .hero-stats {
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+      margin-top: 3rem; padding-top: 2.5rem;
+      border-top: 1px solid var(--off2);
+      opacity: 0; animation: fadeUp .8s var(--ease) 1s forwards;
+    }
+    .stat-num { font-family: var(--ff-display); font-size: 1.9rem; font-weight: 300; line-height: 1; }
+    .stat-num span { color: var(--gold); }
+    .stat-label { font-size: .7rem; color: var(--text-3); letter-spacing: .1em; text-transform: uppercase; margin-top: .25rem; }
+    .hero-visual {
+      position: relative;
+      opacity: 0; animation: fadeIn 1.2s var(--ease) .5s forwards;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Warm tinted circle behind sax */
+    .hero-glow {
+      position: absolute;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(232,201,106,.22) 0%, rgba(250,243,228,.08) 60%, transparent 80%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .hero-visual svg {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 480px;
+      animation: float 6s ease-in-out infinite;
+      filter: drop-shadow(0 20px 60px rgba(180,140,60,.15)) drop-shadow(0 4px 20px rgba(0,0,0,.06));
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: var(--text-3); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      opacity: 0; animation: fadeIn 1s var(--ease) 1.4s forwards;
+    }
+    .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulse 2s ease-in-out infinite; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* ── Section commons ── */
+    section { padding: var(--pad) 0; }
+    .section-header { text-align: center; margin-bottom: clamp(3rem,6vw,5rem); }
+    .section-header .label { display: block; margin-bottom: 1rem; }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem,4vw,3.5rem);
+      font-weight: 300; line-height: 1.15; letter-spacing: -.01em;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub { margin-top: 1rem; color: var(--text-2); font-size: .95rem; max-width: 500px; margin-inline: auto; line-height: 1.8; }
+
+    /* ── Formations ── */
+    .formations { background: var(--off); }
+    .formations-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .formation-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: clamp(2rem,3.5vw,3rem);
+      position: relative;
+      overflow: hidden;
+      transition: transform .4s var(--ease), box-shadow .4s;
+      cursor: pointer;
+    }
+    .formation-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
+    }
+    /* Each card gets a tinted bg swatch */
+    .fc-warm { background: var(--warm); }
+    .fc-sage  { background: var(--sage); }
+    .fc-dark  { background: var(--text-1); color: var(--white); }
+    .formation-num {
+      position: absolute; top: 1.8rem; right: 2rem;
+      font-family: var(--ff-display); font-size: 4.5rem; font-weight: 300;
+      line-height: 1; opacity: .07; color: inherit;
+    }
+    .formation-badge {
+      display: inline-block; font-size: .62rem; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      padding: .32rem .85rem; border-radius: 40px;
+      margin-bottom: 2rem;
+    }
+    .badge-warm { background: var(--warm2); color: var(--gold); }
+    .badge-sage { background: #d8ead0; color: #3a6b29; }
+    .badge-dark { background: rgba(255,255,255,.1); color: rgba(255,255,255,.6); }
+    .formation-level {
+      font-family: var(--ff-display);
+      font-size: clamp(1.7rem,2.5vw,2.3rem);
+      font-weight: 300; line-height: 1.1;
+      letter-spacing: -.01em; margin-bottom: .9rem;
+    }
+    .fc-dark .formation-level { color: var(--white); }
+    .formation-desc { font-size: .87rem; line-height: 1.75; color: var(--text-2); margin-bottom: 1.8rem; }
+    .fc-dark .formation-desc { color: rgba(255,255,255,.55); }
+    .formation-modules { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 2rem; }
+    .formation-module { font-size: .78rem; display: flex; align-items: center; gap: .65rem; color: var(--text-2); }
+    .fc-dark .formation-module { color: rgba(255,255,255,.5); }
+    .formation-module::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+    .formation-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .75rem; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .fc-dark .formation-link { color: var(--gold-mid); }
+
+    /* ── Benefits ── */
+    .benefits { background: var(--white); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .benefit-item {
+      padding: 2.2rem 2rem;
+      background: var(--off);
+      border-radius: 16px;
+      transition: background .3s;
+    }
+    .benefit-item:nth-child(1) { background: var(--warm); }
+    .benefit-item:nth-child(2) { background: var(--sage); }
+    .benefit-item:nth-child(3) { background: var(--slate); }
+    .benefit-item:nth-child(4) { background: var(--blush); }
+    .benefit-item:nth-child(5) { background: var(--blue-bg); }
+    .benefit-item:nth-child(6) { background: var(--warm2); }
+    .benefit-item:hover { filter: brightness(.97); }
+    .benefit-icon { width: 40px; height: 40px; margin-bottom: 1.5rem; color: var(--gold); }
+    .benefit-title { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 400; margin-bottom: .5rem; }
+    .benefit-text { font-size: .85rem; color: var(--text-2); line-height: 1.8; }
+
+    /* ── Testimonials ── */
+    .testimonials { background: var(--off); overflow: hidden; }
+    .testimonials-track-wrap { overflow: hidden; position: relative; }
+    .testimonials-track-wrap::before,
+    .testimonials-track-wrap::after {
+      content:''; position:absolute; top:0; bottom:0; width:140px; z-index:2; pointer-events:none;
+    }
+    .testimonials-track-wrap::before { left:0; background:linear-gradient(to right, var(--off), transparent); }
+    .testimonials-track-wrap::after  { right:0; background:linear-gradient(to left, var(--off), transparent); }
+    .testimonials-track {
+      display: flex; gap: 1.5rem;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+    }
+    .testimonials-track:hover { animation-play-state: paused; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .testimonial-card {
+      width: 320px; flex-shrink: 0;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+    }
+    .testimonial-stars { display:flex; gap:2px; margin-bottom:1rem; }
+    .testimonial-stars span { color: var(--gold); font-size:.85rem; }
+    .testimonial-text {
+      font-family: var(--ff-display); font-size: 1rem; font-style: italic;
+      font-weight: 300; line-height: 1.7; color: var(--text-1); margin-bottom: 1.4rem;
+    }
+    .testimonial-author { display:flex; align-items:center; gap:.9rem; }
+    .testimonial-avatar {
+      width:36px; height:36px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:var(--ff-display); font-size:.95rem; font-weight:400;
+      color: var(--gold); background: var(--warm2); flex-shrink:0;
+    }
+    .testimonial-name { font-size:.82rem; font-weight:500; }
+    .testimonial-role { font-size:.74rem; color:var(--text-3); margin-top:.1rem; }
+
+    /* ── Curriculum ── */
+    .curriculum { background: var(--white); }
+    .curriculum-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+    .curriculum-list { display:flex; flex-direction:column; }
+    .curriculum-item {
+      display:flex; gap:1.5rem; padding:1.6rem 0;
+      border-bottom:1px solid var(--off2);
+      cursor:pointer; transition:padding-left .3s var(--ease);
+    }
+    .curriculum-item:first-child { border-top:1px solid var(--off2); }
+    .curriculum-item:hover { padding-left: .5rem; }
+    .curriculum-num { font-family:var(--ff-display); font-size:.85rem; color:var(--gold); font-weight:400; flex-shrink:0; padding-top:.1rem; }
+    .curriculum-module-title { font-size:.93rem; font-weight:400; margin-bottom:.25rem; transition:color .25s; }
+    .curriculum-item:hover .curriculum-module-title { color:var(--gold); }
+    .curriculum-module-meta { font-size:.75rem; color:var(--text-3); }
+    .curriculum-preview {
+      background: var(--warm);
+      border-radius: 20px;
+      aspect-ratio: 16/10;
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .curriculum-preview::before {
+      content:'';
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(201,168,76,.1) 0%, transparent 70%);
+    }
+    /* Music staff deco */
+    .staff-lines { position:absolute; inset:0; overflow:hidden; opacity:.08; }
+    .staff-lines span {
+      display:block; height:1px; background:var(--text-1);
+      margin-top: 18%;
+    }
+    .play-btn {
+      width:68px; height:68px; border-radius:50%;
+      border:1.5px solid rgba(176,125,46,.4);
+      background:rgba(255,255,255,.8);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--gold); position:relative; z-index:1;
+      cursor:pointer; transition:all .35s var(--ease);
+      box-shadow: 0 4px 20px rgba(176,125,46,.15);
+    }
+    .play-btn:hover { transform:scale(1.1); background:var(--white); box-shadow:0 8px 30px rgba(176,125,46,.25); }
+    .play-btn svg { width:22px; height:22px; margin-left:4px; }
+    .curriculum-preview-label {
+      position:absolute; bottom:1.4rem; left:1.5rem;
+      font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--text-2);
+    }
+    .curriculum-preview-label span { color:var(--gold); }
+
+    /* ── Pricing ── */
+    .pricing { background: var(--off); }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .pricing-card {
+      background:var(--white); border-radius:20px; padding:clamp(2rem,3.5vw,3rem);
+      position:relative; transition:transform .4s var(--ease), box-shadow .4s;
+    }
+    .pricing-card:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,.08); }
+    .pricing-card.featured {
+      background: var(--text-1); color:var(--white);
+      box-shadow: 0 12px 40px rgba(0,0,0,.15);
+    }
+    .pricing-card.featured::before {
+      content:'Plus populaire';
+      position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+      background:var(--gold); color:var(--white);
+      font-size:.6rem; font-weight:500; letter-spacing:.15em; text-transform:uppercase;
+      padding:.32rem 1rem; border-radius:0 0 8px 8px; white-space:nowrap;
+    }
+    .pricing-plan { font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-2); margin-bottom:1.4rem; }
+    .featured .pricing-plan { color:rgba(255,255,255,.45); }
+    .pricing-price {
+      font-family:var(--ff-display); font-size:clamp(2.8rem,5vw,4rem);
+      font-weight:300; line-height:1; margin-bottom:.35rem;
+    }
+    .pricing-price sup { font-size:1.1rem; vertical-align:top; margin-top:.6rem; color:var(--gold); }
+    .pricing-price-note { font-size:.78rem; color:var(--text-3); margin-bottom:2rem; }
+    .featured .pricing-price-note { color:rgba(255,255,255,.35); }
+    .pricing-features {
+      display:flex; flex-direction:column; gap:.8rem; margin-bottom:2.2rem;
+      padding-top:1.8rem; border-top:1px solid var(--off2);
+    }
+    .featured .pricing-features { border-top-color:rgba(255,255,255,.1); }
+    .pricing-feature { display:flex; align-items:flex-start; gap:.75rem; font-size:.83rem; color:var(--text-2); }
+    .featured .pricing-feature { color:rgba(255,255,255,.65); }
+    .pricing-feature svg { width:13px; height:13px; color:var(--gold); flex-shrink:0; margin-top:.2rem; }
+    .pricing-feature.muted { opacity:.45; }
+    .pricing-feature.muted svg { color:var(--text-3); }
+
+    /* ── Newsletter ── */
+    .newsletter { background: var(--warm); border-radius: 24px; margin: 0 1.5rem; }
+    @media (max-width:600px){ .newsletter { margin: 0; border-radius:0; } }
+    .newsletter-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; padding:clamp(3rem,6vw,5rem) clamp(2rem,5vw,4rem); }
+    .newsletter-title { font-family:var(--ff-display); font-size:clamp(1.8rem,3vw,2.8rem); font-weight:300; line-height:1.2; }
+    .newsletter-title em { font-style:italic; color:var(--gold); }
+    .newsletter-sub { color:var(--text-2); font-size:.88rem; margin-top:.8rem; line-height:1.75; }
+    .newsletter-form { display:flex; flex-direction:column; gap:.9rem; }
+    .newsletter-input-wrap { display:flex; }
+    .newsletter-input {
+      flex:1; background:var(--white); border:1px solid var(--off2);
+      border-right:none; padding:.95rem 1.3rem;
+      color:var(--text-1); font-family:var(--ff-body); font-size:.85rem;
+      outline:none; border-radius:40px 0 0 40px; transition:border-color .3s;
+    }
+    .newsletter-input::placeholder { color:var(--text-3); }
+    .newsletter-input:focus { border-color:var(--gold); }
+    .newsletter-submit {
+      background:var(--text-1); color:var(--white); border:none;
+      padding:.95rem 1.8rem; font-family:var(--ff-body); font-size:.75rem;
+      font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+      cursor:pointer; border-radius:0 40px 40px 0; transition:background .2s; white-space:nowrap;
+    }
+    .newsletter-submit:hover { background:#333; }
+    .newsletter-note { font-size:.72rem; color:var(--text-3); }
+
+    /* ── Footer ── */
+    footer { background:var(--off); padding:4rem 0 2.5rem; }
+    .footer-top {
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem;
+      padding-bottom:3rem; border-bottom:1px solid var(--off2); margin-bottom:2rem;
+    }
+    .footer-brand-name { font-family:var(--ff-display); font-size:1.5rem; font-weight:400; letter-spacing:.04em; margin-bottom:.9rem; }
+    .footer-brand-name span { color:var(--gold); }
+    .footer-brand-desc { font-size:.82rem; color:var(--text-2); line-height:1.75; max-width:240px; }
+    .footer-col-title { font-size:.65rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-3); margin-bottom:1.3rem; }
+    .footer-links { display:flex; flex-direction:column; gap:.7rem; }
+    .footer-links a { font-size:.82rem; color:var(--text-2); transition:color .2s; }
+    .footer-links a:hover { color:var(--text-1); }
+    .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .footer-copy { font-size:.75rem; color:var(--text-3); }
+    .footer-copy span { color:var(--gold); }
+    .footer-socials { display:flex; gap:1.5rem; }
+    .footer-socials a { font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); transition:color .2s; }
+    .footer-socials a:hover { color:var(--text-1); }
+
+    /* ── Responsive ── */
+    @media (max-width:900px){
+      .hero-content { grid-template-columns:1fr; text-align:center; gap:3rem; padding-top:7rem; }
+      .hero-eyebrow { justify-content:center; }
+      .hero-sub { margin-inline:auto; }
+      .hero-actions { justify-content:center; }
+      .hero-stats { justify-content:center; }
+      .hero-visual { order:-1; }
+      .formations-grid,.benefits-grid,.pricing-grid { grid-template-columns:1fr; max-width:440px; margin-inline:auto; }
+      .curriculum-grid { grid-template-columns:1fr; }
+      .newsletter-inner { grid-template-columns:1fr; gap:2.5rem; }
+      .footer-top { grid-template-columns:1fr 1fr; }
+      .nav-links,.nav-cta { display:none; }
+      .nav-burger { display:flex; }
+    }
+    @media (max-width:600px){
+      .hero-stats { gap:1.5rem; }
+      .footer-top { grid-template-columns:1fr; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+      .newsletter-input-wrap { flex-direction:column; }
+      .newsletter-input { border-right:1px solid var(--off2); border-radius:40px; }
+      .newsletter-submit { border-radius:40px; }
+      .benefits-grid { grid-template-columns:1fr; max-width:100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Saxo<span>phonia</span></a>
+      <ul class="nav-links">
+        <li><a href="#formations">Formations</a></li>
+        <li><a href="#curriculum">Programme</a></li>
+        <li><a href="#pricing">Tarifs</a></li>
+        <li><a href="#testimonials">Avis</a></li>
+      </ul>
+      <a href="#pricing" class="nav-cta">Commencer</a>
+      <button class="nav-burger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#formations" class="mobile-link">Formations</a>
+  <a href="#curriculum" class="mobile-link">Programme</a>
+  <a href="#pricing" class="mobile-link">Tarifs</a>
+  <a href="#testimonials" class="mobile-link">Avis</a>
+  <a href="#pricing" class="mobile-link" style="color:var(--gold)">Commencer →</a>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="eyebrow-line"></span>
+          <span class="label">Académie en ligne</span>
+        </div>
+        <h1 class="hero-title">
+          L'art du saxophone,<br><em>enfin accessible.</em>
+        </h1>
+        <p class="hero-sub">
+          Maîtrisez le saxophone à votre rythme avec une méthode structurée,
+          des cours vidéo HD et un suivi personnalisé — depuis chez vous.
+        </p>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn btn--dark">
+            Commencer maintenant
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#curriculum" class="btn btn--ghost">Voir le programme</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">12<span>+</span></div>
+            <div class="stat-label">Modules inclus</div>
+          </div>
+          <div>
+            <div class="stat-num">3<span>k</span></div>
+            <div class="stat-label">Élèves actifs</div>
+          </div>
+          <div>
+            <div class="stat-num">98<span>%</span></div>
+            <div class="stat-label">Satisfaction</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-glow"></div>
+        <svg viewBox="0 0 480 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="saxG" x1="160" y1="40" x2="360" y2="540" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"  stop-color="#e8c96a"/>
+              <stop offset="45%" stop-color="#c9a84c"/>
+              <stop offset="100%" stop-color="#a07828"/>
+            </linearGradient>
+            <linearGradient id="saxS" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"  stop-color="#fff" stop-opacity=".3"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M200 60 C200 60 310 70 340 200 C370 330 340 440 290 500 C270 525 240 530 220 520 C180 505 165 470 170 440 C175 410 200 400 200 400 L190 380 C175 350 165 280 170 200 Z" fill="url(#saxG)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <path d="M205 80 C205 80 215 100 215 200 C215 300 210 370 205 400" stroke="rgba(255,255,255,.3)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M172 440 C165 455 160 470 168 490 C178 510 200 525 225 525 C250 525 275 510 285 492 C298 470 290 448 275 438" fill="url(#saxG)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+          <ellipse cx="226" cy="524" rx="38" ry="8" fill="rgba(160,120,40,.35)"/>
+          <path d="M200 60 C195 50 188 30 195 18 C203 4 218 2 228 8 C238 14 240 28 238 40 L235 60" fill="url(#saxG)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+          <rect x="224" y="0" width="20" height="22" rx="3" fill="#2a2218" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
+          <rect x="228" y="3" width="6" height="16" rx="2" fill="rgba(255,255,255,.12)"/>
+          <g opacity=".9">
+            <ellipse cx="250" cy="140" rx="11" ry="7" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+            <ellipse cx="265" cy="175" rx="9"  ry="6" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+            <ellipse cx="275" cy="215" rx="11" ry="7" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+            <ellipse cx="280" cy="260" rx="9"  ry="6" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+            <ellipse cx="278" cy="305" rx="11" ry="7" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+            <ellipse cx="270" cy="350" rx="9"  ry="6" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+            <ellipse cx="255" cy="388" rx="11" ry="7" fill="#b8962e" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+          </g>
+          <g opacity=".7">
+            <ellipse cx="185" cy="200" rx="8" ry="5" fill="#a07828" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
+            <ellipse cx="183" cy="250" rx="8" ry="5" fill="#a07828" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
+            <ellipse cx="183" cy="300" rx="8" ry="5" fill="#a07828" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
+          </g>
+          <line x1="240" y1="130" x2="285" y2="400" stroke="rgba(255,255,255,.1)" stroke-width="1.5"/>
+          <line x1="185" y1="190" x2="185" y2="315" stroke="rgba(255,255,255,.1)" stroke-width="1.5"/>
+          <ellipse cx="235" cy="498" rx="48" ry="12" fill="none" stroke="url(#saxG)" stroke-width="2" opacity=".5"/>
+          <circle cx="215" cy="280" r="8" fill="none" stroke="rgba(176,125,46,.4)" stroke-width="1.5"/>
+          <circle cx="215" cy="280" r="4" fill="rgba(201,168,76,.6)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Découvrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── Formations ── -->
+<section class="formations" id="formations">
+  <div class="container">
+    <div class="section-header">
+      <span class="label reveal">Nos parcours</span>
+      <h2 class="section-title reveal d1">Trois niveaux,<br><em>un seul objectif.</em></h2>
+      <p class="section-sub reveal d2">Peu importe votre niveau actuel, notre méthode progressive vous emmène là où vous voulez aller.</p>
+    </div>
+
+    <div class="formations-grid">
+      <div class="formation-card fc-warm reveal">
+        <span class="formation-num">01</span>
+        <span class="formation-badge badge-warm">Débutant</span>
+        <h3 class="formation-level">Les<br>Fondations</h3>
+        <p class="formation-desc">Partez de zéro et posez les bases solides d'une pratique saine et musicale.</p>
+        <ul class="formation-modules">
+          <li class="formation-module">Posture & embouchure</li>
+          <li class="formation-module">Premières notes et gammes</li>
+          <li class="formation-module">Rythme et lecture</li>
+          <li class="formation-module">Premières mélodies</li>
+        </ul>
+        <span class="formation-link">Découvrir →</span>
+      </div>
+
+      <div class="formation-card fc-sage reveal d1">
+        <span class="formation-num">02</span>
+        <span class="formation-badge badge-sage">Intermédiaire</span>
+        <h3 class="formation-level">L'Expression<br>Musicale</h3>
+        <p class="formation-desc">Développez votre son, explorez les styles et construisez votre vocabulaire musical.</p>
+        <ul class="formation-modules">
+          <li class="formation-module">Technique avancée & vibrato</li>
+          <li class="formation-module">Jazz, blues, classique</li>
+          <li class="formation-module">Improvisation guidée</li>
+          <li class="formation-module">Lecture de partitions</li>
+        </ul>
+        <span class="formation-link" style="color:#3a6b29">Découvrir →</span>
+      </div>
+
+      <div class="formation-card fc-dark reveal d2">
+        <span class="formation-num">03</span>
+        <span class="formation-badge badge-dark">Avancé</span>
+        <h3 class="formation-level" style="color:#fff">Maîtrise &<br>Scène</h3>
+        <p class="formation-desc" style="color:rgba(255,255,255,.5)">Atteignez un niveau professionnel — performance scénique, composition, style propre.</p>
+        <ul class="formation-modules">
+          <li class="formation-module" style="color:rgba(255,255,255,.45)">Altissimo & techniques extrêmes</li>
+          <li class="formation-module" style="color:rgba(255,255,255,.45)">Composition & arrangement</li>
+          <li class="formation-module" style="color:rgba(255,255,255,.45)">Performance & présence scénique</li>
+          <li class="formation-module" style="color:rgba(255,255,255,.45)">Studio & enregistrement</li>
+        </ul>
+        <span class="formation-link" style="color:var(--gold-mid)">Découvrir →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Benefits ── -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="section-header">
+      <span class="label reveal">Pourquoi Saxophonia</span>
+      <h2 class="section-title reveal d1">Conçu pour<br><em>votre réussite.</em></h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-item reveal">
+        <div class="benefit-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3 class="benefit-title">Progression rapide</h3>
+        <p class="benefit-text">Notre méthode pédagogique vous permet de progresser 3× plus vite qu'un apprentissage traditionnel.</p>
+      </div>
+      <div class="benefit-item reveal d1">
+        <div class="benefit-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3 class="benefit-title">Méthode structurée</h3>
+        <p class="benefit-text">Un parcours clair, étape par étape, sans jamais vous perdre. Chaque leçon s'enchaîne naturellement.</p>
+      </div>
+      <div class="benefit-item reveal d2">
+        <div class="benefit-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="benefit-title">Accès à vie</h3>
+        <p class="benefit-text">Payez une fois, accédez pour toujours. Vos cours sont disponibles 24h/24 depuis n'importe quel appareil.</p>
+      </div>
+      <div class="benefit-item reveal">
+        <div class="benefit-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3 class="benefit-title">À votre rythme</h3>
+        <p class="benefit-text">30 minutes par jour suffisent. Apprenez quand vous voulez, reprenez où vous en étiez.</p>
+      </div>
+      <div class="benefit-item reveal d1">
+        <div class="benefit-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="benefit-title">Communauté active</h3>
+        <p class="benefit-text">Rejoignez plus de 3 000 saxophonistes en devenir dans un espace bienveillant et motivant.</p>
+      </div>
+      <div class="benefit-item reveal d2">
+        <div class="benefit-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+        </div>
+        <h3 class="benefit-title">Support dédié</h3>
+        <p class="benefit-text">Nos professeurs répondent sous 24h. Sessions live mensuelles et corrections de vos enregistrements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Testimonials ── -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <span class="label reveal">Témoignages</span>
+      <h2 class="section-title reveal d1">Ce qu'ils <em>disent.</em></h2>
+    </div>
+  </div>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;En six mois, je joue mes premières compositions jazz. Je n'aurais jamais cru ça possible en partant de zéro.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">ML</div>
+          <div><div class="testimonial-name">Marie L.</div><div class="testimonial-role">Niveau intermédiaire</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;La qualité des vidéos et la pédagogie sont vraiment au niveau professionnel. Vaut largement un cours particulier.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TB</div>
+          <div><div class="testimonial-name">Thomas B.</div><div class="testimonial-role">Musicien amateur</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;La communauté est incroyable. J'ai rencontré des musiciens du monde entier et progressé bien plus vite.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SA</div>
+          <div><div class="testimonial-name">Sophie A.</div><div class="testimonial-role">Niveau avancé</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;Je pratiquais 15 min par jour pendant mes pauses déjeuner. En 3 mois, je lisais mes premières partitions.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">RD</div>
+          <div><div class="testimonial-name">Romain D.</div><div class="testimonial-role">Chef de projet, 34 ans</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;L'accès à vie est vraiment un game-changer. Je reviens sur les modules autant de fois que nécessaire.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">CE</div>
+          <div><div class="testimonial-name">Claire E.</div><div class="testimonial-role">Retraitée, 58 ans</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;Après avoir essayé 3 autres plateformes, c'est de loin la plus complète. L'interface inspire la qualité.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">KM</div>
+          <div><div class="testimonial-name">Karim M.</div><div class="testimonial-role">Ingénieur & musicien</div></div>
+        </div>
+      </div>
+      <!-- Duplicate for loop -->
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;En six mois, je joue mes premières compositions jazz. Je n'aurais jamais cru ça possible en partant de zéro.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">ML</div>
+          <div><div class="testimonial-name">Marie L.</div><div class="testimonial-role">Niveau intermédiaire</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;La qualité des vidéos et la pédagogie sont vraiment au niveau professionnel. Vaut largement un cours particulier.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TB</div>
+          <div><div class="testimonial-name">Thomas B.</div><div class="testimonial-role">Musicien amateur</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;La communauté est incroyable. J'ai rencontré des musiciens du monde entier et progressé bien plus vite.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SA</div>
+          <div><div class="testimonial-name">Sophie A.</div><div class="testimonial-role">Niveau avancé</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;Je pratiquais 15 min par jour pendant mes pauses déjeuner. En 3 mois, je lisais mes premières partitions.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">RD</div>
+          <div><div class="testimonial-name">Romain D.</div><div class="testimonial-role">Chef de projet, 34 ans</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;L'accès à vie est vraiment un game-changer. Je reviens sur les modules autant de fois que nécessaire.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">CE</div>
+          <div><div class="testimonial-name">Claire E.</div><div class="testimonial-role">Retraitée, 58 ans</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«&nbsp;Après avoir essayé 3 autres plateformes, c'est de loin la plus complète. L'interface inspire la qualité.&nbsp;»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">KM</div>
+          <div><div class="testimonial-name">Karim M.</div><div class="testimonial-role">Ingénieur & musicien</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Curriculum ── -->
+<section class="curriculum" id="curriculum">
+  <div class="container">
+    <div class="curriculum-grid">
+      <div>
+        <div class="reveal">
+          <span class="label">Programme complet</span>
+          <h2 class="section-title" style="text-align:left; margin-top:1rem; margin-bottom:1rem;">12 modules.<br><em>Zéro superflu.</em></h2>
+          <p style="color:var(--text-2); font-size:.9rem; line-height:1.8; margin-bottom:2.5rem;">Chaque module est une brique. Ensemble, ils construisent un musicien complet.</p>
+        </div>
+        <div class="curriculum-list">
+          <div class="curriculum-item reveal">
+            <span class="curriculum-num">01</span>
+            <div><div class="curriculum-module-title">Anatomie du saxophone & entretien</div><div class="curriculum-module-meta">3 leçons · 45 min</div></div>
+          </div>
+          <div class="curriculum-item reveal d1">
+            <span class="curriculum-num">02</span>
+            <div><div class="curriculum-module-title">Posture, respiration & embouchure</div><div class="curriculum-module-meta">5 leçons · 1h20</div></div>
+          </div>
+          <div class="curriculum-item reveal d2">
+            <span class="curriculum-num">03</span>
+            <div><div class="curriculum-module-title">Gammes, modes et construction musicale</div><div class="curriculum-module-meta">6 leçons · 2h</div></div>
+          </div>
+          <div class="curriculum-item reveal d3">
+            <span class="curriculum-num">04</span>
+            <div><div class="curriculum-module-title">Rythme, swing et feeling jazz</div><div class="curriculum-module-meta">4 leçons · 1h10</div></div>
+          </div>
+          <div class="curriculum-item reveal">
+            <span class="curriculum-num">05</span>
+            <div><div class="curriculum-module-title">Improvisation — méthode pas-à-pas</div><div class="curriculum-module-meta">8 leçons · 3h</div></div>
+          </div>
+          <div class="curriculum-item reveal d1" style="border-bottom:none;">
+            <span class="curriculum-num">··</span>
+            <div><div class="curriculum-module-title" style="color:var(--text-3)">7 modules supplémentaires inclus</div><div class="curriculum-module-meta" style="color:var(--gold)">Voir le programme complet →</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="curriculum-preview reveal d2">
+        <div class="staff-lines">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <button class="play-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+        </button>
+        <div class="curriculum-preview-label">Aperçu — Module <span>02</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <span class="label reveal">Tarifs transparents</span>
+      <h2 class="section-title reveal d1">Investissez en <em>vous.</em></h2>
+      <p class="section-sub reveal d2">Un paiement unique. Aucun abonnement. Aucune surprise.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card reveal">
+        <div class="pricing-plan">Essentiel</div>
+        <div class="pricing-price"><sup>€</sup>149</div>
+        <div class="pricing-price-note">accès à vie</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Formation Débutant complète</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>40+ leçons vidéo HD</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Partitions & exercices PDF</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Accès communauté</div>
+          <div class="pricing-feature muted"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Modules intermédiaire & avancé</div>
+          <div class="pricing-feature muted"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Sessions live mensuelles</div>
+        </div>
+        <a href="#" class="btn btn--ghost" style="width:100%; justify-content:center;">Choisir Essentiel</a>
+      </div>
+
+      <div class="pricing-card featured reveal d1">
+        <div class="pricing-plan">Complet</div>
+        <div class="pricing-price"><sup>€</sup>299</div>
+        <div class="pricing-price-note">accès à vie — tous les niveaux</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><strong>3 formations complètes</strong></div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>120+ leçons vidéo HD</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Partitions & backing tracks</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Communauté & forum privé</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Sessions live mensuelles</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Corrections vidéo (×3/mois)</div>
+        </div>
+        <a href="#" class="btn btn--blue" style="width:100%; justify-content:center;">Commencer maintenant</a>
+      </div>
+
+      <div class="pricing-card reveal d2">
+        <div class="pricing-plan">Premium</div>
+        <div class="pricing-price"><sup>€</sup>499</div>
+        <div class="pricing-price-note">accès à vie + coaching</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Tout le plan Complet</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>4 cours particuliers (visio)</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Plan de progression sur-mesure</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Corrections illimitées</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Badge certifié Saxophonia</div>
+          <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Accès en avant-première</div>
+        </div>
+        <a href="#" class="btn btn--ghost" style="width:100%; justify-content:center;">Choisir Premium</a>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center; margin-top:2.2rem; font-size:.8rem; color:var(--text-3);">Satisfait ou remboursé — 30 jours sans condition. Paiement sécurisé par Stripe.</p>
+  </div>
+</section>
+
+<!-- ── Newsletter ── -->
+<section style="padding:var(--pad) 0; background:var(--white);">
+  <div class="newsletter">
+    <div class="newsletter-inner">
+      <div class="reveal">
+        <span class="label">Leçon offerte</span>
+        <h2 class="newsletter-title" style="margin-top:.8rem">Recevez votre <em>première leçon</em> gratuitement.</h2>
+        <p class="newsletter-sub">Inscrivez-vous et accédez immédiatement à une leçon d'introduction offerte, sans engagement.</p>
+      </div>
+      <div class="reveal d1">
+        <div class="newsletter-form">
+          <div class="newsletter-input-wrap">
+            <input type="email" class="newsletter-input" placeholder="votre@email.com" />
+            <button class="newsletter-submit">Recevoir →</button>
+          </div>
+          <p class="newsletter-note">Aucun spam. Désabonnement en un clic.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Saxo<span>phonia</span></div>
+        <p class="footer-brand-desc">L'académie qui transforme votre passion pour le saxophone en véritable maîtrise musicale.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Formations</div>
+        <ul class="footer-links">
+          <li><a href="#">Les Fondations</a></li>
+          <li><a href="#">L'Expression</a></li>
+          <li><a href="#">Maîtrise & Scène</a></li>
+          <li><a href="#">Programme complet</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ressources</div>
+        <ul class="footer-links">
+          <li><a href="#">Blog musical</a></li>
+          <li><a href="#">Partitions gratuites</a></li>
+          <li><a href="#">Communauté</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Légal</div>
+        <ul class="footer-links">
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Saxophonia</span>. Tous droits réservés.</p>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">TikTok</a>
+        <a href="#">Spotify</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive:true });
+
+  document.getElementById('burger').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open')));
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold:.12, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+    });
+  });
+
+  const hs = document.querySelector('.hero-scroll');
+  if (hs) window.addEventListener('scroll', () => hs.style.opacity = Math.max(0, 1 - scrollY/180), { passive:true });
+
+  const btn = document.querySelector('.newsletter-submit');
+  if (btn) btn.addEventListener('click', () => {
+    const inp = document.querySelector('.newsletter-input');
+    if (!inp.value.includes('@')) { inp.style.borderColor='#c0392b'; setTimeout(()=>inp.style.borderColor='',1500); return; }
+    btn.textContent='✓ Envoyé !'; btn.style.background='#2d6a2d'; inp.value='';
+    setTimeout(() => { btn.textContent='Recevoir →'; btn.style.background=''; }, 3000);
+  });
+</script>
+</body>
+</html>
