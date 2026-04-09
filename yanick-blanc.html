@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yanick Blanc — Maîtrisez le saxophone</title>
+  <title>Saxophonia — Maîtrisez le saxophone</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
@@ -213,6 +213,7 @@
       position: relative;
       z-index: 2;
     }
+
     .hero-eyebrow {
       display: flex; align-items: center; gap: 1rem;
       margin-bottom: 1.5rem;
@@ -523,6 +524,11 @@
     .newsletter-submit:hover { background:#333; }
     .newsletter-note { font-size:.72rem; color:var(--text-3); }
 
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
     /* ── Footer ── */
     footer { background:var(--off); padding:4rem 0 2.5rem; }
     .footer-top {
@@ -566,6 +572,9 @@
       .newsletter-input { border-right:1px solid var(--off2); border-radius:40px; }
       .newsletter-submit { border-radius:40px; }
       .benefits-grid { grid-template-columns:1fr; max-width:100%; }
+      .hero-visual { max-width:100%; }
+      .hero-content { padding-top:1rem; gap:2rem; }
+      
     }
   </style>
 </head>
@@ -603,7 +612,7 @@
 <section class="hero" id="home">
   <div class="container">
     <div class="hero-content">
-      <div>
+      <div class="hero-left">
         <div class="hero-eyebrow">
           <span class="eyebrow-line"></span>
           <span class="label">Académie en ligne</span>
@@ -1079,6 +1088,8 @@
     btn.textContent='✓ Envoyé !'; btn.style.background='#2d6a2d'; inp.value='';
     setTimeout(() => { btn.textContent='Recevoir →'; btn.style.background=''; }, 3000);
   });
+
+  
 </script>
 </body>
 </html>
