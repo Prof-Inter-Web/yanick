@@ -1,0 +1,3903 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yanick Coderre — Saxophone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Geist:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Lexend:wght@100..900&family=Momo+Signature&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ─── Tokens ─────────────────────────────────────────────── */
+      :root {
+        --black: #0a0a0a;
+        --white: #fafafa;
+        --gray-1: #f4f4f2;
+        --gray-2: #e8e8e4;
+        --gray-3: #b0b0a8;
+        --gray-4: #6a6a62;
+        --gold: #c9a84c;
+        --gold-lt: #e8c96a;
+        --gold-dim: #7a6330;
+
+        --ff-display: "Geist", sans-serif;
+        --ff-body: "DM Sans", sans-serif;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+        --section-pad: clamp(5rem, 10vw, 7rem);
+        --content-w: 1160px;
+        --content-narrow: 720px;
+      }
+
+      /* ─── Reset ───────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--ff-body);
+        font-weight: 300;
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+
+      /* ─── Utilities ───────────────────────────────────────────── */
+      .container {
+        width: min(var(--content-w), 100% - 3rem);
+        margin-inline: auto;
+      }
+      .container--narrow {
+        width: min(var(--content-narrow), 100% - 3rem);
+        margin-inline: auto;
+      }
+      .label {
+        font-family: var(--ff-body);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .divider {
+        width: 2.5rem;
+        height: 1px;
+        background: var(--gold);
+        display: inline-block;
+      }
+
+      /* Reveal animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.8s var(--ease-smooth),
+          transform 0.8s var(--ease-smooth);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.22s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.34s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.46s;
+      }
+
+      /* ─── Buttons ─────────────────────────────────────────────── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--ff-body);
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s var(--ease-smooth);
+      }
+      .btn--gold {
+        background: var(--gold);
+        color: var(--black);
+        padding: 1rem 2.2rem;
+      }
+      .btn--gold:hover {
+        background: var(--gold-lt);
+        transform: translateY(-2px);
+      }
+      .btn--outline {
+        background: transparent;
+        color: var(--white);
+        padding: 0.9rem 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .btn--outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+      }
+      .btn svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s var(--ease-smooth);
+      }
+      .btn:hover svg {
+        transform: translateX(4px);
+      }
+
+      /* ─── Nav ─────────────────────────────────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.4rem 0;
+        transition:
+          background 0.4s,
+          padding 0.4s,
+          backdrop-filter 0.4s;
+      }
+      nav.scrolled {
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 1rem 0;
+      }
+      .nav-inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-left: 6%;
+        padding-right: 6%;
+        gap: 2rem;
+      }
+      .nav-logo {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-3);
+        font-weight: 400;
+        transition: color 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--white);
+      }
+      .nav-cta {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid var(--gold-dim);
+        padding: 0.55rem 1.3rem;
+        transition: all 0.3s;
+      }
+      .nav-cta:hover {
+        background: var(--gold);
+        color: var(--black);
+      }
+
+       .nav-cta2 {
+        right: 0;
+        background-color: var(--gold-dim);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: black;
+        font-weight: 800;
+        border: 1px solid var(--gold-dim);
+        padding: 0.55rem 1.3rem;
+        transition: all 0.3s;
+      }
+
+       .nav-cta2:hover {
+        background: var(--gold);
+        color: var(--black);
+      }
+
+      /* Hamburger */
+      .nav-burger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .nav-burger span {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background: var(--white);
+        transition: all 0.3s;
+      }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--black);
+        z-index: 99;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-family: var(--ff-display);
+        font-size: 2.2rem;
+        color: var(--white);
+        letter-spacing: 0.04em;
+        font-weight: 300;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-close {
+        position: absolute;
+        top: 1.8rem;
+        right: 1.8rem;
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 1.8rem;
+        cursor: pointer;
+        font-family: var(--ff-display);
+      }
+
+      /* ─── HERO ─── */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        padding: 120px 40px 80px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 50% 40%,
+            rgba(200, 153, 58, 0.08) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 80% 80%,
+            rgba(200, 153, 58, 0.04) 0%,
+            transparent 60%
+          );
+      }
+
+      
+
+      .hero-grain {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        background-size: 200px;
+      }
+      .hero-line-left,
+      .hero-line-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(200, 153, 58, 0.3) 30%,
+          rgba(200, 153, 58, 0.3) 70%,
+          transparent
+        );
+        z-index: 1;
+      }
+      .hero-line-left {
+        left: 60px;
+      }
+      .hero-line-right {
+        right: 60px;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+      }
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 32px;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+      }
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(56px, 8vw, 110px);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 36px;
+        opacity: 0;
+        animation: fadeUp 1s var(--ease-out) 0.4s forwards;
+      }
+      .hero-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .hero-subtitle {
+        font-size: clamp(15px, 1.8vw, 18px);
+        color: var(--gray-300);
+        max-width: 520px;
+        margin: 0 auto 52px;
+        font-weight: 300;
+        line-height: 1.7;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 0.6s forwards;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 0.8s forwards;
+      }
+      .btn-gold {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--black);
+        background: var(--gold);
+        border: none;
+        padding: 16px 40px;
+        cursor: pointer;
+        transition:
+          background 0.25s,
+          transform 0.25s var(--ease-out),
+          box-shadow 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-gold::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-light);
+        transform: translateX(-101%);
+        transition: transform 0.4s var(--ease-out);
+      }
+      .btn-gold:hover::before {
+        transform: translateX(0);
+      }
+      .btn-gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(200, 153, 58, 0.3);
+      }
+      .btn-gold span {
+        position: relative;
+        z-index: 1;
+      }
+      .btn-outline {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--white);
+        background: transparent;
+        border: 1px solid rgba(248, 246, 241, 0.3);
+        padding: 16px 40px;
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          color 0.25s,
+          transform 0.25s var(--ease-out);
+      }
+      .btn-outline:hover {
+        border-color: var(--white);
+        transform: translateY(-2px);
+      }
+      .hero-scroll {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease-out) 1.2s forwards;
+      }
+      .hero-scroll-line {
+        width: 1px;
+        height: 48px;
+        background: linear-gradient(to bottom, var(--gold), transparent);
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scaleY(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scaleY(1.2);
+        }
+      }
+      .hero-sax {
+        position: absolute;
+        right: 8%;
+        bottom: 0;
+        z-index: 1;
+        opacity: 0.07;
+        animation: fadeUp 1.5s var(--ease-out) 0.3s forwards;
+        pointer-events: none;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s var(--ease-out),
+          transform 0.9s var(--ease-out);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+
+      /* ─── Section Commons ─────────────────────────────────────── */
+      section {
+        padding: var(--section-pad) 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: clamp(3rem, 6vw, 5rem);
+      }
+      .section-header .label {
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .section-title {
+        font-family: var(--ff-display);
+        font-size: clamp(2.2rem, 4vw, 3.6rem);
+        font-weight: 300;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .section-sub {
+        margin-top: 1.2rem;
+        color: var(--gray-3);
+        font-size: 0.95rem;
+        max-width: 520px;
+        margin-inline: auto;
+        line-height: 1.8;
+      }
+
+      /* ─── Formations ──────────────────────────────────────────── */
+      .formations {
+        background: var(--black);
+      }
+      .formations-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5px;
+      }
+      .formation-card {
+        position: relative;
+        background: var(--gray-1);
+        color: var(--black);
+        padding: clamp(2.5rem, 4vw, 3.5rem);
+        overflow: hidden;
+        transition:
+          transform 0.4s var(--ease-smooth),
+          box-shadow 0.4s;
+        cursor: pointer;
+      }
+      .formation-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--black);
+        transform: translateY(100%);
+        transition: transform 0.5s var(--ease-smooth);
+        z-index: 0;
+      }
+      .formation-card:hover::before {
+        transform: translateY(0);
+      }
+      .formation-card:hover .formation-card-inner {
+        color: var(--white);
+      }
+      .formation-card:hover .formation-badge {
+        background: var(--gold);
+        color: var(--black);
+      }
+      .formation-card:hover .formation-level {
+        color: var(--gold);
+      }
+      .formation-card:hover .formation-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .formation-card-inner {
+        position: relative;
+        z-index: 1;
+        transition: color 0.3s;
+      }
+      .formation-badge {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.9rem;
+        background: rgba(0, 0, 0, 0.08);
+        margin-bottom: 2.5rem;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .formation-level {
+        font-family: var(--ff-display);
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        margin-bottom: 1rem;
+        transition: color 0.3s;
+        color: var(--black);
+      }
+      .formation-desc {
+        font-size: 0.88rem;
+        line-height: 1.75;
+        color: var(--gray-4);
+        margin-bottom: 2rem;
+        transition: color 0.3s;
+      }
+      .formation-card:hover .formation-desc {
+        color: var(--gray-3);
+      }
+      .formation-modules {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .formation-module {
+        font-size: 0.78rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        color: var(--gray-4);
+        transition: color 0.3s;
+      }
+      .formation-card:hover .formation-module {
+        color: var(--gray-3);
+      }
+      .formation-module::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+      .formation-arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gold);
+        opacity: 0;
+        transform: translateX(-8px);
+        transition:
+          opacity 0.3s,
+          transform 0.3s var(--ease-smooth);
+      }
+      .formation-num {
+        position: absolute;
+        top: 2.5rem;
+        right: 2.5rem;
+        font-family: var(--ff-display);
+        font-size: 5rem;
+        font-weight: 300;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.06);
+        transition: color 0.3s;
+      }
+      .formation-card:hover .formation-num {
+        color: rgba(255, 255, 255, 0.04);
+      }
+
+      /* ─── Benefits ────────────────────────────────────────────── */
+      .benefits {
+        background: #0f0f0d;
+      }
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .benefit-item {
+        padding: clamp(2.5rem, 4vw, 3.5rem);
+        border-right: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        transition: background 0.35s;
+      }
+      .benefit-item:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .benefit-icon {
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.8rem;
+        color: var(--gold);
+        transition:
+          background 0.3s,
+          border-color 0.3s;
+      }
+      .benefit-item:hover .benefit-icon {
+        background: rgba(201, 168, 76, 0.08);
+        border-color: var(--gold);
+      }
+      .benefit-title {
+        font-family: var(--ff-display);
+        font-size: 1.4rem;
+        font-weight: 400;
+        margin-bottom: 0.7rem;
+        letter-spacing: -0.01em;
+      }
+      .benefit-text {
+        font-size: 0.88rem;
+        color: var(--gray-4);
+        line-height: 1.8;
+      }
+
+      /* ─── Testimonials ────────────────────────────────────────── */
+      .testimonials {
+        background: var(--black);
+        overflow: hidden;
+      }
+      .testimonials-track-wrap {
+        overflow: hidden;
+        position: relative;
+      }
+      .testimonials-track-wrap::before,
+      .testimonials-track-wrap::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 120px;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .testimonials-track-wrap::before {
+        left: 0;
+        background: linear-gradient(to right, var(--black), transparent);
+      }
+      .testimonials-track-wrap::after {
+        right: 0;
+        background: linear-gradient(to left, var(--black), transparent);
+      }
+      .testimonials-track {
+        display: flex;
+        gap: 1.5rem;
+        width: max-content;
+        animation: marquee 40s linear infinite;
+      }
+      .testimonials-track:hover {
+        animation-play-state: paused;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .testimonial-card {
+        width: 340px;
+        flex-shrink: 0;
+        background: #111110;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 2.2rem 2.2rem 2rem;
+      }
+      .testimonial-stars {
+        display: flex;
+        gap: 3px;
+        margin-bottom: 1.2rem;
+      }
+      .testimonial-stars span {
+        color: var(--gold);
+        font-size: 0.9rem;
+      }
+      .testimonial-text {
+        font-family: var(--ff-display);
+        font-size: 1.05rem;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 1.5rem;
+      }
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .testimonial-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold-dim), var(--gray-4));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--ff-display);
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--white);
+        flex-shrink: 0;
+      }
+      .testimonial-name {
+        font-size: 0.82rem;
+        font-weight: 500;
+      }
+      .testimonial-role {
+        font-size: 0.75rem;
+        color: var(--gray-4);
+        margin-top: 0.1rem;
+      }
+
+      /* ─── Curriculum ──────────────────────────────────────────── */
+      .curriculum {
+        background: #0c0c0a;
+      }
+      .curriculum-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+      .curriculum-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .curriculum-item {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1.8rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .curriculum-item:first-child {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .curriculum-item:hover {
+        padding-left: 0.5rem;
+      }
+      .curriculum-num {
+        font-family: var(--ff-display);
+        font-size: 0.85rem;
+        color: var(--gold);
+        font-weight: 400;
+        flex-shrink: 0;
+        padding-top: 0.1rem;
+      }
+      /* .curriculum-info {
+      } */
+      .curriculum-module-title {
+        font-size: 0.95rem;
+        font-weight: 400;
+        margin-bottom: 0.3rem;
+        transition: color 0.3s;
+      }
+      .curriculum-item:hover .curriculum-module-title {
+        color: var(--gold);
+      }
+      .curriculum-module-meta {
+        font-size: 0.78rem;
+        color: var(--gray-4);
+      }
+      .curriculum-preview {
+        position: relative;
+        background: #111;
+        aspect-ratio: 16 / 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .curriculum-preview::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 80% 80% at 50% 50%,
+          rgba(201, 168, 76, 0.07) 0%,
+          transparent 70%
+        );
+      }
+      .play-btn {
+        width: 72px;
+        height: 72px;
+        border: 1.5px solid rgba(201, 168, 76, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold);
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        transition: all 0.35s var(--ease-smooth);
+      }
+      .play-btn::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: rgba(201, 168, 76, 0.1);
+        transform: scale(0);
+        transition: transform 0.35s var(--ease-bounce);
+      }
+      .play-btn:hover {
+        border-color: var(--gold);
+        transform: scale(1.08);
+      }
+      .play-btn:hover::before {
+        transform: scale(1);
+      }
+      .play-btn svg {
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+      }
+      .curriculum-preview-label {
+        position: absolute;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gray-3);
+      }
+      .curriculum-preview-label span {
+        color: var(--gold);
+      }
+
+      /* ─── Pricing ─────────────────────────────────────────────── */
+      .pricing {
+        background: var(--black);
+      }
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        position: relative;
+      }
+      .pricing-card {
+        background: #111110;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        padding: clamp(2.5rem, 4vw, 3.5rem);
+        position: relative;
+        transition: transform 0.4s var(--ease-smooth);
+      }
+      .pricing-card:hover {
+        transform: translateY(-6px);
+      }
+      .pricing-card.featured {
+        background: linear-gradient(145deg, #161512 0%, #111 100%);
+        border-color: rgba(201, 168, 76, 0.2);
+        z-index: 1;
+      }
+      .pricing-card.featured::before {
+        content: "Plus populaire";
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--gold);
+        color: var(--black);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.35rem 1rem;
+        white-space: nowrap;
+      }
+
+
+      .price-container {
+       text-align: center;
+      }
+      .pricing-plan {
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+      .price-value {
+        font-family: var(--ff-display);
+        font-size: clamp(2.8rem, 5vw, 4rem);
+        font-weight: 600;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+        text-align: center;
+      }
+      .price-container sup {
+        font-size: 2rem;
+        vertical-align: top;
+        margin-top: 0.5rem;
+        color: var(--gold);
+      }
+      .pricing-price-note {
+        font-size: 0.9rem;
+        color: var(--gray-3);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .pricing-features {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-bottom: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .pricing-feature {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        font-size: 0.85rem;
+        color: var(--gray-3);
+      }
+      .pricing-feature svg {
+        width: 14px;
+        height: 14px;
+        color: var(--gold);
+        flex-shrink: 0;
+        margin-top: 0.15rem;
+      }
+      .pricing-feature.muted {
+        color: var(--gray-4);
+        opacity: 0.5;
+      }
+      .pricing-feature.muted svg {
+        color: var(--gray-4);
+      }
+
+      /* ─── Newsletter ──────────────────────────────────────────── */
+      .newsletter {
+        background: #0f0f0d;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .newsletter-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .newsletter-title {
+        font-family: var(--ff-display);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 300;
+        line-height: 1.2;
+      }
+      .newsletter-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .newsletter-sub {
+        color: var(--gray-4);
+        font-size: 0.9rem;
+        margin-top: 0.8rem;
+        line-height: 1.7;
+      }
+      .newsletter-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .newsletter-input-wrap {
+        display: flex;
+        gap: 0;
+      }
+      .newsletter-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: none;
+        padding: 1rem 1.3rem;
+        color: var(--white);
+        font-family: var(--ff-body);
+        font-size: 0.85rem;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+      .newsletter-input::placeholder {
+        color: var(--gray-4);
+      }
+      .newsletter-input:focus {
+        border-color: var(--gold-dim);
+      }
+      .newsletter-submit {
+        background: var(--gold);
+        color: var(--black);
+        border: none;
+        padding: 1rem 1.8rem;
+        font-family: var(--ff-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.3s;
+        white-space: nowrap;
+      }
+      .newsletter-submit:hover {
+        background: var(--gold-lt);
+      }
+      .newsletter-note {
+        font-size: 0.9rem;
+        color: var(--gray-3);
+      }
+
+      /* ─── Footer ──────────────────────────────────────────────── */
+      footer {
+        background: var(--black);
+        padding: 4rem 0 2.5rem;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr;
+        gap: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 2rem;
+      }
+      .footer-brand-name {
+        font-family: var(--ff-display);
+        font-size: 1.6rem;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        margin-bottom: 1rem;
+      }
+      .footer-brand-name span {
+        color: var(--gold);
+      }
+      .footer-brand-desc {
+        font-size: 0.82rem;
+        color: var(--gray-4);
+        line-height: 1.75;
+        max-width: 260px;
+      }
+      .footer-col-title {
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gray-3);
+        margin-bottom: 1.4rem;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .footer-links a {
+        font-size: 0.82rem;
+        color: var(--gray-4);
+        transition: color 0.25s;
+      }
+      .footer-links a:hover {
+        color: var(--white);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-copy {
+        font-size: 0.75rem;
+        color: var(--gray-4);
+      }
+      .footer-copy span {
+        color: var(--gold);
+      }
+      .footer-socials {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-socials a {
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-4);
+        transition: color 0.25s;
+      }
+      .footer-socials a:hover {
+        color: var(--gold);
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .price-period sub {
+        font-size: 1rem;
+        vertical-align: sub;
+      }
+
+      .pricing-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .toggle-label {
+        font-size: 1.5rem;
+        color: var(--gray-3);
+        transition: color 0.3s;
+      }
+
+      .toggle-label.active {
+        color: var(--gold);
+        font-weight: 500;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 26px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background-color: var(--gray-4);
+        border-radius: 34px;
+        transition: 0.4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 4px;
+        background-color: var(--white);
+        border-radius: 50%;
+        transition: 0.4s;
+      }
+
+      input:checked + .slider {
+        background-color: var(--gold);
+      }
+      input:checked + .slider:before {
+        transform: translateX(24px);
+      }
+
+
+    /* ──────────────────────────────────────────────────────────
+       SECTION FEATURED FORMATIONS
+    ────────────────────────────────────────────────────────── */
+    .featured-formations {
+      padding: var(--section-pad) 0;
+      background: #0c0c0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient glow subtil en arrière plan */
+    .featured-formations::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,.05) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+    .section-header .label { display: block; margin-bottom: 1rem; }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .section-title em { font-style: italic; color: var(--gold); font-weight: 800;}
+    .section-sub {
+      margin-top: 1.2rem;
+      color: var(--gray-3);
+      font-size: 0.95rem;
+      max-width: 520px;
+      margin-inline: auto;
+      line-height: 1.8;
+    }
+
+    /* ── Grille principale : 1 grande + 2 petites ── */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5px;
+    }
+
+    /* Carte commune */
+    .fc {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 400px;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .fc:hover { transform: scale(1.005); }
+
+    /* La grande carte occupe les 2 lignes à gauche */
+    .fc--hero {
+      grid-row: 1 / 3;
+      min-height: 600px;
+    }
+
+    /* Fond de chaque carte */
+    .fc-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .fc:hover .fc-bg { transform: scale(1.04); }
+
+    /* Overlays de couleur différents par carte */
+    
+    .fc--blue .fc-bg {
+      background: linear-gradient(145deg, #0a0f1a 0%, #06090f 100%);
+    }
+    .fc--olive .fc-bg {
+      background: linear-gradient(145deg, #0d1208 0%, #080d05 100%);
+    }
+
+    /* Motifs décoratifs SVG dans chaque carte */
+    .fc-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* Contenu texte en bas */
+    .fc-body {
+      position: relative;
+      z-index: 2;
+      padding: clamp(1.8rem, 3vw, 2.5rem);
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.3) 60%, transparent 100%);
+    }
+
+    /* Ligne de méta en haut à gauche */
+    .fc-meta {
+      position: absolute;
+      top: clamp(1.5rem, 2.5vw, 2rem);
+      left: clamp(1.8rem, 3vw, 2.5rem);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .fc-badge {
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: .3rem .8rem;
+      background: rgba(201,168,76,.15);
+      border: 1px solid rgba(201,168,76,.3);
+      color: var(--gold);
+    }
+    .fc-badge--new {
+      background: rgba(201,168,76,.9);
+      color: var(--black);
+      border-color: transparent;
+    }
+    .fc-duration {
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray-3);
+    }
+
+    /* Titre de la carte */
+    .fc-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: .6rem;
+    }
+    .fc--hero .fc-title {
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+    }
+    .fc-title em { font-style: italic; color: var(--gold); font-size: 1.6rem; }
+
+    .fc-desc {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: var(--gray-3);
+      margin-bottom: 1.5rem;
+      max-width: 420px;
+    }
+    .fc--hero .fc-desc { max-width: 520px; font-size: .9rem; }
+
+    /* Tags de modules */
+    .fc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1.8rem;
+    }
+    .fc-tag {
+      font-size: .62rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .28rem .75rem;
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--gray-3);
+    }
+
+    /* Pied de carte : niveau + CTA */
+    .fc-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .fc-level {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .fc-level-dots {
+      display: flex;
+      gap: 3px;
+    }
+    .fc-level-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gray-4);
+    }
+    .fc-level-dot.active { background: var(--gold); }
+    .fc-level-label {
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+    }
+
+    /* Bouton CTA de la carte */
+    .fc-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: none;
+      border: 1px solid rgba(255,255,255,.2);
+      padding: .6rem 1.3rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .3s var(--ease-out);
+    }
+    .fc-cta svg { width: 12px; height: 12px; transition: transform .3s var(--ease-out); }
+    .fc:hover .fc-cta {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .fc:hover .fc-cta svg { transform: translateX(4px); }
+
+    /* CTA doré pour la carte hero */
+    .fc--hero .fc-cta {
+      background: var(--gold);
+      color: var(--black);
+      border-color: transparent;
+      padding: .75rem 1.8rem;
+    }
+    .fc--hero:hover .fc-cta {
+      background: var(--gold-lt);
+      color: var(--black);
+      border-color: transparent;
+    }
+
+    /* Ligne de séparation dorée décorative */
+    .fc-rule {
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Icône décorative grande carte ── */
+    .fc-sax-deco {
+      position: absolute;
+      right: clamp(1.5rem, 4vw, 3rem);
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: .06;
+      width: clamp(140px, 18vw, 220px);
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity .5s;
+    }
+    .fc--hero:hover .fc-sax-deco { opacity: .09; }
+
+    /* ── Étoiles de notation ── */
+    .fc-rating {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .fc-stars { color: var(--gold); font-size: .85rem; letter-spacing: 1px; }
+    .fc-rating-count { font-size: .72rem; color: var(--gray-4); }
+
+    /* ── Bande "Prochainement" ── */
+    .fc-coming-soon {
+      position: absolute;
+      top: 1.5rem;
+      right: -2.5rem;
+      background: var(--gold-dim);
+      color: rgba(255,255,255,.8);
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .3rem 3rem;
+      transform: rotate(45deg);
+      transform-origin: center;
+    }
+
+    /* ── Barre de progression ── */
+    .fc-progress-wrap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,.06);
+      z-index: 3;
+    }
+    .fc-progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, var(--gold-dim), var(--gold));
+      transition: width .6s var(--ease-out);
+    }
+
+    /* ── CTA section bas ── */
+    .featured-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .btn-all {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: var(--ff-body);
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: .9rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .3s var(--ease-out);
+    }
+    .btn-all:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-all svg { width: 13px; height: 13px; transition: transform .3s var(--ease-out); }
+    .btn-all:hover svg { transform: translateX(4px); }
+
+
+
+
+
+
+      /* ════════════════════════════════════════════════════════
+       SECTION 1 — NOUVEAU FORFAIT
+    ════════════════════════════════════════════════════════ */
+    .new-pass {
+      padding: var(--section-pad) 0;
+      background: #0a0a08;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Fond ambient */
+    .new-pass::before {
+      content: '';
+      position: absolute;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(201,168,76,.06) 0%, transparent 65%);
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .new-pass-header {
+      text-align: center;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+
+    /* Badge "NOUVEAU" animé */
+    .new-badge-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: .9rem;
+      margin-bottom: 1.4rem;
+    }
+    .new-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--gold);
+      color: var(--black);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: .35rem 1rem;
+      animation: badgePulse 2.5s ease-in-out infinite;
+    }
+    .new-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--black);
+      animation: dotBlink 2.5s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+      50%      { box-shadow: 0 0 0 8px rgba(201,168,76,.12); }
+    }
+    @keyframes dotBlink {
+      0%,100%{ opacity:1; } 50%{ opacity:.3; }
+    }
+
+    .new-pass-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+    }
+    .new-pass-title em { font-style: italic; color: var(--gold); font-family: var(--ff-serif); }
+    .new-pass-sub {
+      color: var(--gray-3);
+      font-size: .95rem;
+      max-width: 540px;
+      margin-inline: auto;
+      line-height: 1.8;
+    }
+
+    /* Grille des 2 passes côte à côte */
+    .pass-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5px;
+      position: relative;
+    }
+
+    /* Séparateur central */
+    .pass-grid::after {
+      content: 'VS';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      width: 42px; height: 42px;
+      background: var(--black);
+      border: 1px solid var(--gold-dim);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      color: var(--gold);
+    }
+
+    .pass-card {
+      position: relative;
+      padding: clamp(2.5rem, 4vw, 3.5rem);
+      background: #111110;
+      border: 1px solid rgba(255,255,255,.04);
+      transition: border-color .4s;
+    }
+    .pass-card--new {
+      background: linear-gradient(160deg, #16130a 0%, #0f0e09 100%);
+      border-color: rgba(201,168,76,.15);
+    }
+    .pass-card--new:hover { border-color: rgba(201,168,76,.3); }
+
+    /* Tag "inclus" pour la carte new */
+    .pass-card--new::before {
+      content: 'Recommandé';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--black);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: .3rem 1.2rem;
+      white-space: nowrap;
+    }
+
+    .pass-name {
+      font-family: var(--ff-display);
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      margin-bottom: 1rem;
+    }
+    .pass-card--new .pass-name { color: var(--gold); }
+
+    .pass-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -.01em;
+      margin-bottom: 1.5rem;
+    }
+    .pass-card--new .pass-title { color: var(--white); }
+
+    .pass-divider {
+      width: 2rem; height: 1px;
+      background: rgba(255,255,255,.1);
+      margin-bottom: 1.8rem;
+    }
+    .pass-card--new .pass-divider { background: var(--gold-dim); }
+
+    .pass-features {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      margin-bottom: 2.2rem;
+    }
+    .pass-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      font-size: .86rem;
+      color: var(--gray-3);
+      line-height: 1.6;
+    }
+    .pass-feature-icon {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+      margin-top: .1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pass-feature-icon svg { width: 14px; height: 14px; color: var(--gold); }
+    .pass-feature.highlight {
+      background: rgba(201,168,76,.06);
+      border-left: 2px solid var(--gold);
+      padding: .75rem 1rem;
+      color: var(--white);
+      font-size: .88rem;
+    }
+    .pass-feature.highlight .pass-feature-icon svg { color: var(--gold-lt); }
+
+    /* Mentions légales coaching */
+    .pass-fine-print {
+      padding: 1.2rem;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05);
+      margin-bottom: 2rem;
+    }
+    .pass-fine-print p {
+      font-size: 0.9rem;
+      color: var(--gray-4);
+      line-height: 1.7;
+    }
+    .pass-fine-print strong {
+      color: var(--gray-3);
+      font-weight: 500;
+    }
+
+    /* Boutons */
+    .pass-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      width: 100%;
+      font-family: var(--ff-body);
+      font-size: .76rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .3s var(--ease-out);
+      border: none;
+    }
+    .pass-btn--ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .pass-btn--ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .pass-btn--gold {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .pass-btn--gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .pass-btn svg { width: 13px; height: 13px; transition: transform .3s; }
+    .pass-btn:hover svg { transform: translateX(4px); }
+
+    /* Spots limités */
+    .spots-alert {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin-top: 1.5rem;
+      padding: .8rem 1rem;
+      background: rgba(201,168,76,.06);
+      border: 1px solid rgba(201,168,76,.15);
+    }
+    .spots-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      animation: dotBlink 1.8s ease-in-out infinite;
+    }
+    .spots-text {
+      font-size: .72rem;
+      color: var(--gold);
+      letter-spacing: .08em;
+      font-weight: 500;
+    }
+
+    /* Indicateur de changement */
+    .pass-switch-note {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: .9rem;
+      color: var(--gray-3);
+    }
+    .pass-switch-note span { color: var(--gold); }
+
+
+    /* ════════════════════════════════════════════════════════
+       SECTION 2 — QUI SUIS-JE (BIO)
+    ════════════════════════════════════════════════════════ */
+    .bio {
+      padding: var(--section-pad) 0;
+      background: #0f0f0d;
+      position: relative;
+      overflow: hidden;
+    }
+    .bio::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+      opacity: .4; pointer-events: none;
+    }
+
+    .bio-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Côté gauche : photo placeholder + stats */
+    .bio-visual { position: relative; }
+    .bio-photo-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      max-width: 380px;
+      overflow: hidden;
+    }
+    /* Cadre doré décoratif décalé */
+
+  
+
+    /* Stats flottantes sur la photo */
+    .bio-stat-card {
+      position: absolute;
+      background: rgba(10,10,8,.92);
+      border: 1px solid rgba(201,168,76,.2);
+      backdrop-filter: blur(10px);
+      padding: .9rem 1.3rem;
+      z-index: 2;
+    }
+    .bio-stat-card--1 {
+      bottom: 2rem;
+      right: -2rem;
+    }
+    .bio-stat-card--2 {
+      top: 2.5rem;
+      right: -2rem;
+    }
+    .bio-stat-num {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--white);
+    }
+    .bio-stat-num span { color: var(--gold); }
+    .bio-stat-label {
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      margin-top: .25rem;
+    }
+
+    /* Côté droit : texte */
+    /* .bio-content {} */
+    .bio-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+    .bio-eyebrow-line { width: 2rem; height: 1px; background: var(--gold); }
+    .bio-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+    .bio-title em { font-style: italic; color: var(--gold); font-family: var(--ff-serif); }
+
+    .bio-text {
+      color: var(--gray-3);
+      font-size: .93rem;
+      line-height: 1.85;
+      margin-bottom: 1.4rem;
+    }
+    .bio-text strong { color: var(--white); font-weight: 400; }
+
+    /* Citation mise en avant */
+    .bio-quote {
+      border-left: 2px solid var(--gold);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(201,168,76,.04);
+    }
+    .bio-quote p {
+      font-family: var(--ff-serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,.8);
+      line-height: 1.7;
+    }
+
+    /* Traits de caractère */
+    .bio-traits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 2rem;
+    }
+    .bio-trait {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .72rem;
+      font-weight: 400;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gray-3);
+      padding: .4rem 1rem;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .bio-trait::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* Signature */
+    .bio-signature {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .bio-signature-name {
+      font-family: var(--ff-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .bio-signature-title {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      margin-top: .4rem;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       SECTION 3 — TÉMOIGNAGES VIDÉO
+    ════════════════════════════════════════════════════════ */
+    .video-testimonials {
+      padding: var(--section-pad) 0;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+    .video-testimonials::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(201,168,76,.04) 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .vt-header {
+      text-align: center;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+    .section-title-display {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    .section-title-display em { font-style: italic; color: var(--gold); font-family: var(--ff-serif); }
+    .section-sub { margin-top: 1.2rem; color: var(--gray-3); font-size: .95rem; max-width: 520px; margin-inline: auto; line-height: 1.8; }
+
+    /* Grille vidéos */
+    .vt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .vt-card {
+      position: relative;
+      background: #111110;
+      border: 1px solid rgba(255,255,255,.05);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .4s, transform .4s var(--ease-out);
+    }
+    .vt-card:hover { border-color: rgba(201,168,76,.25); transform: translateY(-4px); }
+
+    /* Thumbnail vidéo */
+    .vt-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1610 0%, #0d0b08 100%);
+    }
+
+    /* Motif interne thumbnail */
+    .vt-thumb-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: .07;
+    }
+
+    /* Overlay hover sur thumbnail */
+    .vt-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(201,168,76,.08);
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    .vt-card:hover .vt-thumb::after { opacity: 1; }
+
+    /* Bouton play */
+    .vt-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .vt-play-btn {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201,168,76,.5);
+      background: rgba(10,10,8,.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      transition: all .35s var(--ease-out);
+    }
+    .vt-card:hover .vt-play-btn {
+      border-color: var(--gold);
+      background: rgba(201,168,76,.15);
+      transform: scale(1.1);
+    }
+    .vt-play-btn svg { width: 18px; height: 18px; margin-left: 3px; }
+
+    /* Durée vidéo */
+    .vt-duration {
+      position: absolute;
+      bottom: .7rem; right: .7rem;
+      background: rgba(0,0,0,.8);
+      font-size: .62rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      color: var(--white);
+      padding: .25rem .55rem;
+      z-index: 2;
+    }
+
+    /* Contenu sous la vidéo */
+    .vt-body { padding: 1.5rem 1.5rem 1.8rem; }
+
+    .vt-stars { color: var(--gold); font-size: .8rem; letter-spacing: 1px; margin-bottom: .8rem; }
+
+    .vt-quote {
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(255,255,255,.7);
+      margin-bottom: 1.3rem;
+    }
+
+    .vt-author {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .vt-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gray-4));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-display);
+      font-size: .85rem;
+      font-weight: 400;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .vt-author-name { font-size: .82rem; font-weight: 500; }
+    .vt-author-role { font-size: .72rem; color: var(--gray-4); margin-top: .1rem; }
+
+    /* Tag thématique */
+    .vt-tag {
+      position: absolute;
+      top: .8rem; left: .8rem;
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .28rem .7rem;
+      background: rgba(201,168,76,.15);
+      border: 1px solid rgba(201,168,76,.25);
+      color: var(--gold);
+      z-index: 2;
+    }
+
+    /* Note bas de page */
+    .vt-note {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 1rem;
+      color: var(--gray-3);
+    }
+    .vt-note a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Modale vidéo (simple) */
+    .vt-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .vt-modal.open { display: flex; }
+    .vt-modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 840px;
+      background: #111110;
+      border: 1px solid rgba(201,168,76,.2);
+    }
+    .vt-modal-close {
+      position: absolute;
+      top: -2.8rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--gray-3);
+      font-size: 1rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .vt-modal-close:hover { color: var(--gold); }
+    .vt-modal-video {
+      aspect-ratio: 16/9;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-4);
+      font-size: .9rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .vt-modal-caption {
+      padding: 1.2rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+      font-size: .8rem;
+      color: var(--gray-3);
+    }
+
+
+    .hero-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* On garde votre réglage de 50% */
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.3; /* On garde votre opacité */
+  z-index: 1;
+  pointer-events: none; /* Pour que la vidéo ne bloque pas les clics */
+}
+
+.hero-video-container iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw; /* Largeur totale pour couvrir l'espace */
+  height: 100vh;
+  transform: translate(-50%, -50%) scale(1.5); /* Centrage et zoom pour éviter les bandes noires */
+  object-fit: cover;
+  z-index: 1;
+}
+
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .pass-grid { grid-template-columns: 1fr; }
+      .pass-grid::after { display: none; }
+      .bio-inner { grid-template-columns: 1fr; gap: 4rem; }
+      .bio-photo-wrap { max-width: 100%; aspect-ratio: 4/3; }
+      .bio-stat-card--1 { right: 1rem; bottom: 1rem; }
+      .bio-stat-card--2 { right: 1rem; top: 1rem; }
+      .vt-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+    }
+    @media (max-width: 600px) {
+      .bio-traits { gap: .45rem; }
+      .vt-grid { max-width: 100%; }
+    }
+
+
+
+
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .fc--hero { grid-row: auto; min-height: 480px; }
+      .fc { min-height: 320px; }
+    }
+    @media (max-width: 600px) {
+      .fc--hero { min-height: 380px; }
+      .fc-sax-deco { display: none; }
+    }
+
+    
+
+
+
+
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 1024px) {
+        nav {
+          padding: 20px 32px;
+        }
+        nav.scrolled {
+          padding: 14px 32px;
+        }
+        section {
+          padding: 90px 32px;
+        }
+        .hero-line-left {
+          left: 32px;
+        }
+        .hero-line-right {
+          right: 32px;
+        }
+        .formations-grid {
+          grid-template-columns: 1fr;
+          gap: 2px;
+        }
+        .benefices-inner {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+        .benefices-right {
+          padding-top: 0;
+        }
+        .stat-cards {
+          flex-direction: row;
+        }
+        .apercu-modules {
+          grid-template-columns: 1fr;
+        }
+        .temoignages-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .prix-grid {
+          grid-template-columns: 1fr;
+          max-width: 480px;
+          margin: 0 auto;
+        }
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 24px;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+        .nav-hamburger {
+          display: flex;
+        }
+        nav {
+          padding: 18px 24px;
+        }
+        nav.scrolled {
+          padding: 14px 24px;
+        }
+        section {
+          padding: 72px 24px;
+        }
+        .hero-line-left,
+        .hero-line-right {
+          display: none;
+        }
+        .temoignages-grid {
+          grid-template-columns: 1fr;
+        }
+        .stat-cards {
+          flex-direction: column;
+        }
+        .apercu-video {
+          aspect-ratio: 16/9;
+        }
+        footer {
+          padding: 40px 24px;
+        }
+        .footer-nav {
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        .hero-sax {
+          display: none;
+        }
+
+              /* ─── HERO ─── */
+        #hero {
+          min-height: 80vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+          text-align: center;
+          padding: 120px 40px 80px;
+        }
+
+            .section-title {
+          font-family: var(--ff-display);
+          font-size: clamp(2rem, 4vw, 3.6rem);
+          font-weight: 300;
+          line-height: 1.15;
+          letter-spacing: -0.01em;
+        }
+
+        .fc-footer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+          gap: 1px;
+          position: relative;
+        }
+
+        .toggle-label small {
+          display: none;
+        }
+      }
+
+      /* ─── MOBILE MENU ─── */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 40px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s var(--ease-out);
+      }
+      .mobile-menu.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .mobile-menu a {
+        font-family: var(--font-display);
+        font-size: 36px;
+        font-weight: 300;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: -0.01em;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-menu-close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 24px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .mobile-menu-close:hover {
+        color: var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Nav ── -->
+    <nav id="nav">
+      <!-- <div class="container"> -->
+      <div class="nav-inner">
+        <div class="yanick-logo">
+          <a href="#" class="nav-logo">Yanick <span>Coderre</span></a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#featured">Formations</a></li>
+          <li><a href="./spectacles.html">Spectacles</a></li>
+          <li><a href="#pricing">Tarifs</a></li>
+          <li><a href="#testimonials">Contact</a></li>
+        </ul>
+        <a href="https://yanickcoderresaxophone.com/courses/enrolled" class="nav-cta">Espace Client</a>
+        <button class="nav-burger" id="burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <!-- </div> -->
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mobile-close" id="mobileClose">✕</button>
+      <a href="#formations" class="mobile-link">Formations</a>
+      <a href="#curriculum" class="mobile-link">Programme</a>
+      <a href="#pricing" class="mobile-link">Tarifs</a>
+      <a href="#testimonials" class="mobile-link">Avis</a>
+      <a href="#pricing" class="mobile-link" style="color: var(--gold)"
+        >Commencer →</a
+      >
+    </div>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-bg"></div>
+         <div class="hero-video-container">
+  <!-- Remplacer VOTRE_ID par l'identifiant de votre vidéo YouTube -->
+          <iframe 
+            src="https://www.youtube.com/embed/d4XVHXRw7v4?autoplay=1&mute=1&controls=0&loop=1&playlist=d4XVHXRw7v4&showinfo=0&modestbranding=1"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+          </iframe>
+        </div>
+      <div class="hero-grain"></div>
+      <div class="hero-line-left"></div>
+      <div class="hero-line-right"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">École de saxophone en ligne</p>
+        <h1 class="hero-title">
+          APPRENDRE <br />
+          <em>LE SAXOPHONE</em>
+        </h1>
+        <p class="hero-subtitle">
+          LA MÉTHODE ACCESSIBLE, COMPLÈTE ET PROGRESSIVE POUR TOUS LES NIVEAUX
+        </p>
+        <div class="hero-actions">
+          <a href="https://yanickcoderresaxophone.com/courses" class="btn-gold">
+            <span>VOIR LES FORMATIONS</span>
+          </a>
+          <button
+            class="btn-outline"
+            onclick="
+              document
+                .getElementById('apercu')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Voir un extrait gratuit
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span>Défiler</span>
+      </div>
+    </section>
+
+    <!-- ── Pricing ── -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <span class="label reveal">Tarifs transparents</span>
+          <h2 class="section-title reveal reveal-delay-1">
+            ABONNEMENT AU <em>"PASS COMPLET".</em>
+          </h2>
+        </div>
+
+        <div class="pricing-toggle">
+          <span class="toggle-label" id="monthly-label">Mensuel</span>
+          <label class="switch">
+            <input type="checkbox" id="pricing-checkbox" />
+            <span class="slider"></span>
+          </label>
+          <span class="toggle-label" id="yearly-label"
+            >Annuel <small>(-20%)</small></span
+          >
+        </div>
+
+        <div class="pricing-grid">
+          <!-- EURO -->
+          <div class="pricing-card reveal">
+            <div class="pricing-plan">ABONNEMENT <br />(EURO)</div>
+         <div class="price-container">
+            <sup>€</sup>
+            <span class="price-value" data-monthly="33" data-yearly="26,42">33</span>
+             <span class="price-period"><sub>/ mois</sub></span>
+        </div>
+
+            <div class="pricing-price-note">Facturé mensuellement</div>
+            <div class="pricing-features">
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                 23 formations complètes 
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Réponses vidéo personnalisées illimitées
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                2 rencontres de groupe en direct chaque mois
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Accès 24/7
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Annulation de ton plan mensuel à tout moment et/ou revenir après une pause
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Cours privés personnalisé, 2 x 15 minutes pas mois
+              </div>
+            </div>
+            <a
+              href="https://yanickcoderresaxophone.com/purchase?product_id=6463530"
+              class="btn btn--outline pricing-button"
+              data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6463530" 
+              data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549447"
+              style="width: 100%; justify-content: center">
+            
+              JE M’ABONNE</a>
+          </div>
+
+          <!-- CAD -->
+          <div class="pricing-card reveal reveal-delay-1">
+            <div class="pricing-plan">
+              ABONNEMENT <br />
+              ($ CAD)
+            </div>
+                <div class="price-container">
+            <sup>$</sup>
+            <span class="price-value" data-monthly="52" data-yearly="43,17">52</span>
+             <span class="price-period"><sub>/ mois</sub></span>
+        </div>
+            <div class="pricing-price-note">Facturé mensuellement</div>
+            <div class="pricing-features">
+               <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                 23 formations complètes 
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Réponses vidéo personnalisées illimitées
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                2 rencontres de groupe en direct chaque mois
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Accès 24/7
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Annulation de ton plan mensuel à tout moment et/ou revenir après une pause
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Cours privés personnalisé, 2 x 15 minutes pas mois
+              </div>
+            </div>
+             <a
+              href="https://yanickcoderresaxophone.com/purchase?product_id=6692551"
+              class="btn btn--outline pricing-button"
+              data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6692551" 
+              data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549449"
+              style="width: 100%; justify-content: center">
+            
+              JE M’ABONNE</a>
+            
+          </div>
+
+          <!-- USD -->
+          <div class="pricing-card reveal reveal-delay-2">
+            <div class="pricing-plan">
+              ABONNEMENT <br />
+              (USD - PAYPAL)
+            </div>
+                <div class="price-container">
+            <sup>$</sup>
+            <span class="price-value" data-monthly="38" data-yearly="30,42">38</span>
+             <span class="price-period"><sub>/ mois</sub></span>
+        </div>
+            <div class="pricing-price-note">Facturé mensuellement</div>
+            <div class="pricing-features">
+               <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                 23 formations complètes 
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Réponses vidéo personnalisées illimitées
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                2 rencontres de groupe en direct chaque mois
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Accès 24/7
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Annulation de ton plan mensuel à tout moment et/ou revenir après une pause
+              </div>
+              <div class="pricing-feature">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Cours privés personnalisé, 2 x 15 minutes pas mois
+              </div>
+            </div>
+             <a
+              href="https://yanickcoderresaxophone.com/purchase?product_id=6463534"
+              class="btn btn--outline pricing-button"
+              data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6463534" 
+              data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549451"
+              style="width: 100%; justify-content: center">
+            
+              JE M’ABONNE</a>
+
+          </div>
+        </div>
+
+        <p
+          class="reveal"
+          style="
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            color: var(--gray-3);
+          "
+        >
+          Satisfait ou remboursé — 30 jours sans condition. Paiement sécurisé
+          par Stripe.
+        </p>
+      </div>
+    </section>
+
+
+
+<!-- ──────────────────────────────────────────────────────────
+     SECTION : FEATURED FORMATIONS
+     → Prête à coller dans votre fichier existant
+────────────────────────────────────────────────────────── -->
+<section class="featured-formations" id="featured">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="label reveal">Formations vedettes</span>
+      <h2 class="section-title reveal reveal-delay-1">
+        Les cours <em>incontournables.</em>
+      </h2>
+      <p class="section-sub reveal reveal-delay-2">
+        Sélectionnés par votre professeur, ces parcours concentrent l'essentiel pour progresser vite et bien.
+      </p>
+    </div>
+
+    <div class="featured-grid">
+
+      <!-- ── CARTE HERO (grande, gauche) ── -->
+      <div class="fc fc--hero reveal">
+        <div class="fc-bg"></div>
+
+        <!-- Saxophone SVG décoratif -->
+        <img src="./img/featured-image2.jpg" alt="">
+
+        <!-- Motif grille subtil -->
+        <svg class="fc-pattern" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="grid-hero" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-hero)"/>
+          <circle cx="500" cy="100" r="180" fill="none" stroke="rgba(201,168,76,.04)" stroke-width="1"/>
+          <circle cx="500" cy="100" r="120" fill="none" stroke="rgba(201,168,76,.06)" stroke-width="1"/>
+        </svg>
+
+        <div class="fc-meta">
+          <span class="fc-badge fc-badge--new">Nouveau</span>
+          <span class="fc-badge">Débutant → Intermédiaire</span>
+          <span class="fc-duration">56 leçons · 8h</span>
+        </div>
+
+        <div class="fc-body">
+          <div class="fc-rating">
+            <span class="fc-stars">★★★★★</span>
+            <span class="fc-rating-count">4.9 / 5 (312 avis)</span>
+          </div>
+          <div class="fc-rule"></div>
+          <h3 class="fc-title">PDFS et BACKING TRACKS<br><em>en complément des vidéos Youtube</em></h3>
+          <p class="fc-desc">Cours de SAXOPHONE | Comment Improviser avec la Gamme de Blues</p>
+          <div class="fc-tags">
+            <span class="fc-tag">Embouchure</span>
+            <span class="fc-tag">Gammes</span>
+            <span class="fc-tag">Jazz</span>
+            <span class="fc-tag">Improvisation</span>
+            <span class="fc-tag">Lecture</span>
+          </div>
+          <div class="fc-footer">
+            <div class="fc-level">
+              <div class="fc-level-dots">
+                <div class="fc-level-dot active"></div>
+                <div class="fc-level-dot active"></div>
+                <div class="fc-level-dot"></div>
+              </div>
+              <span class="fc-level-label">Débutant – Intermédiaire</span>
+            </div>
+            <a href="https://yanickcoderresaxophone.com/courses/enrolled/2468744" class="fc-cta">
+              Accéder au cours
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="fc-progress-wrap"><div class="fc-progress-bar" style="width:78%"></div></div>
+      </div>
+
+      <!-- ── CARTE PETITE 1 (haut droite) ── -->
+      <div class="fc fc--blue reveal reveal-delay-1">
+        <div class="fc-bg"></div>
+
+        <svg class="fc-pattern" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="dots-blue" width="24" height="24" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="rgba(201,168,76,.08)"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots-blue)"/>
+          <!-- Note de musique décorative -->
+          <text x="75%" y="55%" dominant-baseline="middle" text-anchor="middle"
+                font-size="80" fill="rgba(201,168,76,.04)" font-family="serif">♩</text>
+        </svg>
+
+        <div class="fc-meta">
+          <span class="fc-badge">Débutant</span>
+          <span class="fc-duration">9 leçons · 5h</span>
+        </div>
+
+        <div class="fc-body">
+          <div class="fc-rule"></div>
+          <h3 class="fc-title">Structurer<br><em>une séance de pratique</em></h3>
+          <p class="fc-desc">Méthodologie complète et structurée - Les 7 éléments à pratiquer pour assurer une progression absolue</p>
+          <div class="fc-tags">
+            <span class="fc-tag">Pentatonique</span>
+            <span class="fc-tag">II-V-I</span>
+            <span class="fc-tag">Swing</span>
+          </div>
+          <div class="fc-footer">
+            <div class="fc-level">
+              <div class="fc-level-dots">
+                <div class="fc-level-dot active"></div>
+                <div class="fc-level-dot active"></div>
+                <div class="fc-level-dot active"></div>
+              </div>
+              <span class="fc-level-label">Débutant</span>
+            </div>
+            <a href="https://yanickcoderresaxophone.com/courses/enrolled/1349317" class="fc-cta">
+              Découvrir
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="fc-progress-wrap"><div class="fc-progress-bar" style="width:55%"></div></div>
+      </div>
+
+      <!-- ── CARTE PETITE 2 (bas droite) ── -->
+      <div class="fc fc--olive reveal reveal-delay-2">
+        <div class="fc-bg"></div>
+
+        <!-- Bande "Prochainement" -->
+        <div class="fc-coming-soon">Populaire</div>
+
+        <svg class="fc-pattern" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="lines-olive" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+              <line x1="0" y1="0" x2="0" y2="20" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#lines-olive)"/>
+          <text x="78%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                font-size="80" fill="rgba(201,168,76,.04)" font-family="serif">♪</text>
+        </svg>
+
+        <div class="fc-meta">
+          <span class="fc-badge">Intermédiaire</span>
+          <span class="fc-duration">18 leçons · 6h30</span>
+        </div>
+
+        <div class="fc-body">
+          <div class="fc-rule"></div>
+          <h3 class="fc-title">Comment Improviser<br><em> sur un Standard de Jazz</em></h3>
+          <p class="fc-desc">Une méthode simple et compréhensible pour produire tes premiers solos</p>
+          <div class="fc-tags">
+            <span class="fc-tag">Altissimo</span>
+            <span class="fc-tag">Performance</span>
+            <span class="fc-tag">Son</span>
+          </div>
+          <div class="fc-footer">
+            <div class="fc-level">
+              <div class="fc-level-dots">
+                <div class="fc-level-dot active"></div>
+                <div class="fc-level-dot active"></div>
+                <div class="fc-level-dot active"></div>
+              </div>
+              <span class="fc-level-label">Intermédiaire</span>
+            </div>
+            <a href="https://yanickcoderresaxophone.com/courses/enrolled/560571" class="fc-cta">
+              Découvrir
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="fc-progress-wrap"><div class="fc-progress-bar" style="width:90%"></div></div>
+      </div>
+
+    </div><!-- /featured-grid -->
+
+    <!-- CTA bas de section -->
+    <div class="featured-cta reveal">
+      <a href="https://yanickcoderresaxophone.com/courses" class="btn-all">
+        Voir toutes les formations
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 1 — NOUVEAU FORFAIT : PASS COMPLET + COACHING
+════════════════════════════════════════════════════════ -->
+<section class="new-pass" id="coaching">
+  <div class="container">
+
+    <div class="new-pass-header">
+      <div class="new-badge-wrap reveal">
+        <span class="new-badge">Nouveau forfait</span>
+      </div>
+      <h2 class="new-pass-title reveal d1">
+        Le Pass Complet,<br><em>réinventé.</em>
+      </h2>
+      <p class="new-pass-sub reveal d2">
+        Choisissez le forfait qui correspond à votre façon d'apprendre.
+        Passez de l'un à l'autre à tout moment, sans frais.
+      </p>
+    </div>
+
+    <!-- Les 2 passes -->
+    <div class="pass-grid">
+
+      <!-- ── Carte : Pass Complet (existant) ── -->
+      <div class="pass-card reveal">
+        <div class="pass-name">Déjà disponible</div>
+        <h3 class="pass-title">Le Pass<br>Complet</h3>
+        <div class="pass-divider"></div>
+        <ul class="pass-features">
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Accès à toutes les formations (débutant, intermédiaire, avancé)
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            23+ leçons vidéo HD
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Partitions & exercices PDF
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Contenu mis à jour régulièrement
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Accès à la communauté en ligne
+          </div>
+        </ul>
+        <a href="#pricing" class="pass-btn pass-btn--ghost">
+          Choisir ce forfait
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <!-- ── Carte : Pass Complet + Coaching (nouveau) ── -->
+      <div class="pass-card pass-card--new reveal d2">
+        <div class="pass-name">Nouveau — Places limitées</div>
+        <h3 class="pass-title">Le Pass Complet<br>+ Coaching</h3>
+        <div class="pass-divider"></div>
+        <ul class="pass-features">
+          <div class="pass-feature highlight">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <strong>Tout le contenu du Pass Complet</strong>
+          </div>
+          <div class="pass-feature highlight">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </span>
+            <strong>2 sessions de coaching privé de 15 min / mois</strong>
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Identifie et comprends tes blocages
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Obtiens des réponses claires pour mieux avancer
+          </div>
+          <div class="pass-feature">
+            <span class="pass-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Découvre des solutions concrètes pour poursuivre ta progression
+          </div>
+        </ul>
+
+        <div class="pass-fine-print">
+          <p><strong>À noter :</strong> Les sessions de coaching privé ne sont pas cumulables d'un mois à l'autre et sont valides uniquement pour le mois en cours.</p>
+        </div>
+
+        <a href="#pricing" class="pass-btn pass-btn--gold">
+          Rejoindre maintenant
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+
+        <div class="spots-alert">
+          <div class="spots-dot"></div>
+          <span class="spots-text">Places très limitées — disponibilité restreinte</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="pass-switch-note reveal">
+      <span>✦</span> Il est possible de changer de forfait à tout moment, sans frais ni pénalité. <span>✦</span>
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 2 — QUI SUIS-JE ? (BIO)
+════════════════════════════════════════════════════════ -->
+<section class="bio" id="bio">
+  <div class="container">
+    <div class="bio-inner">
+
+      <!-- Gauche : visuel -->
+      <div class="bio-visual reveal">
+        <div class="bio-photo-wrap">
+          <div class="bio-photo">
+            <!-- Remplacer par <img src="./yanick_gold2.png" ...> quand l'image est dispo -->
+           <img src="https://uploads.teachablecdn.com/attachments/QASR8p5NSCiyQXBS6czw_0Q3A9518.JPG" alt="">
+          </div>
+        </div>
+
+        <!-- Stat cards flottantes -->
+        <div class="bio-stat-card bio-stat-card--2">
+          <div class="bio-stat-num">30<span>+</span></div>
+          <div class="bio-stat-label">Années de scène</div>
+        </div>
+        <div class="bio-stat-card bio-stat-card--1">
+          <div class="bio-stat-num">3<span>k</span></div>
+          <div class="bio-stat-label">Élèves formés</div>
+        </div>
+      </div>
+
+      <!-- Droite : texte -->
+      <div class="bio-content">
+        <div class="bio-eyebrow reveal">
+          <span class="bio-eyebrow-line"></span>
+          <span class="label">Qui suis-je ?</span>
+        </div>
+
+        <h2 class="bio-title reveal d1">
+          Salut, je suis<br><em>Yanick.</em>
+        </h2>
+
+        <p class="bio-text reveal d2">
+          Musicien professionnel depuis <strong>30 ans</strong>, j'ai le privilège de gagner ma vie en jouant de la musique et en voyageant à travers le monde. Ce parcours m'a donné une conviction profonde : la musique est accessible à tous.
+        </p>
+
+        <div class="bio-quote reveal d2">
+          <p>«&nbsp;Je n'aime pas le mot <strong style="font-style:normal; color:var(--gold);">talent</strong>. Je suis un fervent disciple du travail acharné, méthodique — mais toujours en gardant le plaisir et la passion en avant-plan.&nbsp;»</p>
+        </div>
+
+        <p class="bio-text reveal d3">
+          J'ai aussi une passion pour la transmission du savoir à travers mes formations. Je propose une méthode <strong>simple, efficace, étape par étape</strong> et accessible à tous — que tu sois débutant, intermédiaire ou avancé, peu importe ton instrument.
+        </p>
+
+        <p class="bio-text reveal d3">
+          Je crois sincèrement que <strong>toute personne peut apprendre à jouer du saxophone</strong> ou de tout autre instrument. Il suffit d'une bonne méthode, de constance… et du plaisir de jouer.
+        </p>
+
+        <div class="bio-traits reveal d4">
+          <span class="bio-trait">Musicien professionnel</span>
+          <span class="bio-trait">30 ans de scène</span>
+          <span class="bio-trait">Voyageur mondial</span>
+          <span class="bio-trait">Pédagogue passionné</span>
+          <span class="bio-trait">Saxophone alto & ténor</span>
+        </div>
+
+        <div class="bio-signature reveal d4">
+          <div>
+            <div class="bio-signature-name">Yanick Coderre</div>
+            <div class="bio-signature-title">Saxophoniste professionnel & formateur</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 3 — TÉMOIGNAGES VIDÉO
+════════════════════════════════════════════════════════ -->
+<section class="video-testimonials" id="video-temoignages">
+  <div class="container">
+
+    <div class="vt-header">
+      <span class="label reveal">Témoignages vidéo</span>
+      <h2 class="section-title-display reveal d1">
+        Ils ont <em>osé commencer.</em>
+      </h2>
+      <p class="section-sub reveal d2">
+        Découvrez ce que vivent concrètement les élèves de Yanick — dans leurs propres mots, en vidéo.
+      </p>
+    </div>
+
+    <div class="vt-grid">
+
+      <!-- Carte vidéo 1 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/3RGD8aebq4')">
+        <div class="vt-thumb">
+            <img src="./img/client1.png" alt="Client 1" class="vt-img">
+          <!-- Motif interne -->
+         
+         
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">2:34</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 2 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/3RGD8aljq4?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+             <img src="./img/client2.png" alt="Client 2" class="vt-img">
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">1:58</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 3 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/yR57PMb4L7?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+            <img src="./img/client3.png" alt="Client 3" class="vt-img">
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">3:12</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 4 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/4qXdlyeNqv?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+            <img src="./img/client4.png" alt="Client 4" class="vt-img">
+          <!-- Motif interne -->
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">2:34</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 5 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/YRljkDxaLw?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+            <img src="./img/client5.png" alt="Client 5" class="vt-img">
+          <!-- Motif interne -->
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">2:34</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 6 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/Nq7rJknWRA?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+            <img src="./img/client6.png" alt="Client 6" class="vt-img">
+          <!-- Motif interne -->
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">2:34</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 7 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/rRAMB24kR1?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+            <img src="./img/client7.png" alt="Client 7" class="vt-img">
+          <!-- Motif interne -->
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">2:34</span>
+        </div>
+        
+      </div>
+
+      <!-- Carte vidéo 8 -->
+      <div class="vt-card reveal" onclick="openModal('Marie L. — 6 mois de progression', 'https://player.hotmart.com/embed/QZpOkvejL6?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%226304091%22%7D%5D')">
+        <div class="vt-thumb">
+            <img src="./img/client8.png" alt="Client 8" class="vt-img">
+          <!-- Motif interne -->
+          
+          <div class="vt-play">
+            <div class="vt-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <span class="vt-duration">2:34</span>
+        </div>
+       
+      </div>
+
+    </div>
+
+    <p class="vt-note reveal">
+      Des centaines d'élèves ont déjà transformé leur apprentissage. &nbsp;
+      <a href="#pricing">Rejoins-les →</a>
+    </p>
+
+  </div>
+</section>
+
+<!-- Modale vidéo simple -->
+<div class="vt-modal" id="vtModal" onclick="closeModal(event)">
+  <div class="vt-modal-inner">
+    <button class="vt-modal-close" onclick="document.getElementById('vtModal').classList.remove('open')">
+      ✕ Fermer
+    </button>
+    <div class="vt-modal-video">
+      <!-- On laisse le src vide ici -->
+      <iframe id="vtIframe" src="" width="100%" height="480" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="vt-modal-caption" id="vtModalCaption"></div>
+  </div>
+</div>
+
+
+
+
+
+    <!-- ── Testimonials ── -->
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <span class="label reveal">Témoignages</span>
+          <h2 class="section-title reveal reveal-delay-1">
+            Ce qu'ils <em>disent.</em>
+          </h2>
+        </div>
+      </div>
+
+      <div class="testimonials-track-wrap">
+        <div class="testimonials-track" id="testimonialsTrack">
+          <!-- Cards duplicated for infinite scroll -->
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;J'ai commencé par la formation Son et interprétation. Puis, continué avec presque toutes les autres si complètes, sans cesser de me délecter des tutos exceptionnels. Tout ce qui est proposé par Yanick Coderre a ceci en commun : structure, professionnalisme exceptionnel et générosité hors du commun. Et par dessus tout, quel plaisir à l'écoute du son.&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PS</div>
+              <div>
+                <div class="testimonial-name">Philippe Steulet</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;Formation progressive (Comment improviser sur un blues jazz), très bien expliquée et décortiquée pour commencer à la base, d'un concept pas évident à priori. Excellente formation!&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PK</div>
+              <div>
+                <div class="testimonial-name">Pierre Kribs</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;Organiste classique, je viens de prendre ma retraite de l’enseignement de la musique au cégep. Après 40 ans d’arrêt, j’ai décidé de rejouer du sax. Les formations offertes par Yanick sont d’une très grande qualité, très claires et super efficaces. Elles me permettent de travailler peu à peu les différentes techniques de l’instrument et surtout elles me redonnent le goût de jouer du sax tous les jours. Bravo et merci Yanick!&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">FG</div>
+              <div>
+                <div class="testimonial-name">Francis Gagnon</div>
+              </div>
+            </div>
+          </div>
+            <!-- Duplicate for seamless loop -->
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;"Des formations à se procurer absolument"&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">RB</div>
+              <div>
+                <div class="testimonial-name">Robert Boucher</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;"Je ne savais pas lire la musique il, y a 8 mois. Une partition était comme du mandarin pour moi! Je ne pouvais jouer que de petits trucs appris par coeur, à l'oreille...J'ai suivi la formation Solfège Genius. Maintenant, je peux déchiffrer n'importe quel thème du Real Book ou à peu près."&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MP</div>
+              <div>
+                <div class="testimonial-name">Michel Plante</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;"En fait, étant prof aussi, lorsque j'ai besoin de me "ressourcer", je compulse l'une ou l'autre de ces formations pour trouver des idées d'exercices."&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MM</div>
+              <div>
+                <div class="testimonial-name">Michel Mainil</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;"Voilà enfin un très bon pédagogue pour les saxophonistes débutants et à avancés, il ne reste maintenant plus qu’à pratiquer!"&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">FF</div>
+              <div>
+                <div class="testimonial-name">Fredéric F</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;J'ai commencé par la formation Son et interprétation. Puis, continué avec presque toutes les autres si complètes, sans cesser de me délecter des tutos exceptionnels. Tout ce qui est proposé par Yanick Coderre a ceci en commun : structure, professionnalisme exceptionnel et générosité hors du commun. Et par dessus tout, quel plaisir à l'écoute du son.&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PS</div>
+              <div>
+                <div class="testimonial-name">Philippe Steulet</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;J'ai repris le sax après 25 ans d'arrêt. J'ai pris 2 formations dont celle sur l'improvisation car je n'arrivais pas à jouer sur une grille en regardant les accords. Maintenant je lis les accords et quand j'improvise je suis les tonalités.&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">FM</div>
+              <div>
+                <div class="testimonial-name">François Mattiocco</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;J'ai pris la formation sur le rythme, très bien faite, avec un travail sur le tempo à chanter puis à jouer sur l'instrument. Vraiment une excellente méthode qui m'a fait progresser et je compte bien prendre la formation sur le son et sur l'improvisation. Je vous conseille les formations de Yanick car d'abord c'est un excellent musicien mais également un excellent pédagogue, quelqu'un de passionné, humble, qui répond rapidement au messages. Bref, allez-y, foncez, c'est que du bonheur.&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">N</div>
+              <div>
+                <div class="testimonial-name">Nacerdine</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;La formation pour saxophonistes débutants me sert tous les jours par ces conseils et exercices très bien construits et très didactiques. Même quelqu'un qui n'a jamais joué du sax peut s'en sortir en suivant bien les conseils et exercices fournis. Pour résumer, lancez-vous. Si je l'ai fait, tout le monde peut le faire.&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">H</div>
+              <div>
+                <div class="testimonial-name">Hugues</div>
+              </div>
+            </div>
+          </div>
+           <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              «&nbsp;Cela fait 15 ans que je joue du saxophone. J’ai déjà appris beaucoup avec tes vidéos sur internet. Depuis je me suis procuré le pack: Le trio. Grâce à cela je m’améliore en rythme, dans l’impro etc... De plus, grâce à tes conseils provenant de la formation "Son et Interprétation", j’ai un super son et ce n’est pas que moi qui le pense, les gens me le disent aussi.&nbsp;»
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">RS</div>
+              <div>
+                <div class="testimonial-name">Rui Soares</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Newsletter ── -->
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-inner">
+          <div class="reveal">
+            <span class="label">Leçon offerte</span>
+            <h2 class="newsletter-title">
+              Recevez votre <em>première leçon</em> gratuitement.
+            </h2>
+            <p class="newsletter-sub">
+              Inscrivez-vous et accédez immédiatement à une leçon d'introduction
+              offerte, sans engagement.
+            </p>
+          </div>
+          <div class="reveal reveal-delay-1">
+            <div class="newsletter-form">
+              <div class="newsletter-input-wrap">
+                <input
+                  type="email"
+                  class="newsletter-input"
+                  placeholder="votre@email.com"
+                />
+                <button class="newsletter-submit">Recevoir →</button>
+              </div>
+              <p class="newsletter-note">
+                Aucun spam. Désabonnement en un clic.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <div class="footer-brand-name">Yanick <span>Coderre</span></div>
+            <p class="footer-brand-desc">
+              L'académie en ligne qui transforme votre passion pour le saxophone
+              en véritable maîtrise musicale.
+            </p>
+            <br>
+            <img src="https://assets.teachablecdn.com/teachable-branding-2025/badges/badge-powered-by-teachable.svg" alt="">
+          </div>
+          <div>
+            <div class="footer-col-title">Informations</div>
+            <ul class="footer-links">
+              <li><a href="#featured">Formations</a></li>
+              <li><a href="#">Spectacles</a></li>
+              <li><a href="#pricing">Tarifs</a></li>
+              <li><a href="#">Espace client</a></li>
+            </ul>
+          </div>
+         
+          <div>
+            <div class="footer-col-title">Légal</div>
+            <ul class="footer-links">
+              <li><a href="#">Mentions légales</a></li>
+              <li><a href="#">Confidentialité</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            © 2026 <span>Yanick Coderre</span>. Tous droits réservés.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.youtube.com/channel/UC8rPYjr5lL9T5eLg9zcdZ7w">YouTube</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ── JavaScript ── -->
+    <script>
+      // ── Nav scroll ──────────────────────────────────────────────
+      const nav = document.getElementById("nav");
+      window.addEventListener(
+        "scroll",
+        () => {
+          nav.classList.toggle("scrolled", window.scrollY > 40);
+        },
+        { passive: true },
+      );
+
+      // ── Mobile menu ─────────────────────────────────────────────
+      const burger = document.getElementById("burger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobileClose = document.getElementById("mobileClose");
+
+      burger.addEventListener("click", () => mobileMenu.classList.add("open"));
+      mobileClose.addEventListener("click", () =>
+        mobileMenu.classList.remove("open"),
+      );
+      document
+        .querySelectorAll(".mobile-link")
+        .forEach((l) =>
+          l.addEventListener("click", () =>
+            mobileMenu.classList.remove("open"),
+          ),
+        );
+
+      // ── Scroll reveal ────────────────────────────────────────────
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      );
+
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      // ── Smooth anchor scrolling ──────────────────────────────────
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // ── Hero scroll hint fade ────────────────────────────────────
+      const heroScroll = document.querySelector(".hero-scroll");
+      if (heroScroll) {
+        window.addEventListener(
+          "scroll",
+          () => {
+            heroScroll.style.opacity = Math.max(0, 1 - window.scrollY / 180);
+          },
+          { passive: true },
+        );
+      }
+
+      // ── Newsletter form ──────────────────────────────────────────
+      const form = document.querySelector(".newsletter-form");
+      const btn = document.querySelector(".newsletter-submit");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const input = document.querySelector(".newsletter-input");
+          if (!input.value.includes("@")) {
+            input.style.borderColor = "#c0392b";
+            setTimeout(() => (input.style.borderColor = ""), 1500);
+            return;
+          }
+          btn.textContent = "✓ Envoyé !";
+          btn.style.background = "#3a7a3a";
+          input.value = "";
+          setTimeout(() => {
+            btn.textContent = "Recevoir →";
+            btn.style.background = "";
+          }, 3000);
+        });
+      }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const checkbox = document.getElementById('pricing-checkbox');
+  const priceValues = document.querySelectorAll('.price-value');
+  const periods = document.querySelectorAll('.price-period');
+  const buttons = document.querySelectorAll('.pricing-button');
+
+  if (!checkbox) return; // Sécurité si l'élément n'existe pas encore
+
+  checkbox.addEventListener('change', () => {
+    const isYearly = checkbox.checked;
+
+    // 1. Mise à jour des prix
+    priceValues.forEach(price => {
+      price.textContent = isYearly 
+        ? price.getAttribute('data-yearly') 
+        : price.getAttribute('data-monthly');
+    });
+
+    // 2. Mise à jour des périodes (/ mois -> / année)
+    periods.forEach(period => {
+      period.textContent = isYearly ? '/ année' : '/ mois';
+    });
+
+    // 3. Mise à jour des liens des boutons
+    buttons.forEach(btn => {
+      const newLink = isYearly 
+        ? btn.getAttribute('data-link-yearly') 
+        : btn.getAttribute('data-link-monthly');
+      
+      if (newLink) {
+        btn.setAttribute('href', newLink);
+      }
+    });
+  });
+});
+
+
+
+function openModal(title, videoUrl) {
+  const modal = document.getElementById('vtModal');
+  const iframe = document.getElementById('vtIframe');
+  const caption = document.getElementById('vtModalCaption');
+
+  // 1. On injecte le titre et le lien
+  caption.innerText = title;
+  iframe.src = videoUrl;
+
+  // 2. On ouvre la modale
+  modal.classList.add('open');
+}
+
+// Très important : stopper la vidéo quand on ferme
+function closeModal(event) {
+  const modal = document.getElementById('vtModal');
+  const iframe = document.getElementById('vtIframe');
+  
+  // Si on clique sur le fond noir ou le bouton fermer
+  if (event.target === modal || event.target.classList.contains('vt-modal-close')) {
+    modal.classList.remove('open');
+    iframe.src = ""; // On vide le lien pour couper le son de la vidéo
+  }
+}
+
+
+    </script>
+  </body>
+</html>
