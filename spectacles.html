@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Musique Live — Yanick Coderre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --black:    #0a0a0a;
+      --black-2:  #0d0d0b;
+      --black-3:  #111110;
+      --white:    #fafafa;
+      --gray-1:   #f4f4f2;
+      --gray-3:   #b0b0a8;
+      --gray-4:   #6a6a62;
+      --gold:     #c9a84c;
+      --gold-lt:  #e8c96a;
+      --gold-dim: #7a6330;
+      --gold-bg:  rgba(201,168,76,.05);
+      --ff-display: "Geist", sans-serif;
+      --ff-serif:   "Cormorant Garamond", serif;
+      --ff-body:    "DM Sans", sans-serif;
+      --ease:       cubic-bezier(0.16, 1, 0.3, 1);
+      --pad:        clamp(5rem, 10vw, 9rem);
+      --w:          1160px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { width: min(var(--w), 100% - 3rem); margin-inline: auto; }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1{transition-delay:.1s} .d2{transition-delay:.22s}
+    .d3{transition-delay:.34s} .d4{transition-delay:.46s}
+
+    /* Label */
+    .label {
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ══════════════════════════════════════
+       NAV (identique au projet)
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.4rem 0;
+      transition: background .4s, backdrop-filter .4s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      padding: 1rem 0;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-inline: 6%;
+    }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.3rem; font-weight: 400; letter-spacing: .05em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-links a {
+      font-size: .72rem; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gray-3);
+      font-weight: 400; transition: color .25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-cta {
+      font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--gold-dim);
+      padding: .5rem 1.2rem; transition: all .3s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+    .nav-burger span { display: block; width: 22px; height: 1px; background: var(--white); }
+
+    /* ══════════════════════════════════════
+       HERO — PAGE SERVICES
+    ══════════════════════════════════════ */
+    .hero-services {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    /* Style pour l'image de fond */
+.hero-image-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* REMPLACEZ l'URL par votre image */
+  background-image: url('./img/yanick-service.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.55; /* Ajustez l'opacité pour le look sombre/premium */
+}
+
+/* On ajoute un fondu noir radial par-dessus l'image pour un look cinématographique */
+.hero-image-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    var(--black) 100%
+  );
+}
+
+/* S'assurer que le contenu du hero passe bien par-dessus l'image */
+.hero-services-content {
+  position: relative;
+  z-index: 2;
+}
+
+    /* Lignes verticales décoratives */
+    .hero-services::before, .hero-services::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(201,168,76,.25) 20%,
+        rgba(201,168,76,.25) 80%,
+        transparent 100%);
+    }
+    .hero-services::before { left: 6%; }
+    .hero-services::after  { right: 6%; }
+
+    /* Ambient glow */
+    .hero-glow {
+      position: absolute;
+      width: 900px; height: 700px;
+      background: radial-gradient(ellipse,
+        rgba(201,168,76,.07) 0%,
+        rgba(201,168,76,.03) 40%,
+        transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+    }
+
+    /* Grain */
+    .hero-grain {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    .hero-services-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 8rem;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp .8s var(--ease) .3s forwards;
+    }
+    .eyebrow-line { width: 2rem; height: 1px; background: var(--gold); }
+
+    .hero-services-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3.5rem, 8vw, 5rem);
+      font-weight: 200;
+      line-height: .95;
+      letter-spacing: -.03em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease) .5s forwards;
+    }
+
+     .hero-services-title em {
+      font-weight: 800;
+      color: var(--gold-lt);
+     }
+
+    .hero-services-title span { display: block; }
+    .hero-services-title .accent {
+      font-weight: 800;
+      font-style: italic;
+      color: var(--gold);
+      font-size: clamp(3rem, 7vw, 8rem);
+      text-transform: none;
+      letter-spacing: -.02em;
+    }
+
+    .hero-services-sub {
+      font-size: clamp(.9rem, 1.5vw, 1.05rem);
+      color: var(--gray-3);
+      max-width: 500px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp .8s var(--ease) .8s forwards;
+    }
+
+    .hero-cta-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .8s var(--ease) 1s forwards;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      opacity: 0;
+      animation: fadeIn 1s var(--ease) 1.4s forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes pulse  { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* Boutons */
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-family: var(--ff-body); font-size: .76rem;
+      font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; border: none; transition: all .3s var(--ease);
+    }
+    .btn--gold { background: var(--gold); color: var(--black); padding: 1rem 2.2rem; }
+    .btn--gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .btn--outline {
+      background: transparent; color: var(--white);
+      padding: .95rem 2rem; border: 1px solid rgba(255,255,255,.2);
+    }
+    .btn--outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .btn svg { width: 13px; height: 13px; transition: transform .3s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    /* ══════════════════════════════════════
+       PROJETS — CARDS ALTERNÉES
+    ══════════════════════════════════════ */
+    .projects { background: var(--black); }
+
+    /* Chaque projet = une "scène" */
+    .project-scene {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+      border-top: 1px solid rgba(255,255,255,.05);
+      position: relative;
+    }
+    .project-scene:last-child { border-bottom: 1px solid rgba(255,255,255,.05); }
+
+    .project-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .project-scene:nth-child(even) .project-inner {
+      direction: rtl;
+    }
+    .project-scene:nth-child(even) .project-inner > * {
+      direction: ltr;
+    }
+
+    /* Numéro décoratif en background */
+    .project-num-bg {
+      position: absolute;
+      top: 2rem;
+      right: 6%;
+      font-family: var(--ff-display);
+      font-size: clamp(6rem, 12vw, 14rem);
+      font-weight: 200;
+      line-height: 1;
+      color: rgba(201,168,76,.04);
+      letter-spacing: -.05em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .project-scene:nth-child(even) .project-num-bg { right: auto; left: 6%; }
+
+    /* ── Côté texte ── */
+    .project-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 1.4rem;
+    }
+    .project-tag-line { width: 1.8rem; height: 1px; background: var(--gold); }
+
+    .project-name {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 200;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+    .project-name-serif {
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gold);
+      display: block;
+      text-transform: none;
+      letter-spacing: -.01em;
+      line-height: 1.1;
+    }
+
+    .project-divider { width: 2.5rem; height: 1px; background: var(--gold-dim); margin: 1.8rem 0; }
+
+    .project-desc {
+      font-size: .92rem;
+      color: var(--gray-3);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    /* Mots-clés d'ambiance */
+    .project-vibes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 2.2rem;
+    }
+    .project-vibe {
+      font-size: .6rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .3rem .85rem;
+      border: 1px solid rgba(201,168,76,.2);
+      color: var(--gold);
+      background: rgba(201,168,76,.04);
+    }
+
+    .project-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,.18);
+      padding: .75rem 1.6rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .3s var(--ease);
+    }
+    .project-cta:hover { border-color: var(--gold); color: var(--gold); }
+    .project-cta svg { width: 12px; height: 12px; transition: transform .3s; }
+    .project-cta:hover svg { transform: translateX(4px); }
+
+    /* ── Côté vidéo/visuel ── */
+    .project-media { position: relative; }
+
+    .video-embed-wrap {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #111110;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    /* Cadre doré décalé derrière */
+    .video-embed-wrap::before {
+      content: '';
+      position: absolute;
+      top: .9rem; left: .9rem;
+      right: -.9rem; bottom: -.9rem;
+      border: 1px solid rgba(201,168,76,.12);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Placeholder interne (à remplacer par iframe) */
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      background: linear-gradient(145deg, #141208 0%, #0d0c08 100%);
+      cursor: pointer;
+      transition: filter .4s;
+    }
+    .video-placeholder:hover { filter: brightness(1.1); }
+
+    /* Motif de fond vidéo */
+    .video-pattern {
+      position: absolute;
+      inset: 0;
+    }
+
+    .video-play-ring {
+      position: relative;
+      z-index: 1;
+    }
+    .video-play-ring svg.ring {
+      width: 80px; height: 80px;
+      animation: ringRotate 12s linear infinite;
+    }
+    @keyframes ringRotate { to { transform: rotate(360deg); } }
+
+    .video-play-center {
+      position: absolute;
+      inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-play-center svg {
+      width: 22px; height: 22px;
+      color: var(--gold);
+      margin-left: 3px;
+    }
+
+    .video-title-overlay {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gray-3);
+      z-index: 1;
+    }
+    .video-title-overlay span { color: var(--gold); }
+
+    /* Second video (petit aperçu) */
+    .video-secondary {
+      margin-top: 1px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+    }
+    .video-mini {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #111;
+      overflow: hidden;
+      cursor: pointer;
+      transition: filter .3s;
+    }
+    .video-mini:hover { filter: brightness(1.15); }
+    .video-mini-play {
+      position: absolute;
+      inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-mini-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,.4);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      transition: all .3s;
+    }
+    .video-mini:hover .video-mini-btn { border-color: var(--gold); background: rgba(201,168,76,.1); }
+    .video-mini-btn svg { width: 12px; height: 12px; margin-left: 2px; }
+    .video-mini-label {
+      position: absolute;
+      bottom: .5rem; left: .6rem;
+      font-size: .55rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+    }
+
+    /* ══════════════════════════════════════
+       SECTION CONTACT CTA
+    ══════════════════════════════════════ */
+    .contact-cta {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      background: #0f0f0d;
+      border-top: 1px solid rgba(255,255,255,.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-cta-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 680px;
+      margin-inline: auto;
+    }
+    .contact-cta-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 200;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1.4rem;
+    }
+    .contact-cta-title em {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 800;
+    }
+    .contact-cta-sub {
+      color: var(--gray-3);
+      font-size: .95rem;
+      line-height: 1.8;
+      margin-bottom: 2.8rem;
+    }
+    .contact-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-bottom: 1px;
+    }
+    .contact-input {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: 1rem 1.3rem;
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .3s;
+      font-weight: 300;
+    }
+    .contact-input::placeholder { color: var(--gray-4); }
+    .contact-input:focus { border-color: var(--gold-dim); }
+    .contact-textarea {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: 1rem 1.3rem;
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .3s;
+      font-weight: 300;
+      resize: none;
+      min-height: 120px;
+      grid-column: 1 / -1;
+    }
+    .contact-textarea:focus { border-color: var(--gold-dim); }
+    .contact-textarea::placeholder { color: var(--gray-4); }
+    .contact-submit {
+      grid-column: 1 / -1;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 1.1rem;
+      font-family: var(--ff-body);
+      font-size: .76rem;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+    .contact-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .contact-note {
+      font-size: .9rem;
+      color: var(--gray-3);
+      margin-top: 1.2rem;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER (identique au projet)
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--black);
+      padding: 3rem 0 2rem;
+      border-top: 1px solid rgba(255,255,255,.04);
+    }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: .75rem; color: var(--gray-4); }
+    .footer-copy span { color: var(--gold); }
+    .footer-nav-links { display: flex; gap: 2rem; }
+    .footer-nav-links a { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-4); transition: color .2s; }
+    .footer-nav-links a:hover { color: var(--gold); }
+
+    .video-responsive {
+      position: relative;
+      padding-bottom: 56.25%; /* Ratio 16:9 */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000; /* Fond noir pendant le chargement */
+    }
+
+    .video-responsive iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-embed-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Force le format vidéo standard */
+  background: #000;     /* Fond noir de sécurité */
+  overflow: hidden;
+  border-radius: 8px;   /* Optionnel : pour des coins arrondis */
+}
+
+.video-embed-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .project-inner { grid-template-columns: 1fr; gap: 3rem; direction: ltr !important; }
+      .project-scene:nth-child(even) .project-inner > * { direction: ltr; }
+      .project-num-bg { display: none; }
+      .video-secondary { grid-template-columns: 1fr; }
+      .contact-form { grid-template-columns: 1fr; }
+      .hero-services::before, .hero-services::after { display: none; }
+    }
+    @media (max-width: 600px) {
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Yanick <span>Coderre</span></a>
+    <ul class="nav-links">
+      <li><a href="./teachbanner.html">Accueil</a></li>
+      <li><a href="#lounge">Lounge Factory</a></li>
+      <li><a href="#gentleman">Gentleman</a></li>
+      <li><a href="#jazz">Jazz Trio</a></li>
+      <li><a href="#urbeat">Ürbeat</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Réserver</a>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero-services" id="hero">
+   <div class="hero-image-bg"></div> 
+  <div class="hero-glow"></div>
+  <div class="hero-grain"></div>
+
+  <div class="hero-services-content">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span class="label">Yanick Coderre</span>
+        <span class="eyebrow-line"></span>
+      </div>
+
+      <h1 class="hero-services-title">
+        <span>Musique <em>"Live"</em></span>
+        <span>Pour Vos</span>
+        <span class="accent">Événements</span>
+      </h1>
+
+      <p class="hero-services-sub">
+        Des performances musicales haut de gamme, conçues sur mesure pour l'atmosphère unique de chaque événement — du cocktail intimiste au gala corporate.
+      </p>
+
+      <div class="hero-cta-wrap">
+        <a href="#contact" class="btn btn--gold">
+          Demander un devis
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="#lounge" class="btn btn--outline">Découvrir les projets</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Explorer</span>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PROJETS
+══════════════════════════════════════ -->
+<section class="projects" id="projects">
+
+  <!-- ── 01 · LOUNGE FACTORY PROJECT ── -->
+  <div class="project-scene" id="lounge">
+    <div class="container">
+      <span class="project-num-bg">01</span>
+      <div class="project-inner">
+
+        <!-- Texte -->
+        <div>
+          <div class="project-tag reveal">
+            <span class="project-tag-line"></span>
+            <span class="label">Projet 01</span>
+          </div>
+          <h2 class="project-name reveal d1">
+            Lounge Factory
+            <span class="project-name-serif">Project</span>
+          </h2>
+          <div class="project-divider reveal d1"></div>
+          <p class="project-desc reveal d2">
+            Imaginez un projet musical captivant conçu spécialement pour votre événement : une fusion envoûtante de <strong style="color:var(--white);font-weight:400">saxophone live et de mixes DJ</strong>, oscillant entre la sophistication de la musique jazz, lounge et l'énergie rythmée de la musique house.
+          </p>
+          <p class="project-desc reveal d2">
+            Cette combinaison crée une ambiance spéciale et originale qui marie harmonieusement l'élégance et le dynamisme — une expérience musicale mémorable et immersive pour tous les invités.
+          </p>
+          <div class="project-vibes reveal d3">
+            <span class="project-vibe">Jazz</span>
+            <span class="project-vibe">Lounge</span>
+            <span class="project-vibe">House</span>
+            <span class="project-vibe">Saxophone live</span>
+            <span class="project-vibe">DJ Mix</span>
+            <span class="project-vibe">Haut de gamme</span>
+          </div>
+          <a href="#contact" class="project-cta reveal d3">
+            Réserver ce projet
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Vidéo -->
+        <div class="project-media reveal d2">
+          <div class="video-embed-wrap">
+           <iframe 
+            src="https://player.hotmart.com/embed/Yq4OK26mRl?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 02 · GENTLEMAN SAXOPHONISTE ── -->
+  <div class="project-scene" id="gentleman">
+    <div class="container">
+      <span class="project-num-bg">02</span>
+      <div class="project-inner">
+
+        <!-- Texte -->
+        <div>
+          <div class="project-tag reveal">
+            <span class="project-tag-line"></span>
+            <span class="label">Projet 02</span>
+          </div>
+          <h2 class="project-name reveal d1">
+            Gentleman
+            <span class="project-name-serif">Saxophoniste</span>
+          </h2>
+          <div class="project-divider reveal d1"></div>
+          <p class="project-desc reveal d2">
+            Le projet musical pour vos <strong style="color:var(--white);font-weight:400">événements corporatifs</strong>, combinant le charme sophistiqué du saxophone à une ambiance jazzy enveloppante. Yanick Coderre crée une atmosphère spéciale et unique qui garantit le succès de votre événement.
+          </p>
+          <p class="project-desc reveal d2">
+            Son répertoire inclusif, allant du jazz classique à des touches de musique pop soigneusement sélectionnées, assure une expérience musicale inoubliable pour tous vos invités.
+          </p>
+          <div class="project-vibes reveal d3">
+            <span class="project-vibe">Jazz classique</span>
+            <span class="project-vibe">Pop élégante</span>
+            <span class="project-vibe">Corporate</span>
+            <span class="project-vibe">Cocktail</span>
+            <span class="project-vibe">Soirée gala</span>
+          </div>
+          <a href="#contact" class="project-cta reveal d3">
+            Réserver ce projet
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Vidéo -->
+        <div class="project-media reveal d2">
+          <div class="video-embed-wrap">
+           <iframe 
+            src="https://player.hotmart.com/embed/DZmWrNjJqz?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 03 · JAZZ SESSIONS TRIO ── -->
+  <div class="project-scene" id="jazz">
+    <div class="container">
+      <span class="project-num-bg">03</span>
+      <div class="project-inner">
+
+        <!-- Texte -->
+        <div>
+          <div class="project-tag reveal">
+            <span class="project-tag-line"></span>
+            <span class="label">Projet 03</span>
+          </div>
+          <h2 class="project-name reveal d1">
+            Jazz Sessions
+            <span class="project-name-serif">Trio</span>
+          </h2>
+          <div class="project-divider reveal d1"></div>
+          <p class="project-desc reveal d2">
+            Une formation intimiste à trois voix pour des événements où l'authenticité du jazz prend toute sa place. Saxophone, piano et contrebasse s'entrelacent pour créer une atmosphère chaleureuse, raffinée et intemporelle.
+          </p>
+          <p class="project-desc reveal d2">
+            Idéal pour les <strong style="color:var(--white);font-weight:400">dîners de prestige, réceptions privées</strong> et tout événement où l'élégance musicale s'impose naturellement.
+          </p>
+          <div class="project-vibes reveal d3">
+            <span class="project-vibe">Jazz acoustique</span>
+            <span class="project-vibe">Trio live</span>
+            <span class="project-vibe">Dîner prestige</span>
+            <span class="project-vibe">Réception privée</span>
+            <span class="project-vibe">Standards jazz</span>
+          </div>
+          <a href="#contact" class="project-cta reveal d3">
+            Réserver ce projet
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Vidéo -->
+        <div class="project-media reveal d2">
+          <div class="video-embed-wrap">
+           <iframe 
+            src="https://player.hotmart.com/embed/1LVg85xlZw?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 04 · ÜRBEAT ── -->
+  <div class="project-scene" id="urbeat">
+    <div class="container">
+      <span class="project-num-bg">04</span>
+      <div class="project-inner">
+
+        <!-- Texte -->
+        <div>
+          <div class="project-tag reveal">
+            <span class="project-tag-line"></span>
+            <span class="label">Projet 04</span>
+          </div>
+          <h2 class="project-name reveal d1">
+            <span class="project-name-serif" style="font-size:clamp(2.5rem,5vw,4.5rem)">Ürbeat</span>
+          </h2>
+          <div class="project-divider reveal d1"></div>
+          <p class="project-desc reveal d2">
+            Un projet musical électronique et expérimental où le saxophone rencontre les textures sonores les plus modernes. Ürbeat repousse les frontières de la performance live en fusionnant l'organique et le numérique.
+          </p>
+          <p class="project-desc reveal d2">
+            Pour les événements qui veulent marquer les esprits avec une <strong style="color:var(--white);font-weight:400">expérience sonore unique et avant-gardiste</strong>.
+          </p>
+          <div class="project-vibes reveal d3">
+            <span class="project-vibe">Électronique</span>
+            <span class="project-vibe">Expérimental</span>
+            <span class="project-vibe">Avant-garde</span>
+            <span class="project-vibe">Live electronics</span>
+            <span class="project-vibe">Immersif</span>
+          </div>
+          <a href="#contact" class="project-cta reveal d3">
+            Réserver ce projet
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Vidéo -->
+        <div class="project-media reveal d2">
+           <div class="video-embed-wrap">
+           <iframe 
+            src="https://player.hotmart.com/embed/4qXga56lRv?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════
+     CONTACT CTA
+══════════════════════════════════════ -->
+<section class="contact-cta" id="contact">
+  <div class="container">
+    <div class="contact-cta-inner">
+      <span class="label reveal" style="display:block; margin-bottom:1.2rem">Contact</span>
+      <h2 class="contact-cta-title reveal d1">
+        Parlons de votre<br><em>événement.</em>
+      </h2>
+      <p class="contact-cta-sub reveal d2">
+        Chaque événement est unique. Décrivez-moi votre projet et je vous proposerai la formule musicale la plus adaptée.
+      </p>
+
+      <div class="contact-form reveal d2">
+        <input type="text"  class="contact-input" placeholder="Votre nom" />
+        <input type="email" class="contact-input" placeholder="Votre courriel" />
+        <input type="text"  class="contact-input" placeholder="Type d'événement" />
+        <input type="text"  class="contact-input" placeholder="Date envisagée" />
+        <textarea class="contact-textarea" placeholder="Décrivez votre événement, le lieu, le nombre d'invités, l'ambiance souhaitée…"></textarea>
+        <button class="contact-submit">Envoyer ma demande →</button>
+      </div>
+      <p class="contact-note reveal">Réponse sous 24–48h · Devis gratuit et sans engagement</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Yanick Coderre</span>. Tous droits réservés.</p>
+      <div class="footer-nav-links">
+        <a href="#">Formations</a>
+        <a href="#">Services live</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  /* Nav scroll */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  /* Scroll reveal */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* Smooth anchors */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  /* Hero scroll fade */
+  const hs = document.querySelector('.hero-scroll');
+  if (hs) window.addEventListener('scroll', () => {
+    hs.style.opacity = Math.max(0, 1 - scrollY / 200);
+  }, { passive: true });
+
+  /* Contact form */
+  const submitBtn = document.querySelector('.contact-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      const inputs = document.querySelectorAll('.contact-input, .contact-textarea');
+      let valid = true;
+      inputs.forEach(i => { if (!i.value.trim()) { i.style.borderColor = 'rgba(180,60,60,.5)'; valid = false; } else { i.style.borderColor = ''; } });
+      if (valid) {
+        submitBtn.textContent = '✓ Message envoyé !';
+        submitBtn.style.background = '#2d6a2d';
+        setTimeout(() => { submitBtn.textContent = 'Envoyer ma demande →'; submitBtn.style.background = ''; }, 3000);
+      }
+    });
+  }
+</script>
+</body>
+</html>
