@@ -1,0 +1,2063 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yanick Coderre — Saxophone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Une seule requête Google Fonts consolidée -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Geist:wght@200;300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ════════════════════════════════════════════════════
+       TOKENS
+    ════════════════════════════════════════════════════ */
+      :root {
+        --black: #0a0a0a;
+        --white: #fafafa;
+        --gray-1: #f4f4f2;
+        --gray-3: #b0b0a8;
+        --gray-4: #9a9a90;
+        --gold: #c9a84c;
+        --gold-lt: #e8c96a;
+        --gold-dim: #7a6330;
+        --green: #b2b501;
+
+        --ff-display: arial, "Geist", sans-serif;
+        --ff-serif: arial, "Cormorant Garamond", serif;
+        --ff-body: "DM Sans", sans-serif;
+
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+        --section-pad: clamp(5rem, 10vw, 7rem);
+        --content-w: 1160px;
+      }
+
+      /* ════════════════════════════════════════════════════
+       RESET
+    ════════════════════════════════════════════════════ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--ff-body);
+        font-weight: 300;
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+
+      /* ════════════════════════════════════════════════════
+       UTILITIES
+    ════════════════════════════════════════════════════ */
+      .container {
+        width: min(var(--content-w), 100% - 3rem);
+        margin-inline: auto;
+      }
+      .label {
+        font-family: var(--ff-body);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      /* ── Scroll reveal ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.9s var(--ease-out),
+          transform 0.9s var(--ease-out);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+      /* Aliases utilisés dans la section catalogue */
+      .d1 {
+        transition-delay: 0.1s;
+      }
+      .d2 {
+        transition-delay: 0.22s;
+      }
+      .d3 {
+        transition-delay: 0.34s;
+      }
+      .d4 {
+        transition-delay: 0.46s;
+      }
+
+      /* ── Boutons hero (btn-gold / btn-outline) ── */
+      .btn-gold {
+        font-family: var(--ff-body);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--black);
+        background: var(--gold);
+        border: none;
+        padding: 16px 40px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.25s var(--ease-out),
+          box-shadow 0.25s;
+      }
+      .btn-gold::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-lt);
+        transform: translateX(-101%);
+        transition: transform 0.4s var(--ease-out);
+      }
+      .btn-gold:hover::before {
+        transform: translateX(0);
+      }
+      .btn-gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(200, 153, 58, 0.3);
+      }
+      .btn-gold span {
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-outline {
+        font-family: var(--ff-body);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--white);
+        background: transparent;
+        border: 1px solid rgba(248, 246, 241, 0.3);
+        padding: 16px 40px;
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          color 0.25s,
+          transform 0.25s var(--ease-out);
+      }
+      .btn-outline:hover {
+        border-color: var(--white);
+        transform: translateY(-2px);
+      }
+
+      /* ── Boutons génériques (pass, catalog) ── */
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--ff-body);
+        font-size: 0.76rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--gold);
+        color: var(--black);
+        padding: 1rem 2.2rem;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s var(--ease-out);
+      }
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-lt);
+        transform: translateX(-101%);
+        transition: transform 0.4s var(--ease-out);
+      }
+      .btn-primary:hover::before {
+        transform: translateX(0);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+      .btn-primary span,
+      .btn-primary svg {
+        position: relative;
+        z-index: 1;
+      }
+      .btn-primary svg {
+        width: 12px;
+        height: 12px;
+        transition: transform 0.3s;
+      }
+      .btn-primary:hover svg {
+        transform: translateX(4px);
+      }
+
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--ff-body);
+        font-size: 0.76rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--white);
+        padding: 1rem 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          transform 0.3s;
+      }
+      .btn-ghost:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+      }
+      .btn-ghost svg {
+        width: 12px;
+        height: 12px;
+        transition: transform 0.3s;
+      }
+      .btn-ghost:hover svg {
+        transform: translateX(4px);
+      }
+
+      /* ════════════════════════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════════════════════════ */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.4rem 0;
+        transition:
+          background 0.4s,
+          padding 0.4s;
+      }
+      nav.scrolled {
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 1rem 0;
+      }
+      .nav-inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-inline: 6%;
+        gap: 2rem;
+      }
+      .nav-logo {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+      }
+      .nav-logo span {
+        color: var(--gold);
+        font-weight: 900;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-3);
+        font-weight: 500;
+        transition: color 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--white);
+      }
+      .nav-cta {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid var(--gold-dim);
+        padding: 0.55rem 1.3rem;
+        transition: all 0.3s;
+      }
+      .nav-cta:hover {
+        background: var(--gold);
+        color: var(--black);
+      }
+      .nav-cta2 {
+        background-color: var(--gold-dim);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--black);
+        font-weight: 800;
+        border: 1px solid var(--gold-dim);
+        padding: 0.55rem 1.3rem;
+        transition: all 0.3s;
+      }
+      .nav-cta2:hover {
+        background: var(--gold);
+        color: var(--black);
+      }
+
+      /* Hamburger */
+      .nav-burger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .nav-burger span {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background: var(--white);
+        transition: all 0.3s;
+      }
+
+      /* Menu mobile — une seule déclaration consolidée */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-family: var(--ff-display);
+        font-size: 2.2rem;
+        color: var(--white);
+        letter-spacing: 0.04em;
+        font-weight: 300;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-close {
+        position: absolute;
+        top: 1.8rem;
+        right: 1.8rem;
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 1.8rem;
+        cursor: pointer;
+      }
+
+      /* ════════════════════════════════════════════════════
+       SECTION COMMUNE
+    ════════════════════════════════════════════════════ */
+      section {
+        padding: var(--section-pad) 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: clamp(3rem, 6vw, 5rem);
+      }
+      .section-header .label {
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .section-title {
+        font-family: var(--ff-display);
+        font-size: clamp(2.2rem, 4vw, 3.6rem);
+        font-weight: 300;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--gold);
+        font-weight: 800;
+      }
+      .section-sub {
+        margin-top: 1.2rem;
+        color: var(--gray-3);
+        font-size: 0.95rem;
+        max-width: 520px;
+        font-weight: 500;
+        margin-inline: auto;
+        line-height: 1.8;
+      }
+
+      /* ══════════════════════════
+       HERO CONTACT
+    ══════════════════════════ */
+      .contact-hero {
+        min-height: 52vh;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: clamp(3rem, 6vw, 5rem);
+        padding-top: 10rem;
+        padding-left: 10rem;
+        padding-right: 10%;
+        background-image: url(./img/sax.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: 80% 100%;
+      }
+
+      /* Lignes verticales */
+      .contact-hero::before,
+      .contact-hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(201, 168, 76, 0.2) 25%,
+          rgba(201, 168, 76, 0.2) 75%,
+          transparent 100%
+        );
+      }
+      .contact-hero::before {
+        left: 6%;
+      }
+      .contact-hero::after {
+        right: 6%;
+      }
+
+      /* Glow ambiant */
+      .hero-ambient {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse 70% 60% at 50% 0%,
+            rgba(201, 168, 76, 0.06) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 80% 100%,
+            rgba(201, 168, 76, 0.04) 0%,
+            transparent 60%
+          );
+      }
+
+      /* Grain */
+      .hero-grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px;
+      }
+
+      @keyframes noteDrift {
+        0%,
+        100% {
+          transform: translateY(-50%) rotate(-3deg);
+        }
+        50% {
+          transform: translateY(-52%) rotate(0deg);
+        }
+      }
+
+      .contact-hero-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.6rem;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+      }
+      .eyebrow-line {
+        width: 2rem;
+        height: 1px;
+        background: var(--gold);
+      }
+      .label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .hero-title {
+        font-family: var(--ff-display);
+        font-size: clamp(4rem, 9vw, 10rem);
+        font-weight: 200;
+        line-height: 0.92;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 1s var(--ease) 0.5s forwards;
+      }
+      .hero-title-serif {
+        display: block;
+        font-family: var(--ff-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(3.5rem, 8vw, 9rem);
+        color: var(--gold);
+        text-transform: none;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .hero-sub {
+        font-size: clamp(1rem, 1.4vw, 1.25rem);
+        color: var(--gray-3);
+        max-width: 420px;
+        line-height: 1.65;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.8s forwards;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ══════════════════════════
+       CORPS PRINCIPAL
+    ══════════════════════════ */
+      .contact-body {
+        padding: clamp(4rem, 8vw, 7rem) 0 clamp(5rem, 10vw, 9rem);
+        background: var(--black);
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 5fr 7fr;
+        gap: 6rem;
+        align-items: start;
+      }
+
+      /* ── Colonne gauche : infos ── */
+      .info-block {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .info-block:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .info-block-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .info-block-label::before {
+        content: "";
+        width: 1.5rem;
+        height: 1px;
+        background: var(--gold-dim);
+      }
+
+      .info-value {
+        font-family: var(--ff-d);
+        font-size: clamp(1rem, 1.8vw, 1.25rem);
+        font-weight: 300;
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+        color: var(--white);
+        transition: color 0.3s;
+      }
+      a.info-value:hover {
+        color: var(--gold);
+      }
+
+      .info-note {
+        font-size: 0.9rem;
+        color: var(--gray-4);
+        margin-top: 0.5rem;
+        line-height: 1.7;
+        font-weight: 500;
+      }
+
+      /* Réseaux sociaux */
+      .social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+        cursor: pointer;
+      }
+      .social-link:hover {
+        border-color: rgba(201, 168, 76, 0.25);
+        background: rgba(201, 168, 76, 0.03);
+      }
+      .social-link-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .social-icon {
+        width: 64px;
+        height: 64px;
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold);
+        flex-shrink: 0;
+        transition:
+          background 0.3s,
+          border-color 0.3s;
+      }
+      .social-link:hover .social-icon {
+        background: rgba(201, 168, 76, 0.08);
+        border-color: var(--gold);
+      }
+      .social-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+      .social-name {
+        font-size: 0.9rem;
+        font-weight: 400;
+        letter-spacing: 0.03em;
+      }
+      .social-handle {
+        font-size: 0.9rem;
+        color: var(--gray-4);
+        margin-top: 0.1rem;
+        font-weight: 500;
+      }
+      .social-arrow {
+        color: var(--gray-4);
+        font-size: 1rem;
+        transition:
+          color 0.3s,
+          transform 0.3s;
+      }
+      .social-link:hover .social-arrow {
+        color: var(--gold);
+        transform: translateX(3px);
+      }
+
+      /* Disponibilité */
+      .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.55rem 1.1rem;
+        border: 1px solid rgba(160, 60, 60, 0.3);
+        background: rgba(160, 60, 60, 0.05);
+        margin-top: 0.8rem;
+      }
+      .avail-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #af4c4c;
+        animation: availPulse 2s ease-in-out infinite;
+      }
+      @keyframes availPulse {
+        0%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 0 0 0 rgba(76, 175, 114, 0);
+        }
+        50% {
+          opacity: 0.8;
+          box-shadow: 0 0 0 5px rgba(76, 175, 114, 0.12);
+        }
+      }
+      .avail-text {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #af4c4c;
+        font-weight: 500;
+      }
+
+      /* ── Colonne droite : formulaire ── */
+      .contact-form-wrap {
+        position: relative;
+      }
+
+      /* Cadre décoratif derrière le formulaire */
+      .contact-form-wrap::before {
+        content: "";
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        right: -1rem;
+        bottom: -1rem;
+        border: 1px solid rgba(201, 168, 76, 0.06);
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .form-inner {
+        background: var(--black-3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: clamp(2rem, 4vw, 3.5rem);
+      }
+
+      .form-title {
+        font-family: var(--ff-body);
+        font-size: 1.1rem;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.5rem;
+      }
+      .form-sub {
+        font-size: 0.9rem;
+        color: var(--gray-4);
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+
+      /* Tabs de raison de contact */
+      .form-tabs {
+        display: flex;
+        gap: 1px;
+        margin-bottom: 2.5rem;
+      }
+      .form-tab {
+        flex: 1;
+        padding: 0.65rem 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-family: var(--ff-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-4);
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.25s;
+      }
+      .form-tab:hover {
+        color: var(--gray-3);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      .form-tab.active {
+        background: rgba(201, 168, 76, 0.08);
+        border-color: rgba(201, 168, 76, 0.3);
+        color: var(--gold);
+      }
+
+      /* Champs */
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        margin-bottom: 1px;
+      }
+      .form-row.full {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group {
+        position: relative;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 1rem 1.2rem;
+        color: var(--white);
+        font-family: var(--ff-b);
+        font-size: 0.85rem;
+        font-weight: 500;
+        outline: none;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+        appearance: none;
+      }
+      .form-input::placeholder,
+      .form-textarea::placeholder {
+        color: var(--gray-4);
+      }
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        border-color: var(--gold-dim);
+        background: rgba(201, 168, 76, 0.03);
+      }
+      .form-input.error {
+        border-color: rgba(180, 60, 60, 0.5);
+      }
+
+      .form-select {
+        cursor: pointer;
+      }
+      .form-select option {
+        background: #111;
+      }
+
+      .form-textarea {
+        resize: none;
+        min-height: 130px;
+        line-height: 1.7;
+      }
+
+      /* Label flottant */
+      .form-label {
+        position: absolute;
+        top: -1px;
+        left: 1rem;
+        transform: translateY(-50%);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: var(--black-3);
+        padding: 0 0.4rem;
+        pointer-events: none;
+      }
+
+      /* Espace entre groupes */
+      .form-spacer {
+        height: 1px;
+      }
+
+      /* Checkbox */
+      .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.9rem;
+        margin: 1.6rem 0;
+        cursor: pointer;
+      }
+      .form-check input[type="checkbox"] {
+        display: none;
+      }
+      .check-box {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        margin-top: 0.15rem;
+        position: relative;
+        transition:
+          border-color 0.25s,
+          background 0.25s;
+      }
+      .form-check:hover .check-box {
+        border-color: var(--gold-dim);
+      }
+      .check-box.checked {
+        border-color: var(--gold);
+        background: rgba(201, 168, 76, 0.1);
+      }
+      .check-box.checked::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 7px;
+        height: 5px;
+        border-left: 1.5px solid var(--gold);
+        border-bottom: 1.5px solid var(--gold);
+        margin-top: -1px;
+        transform: translate(-50%, -55%) rotate(-45deg);
+      }
+      .check-label {
+        font-size: 0.9rem;
+        color: var(--gray-3);
+        line-height: 1.6;
+        font-weight: 500;
+      }
+      .check-label span {
+        color: var(--gold);
+      }
+
+      /* Bouton submit */
+      .form-submit {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        background: var(--gold);
+        color: var(--black);
+        border: none;
+        padding: 1.15rem;
+        font-family: var(--ff-body);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .form-submit::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold-lt);
+        transform: translateX(-101%);
+        transition: transform 0.45s var(--ease);
+      }
+      .form-submit:hover::before {
+        transform: translateX(0);
+      }
+      .form-submit:hover {
+        transform: translateY(-2px);
+      }
+      .form-submit span {
+        position: relative;
+        z-index: 1;
+      }
+      .form-submit svg {
+        width: 13px;
+        height: 13px;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s;
+      }
+      .form-submit:hover svg {
+        transform: translateX(4px);
+      }
+
+      /* État de succès */
+      .form-success {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 1.2rem;
+        padding: 4rem 2rem;
+        min-height: 300px;
+      }
+      .form-success.show {
+        display: flex;
+      }
+      .form-inner.sent .form-fields {
+        display: none;
+      }
+      .form-inner.sent .form-success {
+        display: flex;
+      }
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        border: 1.5px solid var(--gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold);
+      }
+      .success-icon svg {
+        width: 22px;
+        height: 22px;
+      }
+      .success-title {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        font-weight: 300;
+        letter-spacing: -0.01em;
+      }
+      .success-text {
+        font-size: 0.85rem;
+        color: var(--gray-3);
+        line-height: 1.7;
+        max-width: 320px;
+      }
+
+      /* Note sous formulaire */
+      .form-note {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--gray-4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+      }
+      .form-note::before,
+      .form-note::after {
+        content: "";
+        width: 1.5rem;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      /* ══════════════════════════
+       BANDE FAQ RAPIDE
+    ══════════════════════════ */
+      .faq-strip {
+        background: #0f0f0d;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        padding: clamp(3rem, 6vw, 5rem) 0;
+      }
+
+      .faq-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .faq-title {
+        font-family: var(--ff-d);
+        font-size: clamp(1.5rem, 3vw, 2.4rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .faq-title em {
+        font-style: italic;
+        color: var(--gold);
+        font-family: var(--ff-display);
+      }
+
+      .faq-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+      }
+
+      .faq-item {
+        padding: 2rem 1.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.01);
+        transition: background 0.3s;
+      }
+      .faq-item:hover {
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .faq-q {
+        font-family: var(--ff-display);
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-bottom: 0.8rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .faq-a {
+        font-size: 1rem;
+        color: var(--gray-4);
+        line-height: 1.55;
+        font-weight: 500;
+      }
+
+      /* ════════════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════════════ */
+      footer {
+        background: var(--black);
+        padding: 4rem 0 2.5rem;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr;
+        gap: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 2rem;
+      }
+      .footer-brand-name {
+        font-family: var(--ff-display);
+        font-size: 1.6rem;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        margin-bottom: 1rem;
+      }
+      .footer-brand-name span {
+        color: var(--gold);
+      }
+      .footer-brand-desc {
+        font-size: 1rem;
+        color: var(--gray-4);
+        line-height: 1.5;
+        max-width: 260px;
+      }
+      .footer-col-title {
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gray-3);
+        margin-bottom: 1.4rem;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .footer-links a {
+        font-size: 0.9rem;
+        color: var(--gray-4);
+        transition: color 0.25s;
+      }
+      .footer-links a:hover {
+        color: var(--white);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-copy {
+        font-size: 0.9rem;
+        color: var(--gray-4);
+        font-weight: 500;
+      }
+      .footer-copy span {
+        color: var(--gold);
+      }
+      .footer-socials {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-socials a {
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-4);
+        transition: color 0.25s;
+        font-weight: 700;
+      }
+      .footer-socials a:hover {
+        color: var(--gold);
+      }
+
+      /* ── Sélecteur de langue custom ── */
+      .lang-switcher {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .lang-btn {
+        font-family: var(--ff-body);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-4);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0.45rem;
+        transition: color 0.25s;
+        line-height: 1;
+      }
+      .lang-btn:hover {
+        color: var(--white);
+      }
+      .lang-btn.active {
+        color: var(--gold);
+      }
+      .lang-sep {
+        color: rgba(255, 255, 255, 0.15);
+        font-size: 0.6rem;
+        user-select: none;
+      }
+
+      /* Masque complètement tout élément natif de Google Translate */
+      .goog-te-banner-frame,
+      .skiptranslate,
+      #goog-gt-tt,
+      .goog-te-balloon-frame {
+        display: none !important;
+      }
+      body {
+        top: 0 !important;
+      }
+
+      /* ════════════════════════════════════════════════════
+       RESPONSIVE — consolidé en 3 breakpoints propres
+    ════════════════════════════════════════════════════ */
+      @media (max-width: 1024px) {
+        .pricing-grid {
+          grid-template-columns: 1fr;
+          max-width: 480px;
+          margin-inline: auto;
+        }
+        .catalog-bottom {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .vt-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .bio-inner {
+          grid-template-columns: 1fr;
+          gap: 4rem;
+        }
+        .bio-photo-wrap {
+          max-width: 100%;
+          aspect-ratio: 4/3;
+        }
+        .bio-stat-card--1 {
+          right: 1rem;
+          bottom: 1rem;
+        }
+        .bio-stat-card--2 {
+          right: 1rem;
+          top: 1rem;
+        }
+        .pass-grid {
+          grid-template-columns: 1fr;
+        }
+        .pass-grid::after {
+          display: none;
+        }
+        .sec-header {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-cta,
+        .nav-cta2 {
+          display: none;
+        }
+        .nav-burger {
+          display: flex;
+        }
+        #hero {
+          min-height: 80vh;
+        }
+        .hero-line-left,
+        .hero-line-right {
+          display: none;
+        }
+        .catalog-bottom {
+          grid-template-columns: 1fr;
+          max-width: 480px;
+          margin-inline: auto;
+        }
+        .vt-grid {
+          grid-template-columns: 1fr;
+          max-width: 480px;
+          margin-inline: auto;
+        }
+        .newsletter-inner {
+          grid-template-columns: 1fr;
+        }
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .fc-footer {
+          flex-direction: column;
+          align-items: center;
+        }
+        .toggle-label small {
+          display: none;
+        }
+      }
+      @media (max-width: 640px) {
+        .fc-image-container {
+          height: 150px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ── Navigation ── -->
+    <nav id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">Yanick <span>Coderre</span></a>
+        <ul class="nav-links">
+          <li><a href="./saxophonev5.html">Accueil</a></li>
+          <li><a href="https://yanickcoderresaxophone.com/courses">Formations</a></li>
+          <li><a href="./spectacles.html">Spectacles</a></li>
+          <li><a href="./saxophonev5.html#pricing">Tarifs</a></li>
+          <li><a href="#">Contact</a></li>
+          <li>
+            <div class="lang-switcher" id="langSwitcher">
+              <button class="lang-btn active" data-lang="fr">FR</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="en">EN</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="es">ES</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="pt">PT</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="de">DE</button>
+            </div>
+            <!-- Widget Google Translate caché — nécessaire au fonctionnement -->
+            <div
+              id="google_translate_element"
+              style="
+                display: none !important;
+                visibility: hidden;
+                position: absolute;
+              "
+            ></div>
+          </li>
+        </ul>
+        <a
+          href="https://yanickcoderresaxophone.com/courses/enrolled"
+          class="nav-cta"
+          >Espace Client</a
+        >
+        <button class="nav-burger" id="burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ── Menu mobile ── -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mobile-close" id="mobileClose">✕</button>
+      <a href="#formations" class="mobile-link">Formations</a>
+      <a href="#curriculum" class="mobile-link">Programme</a>
+      <a href="#pricing" class="mobile-link">Tarifs</a>
+      <a href="#testimonials" class="mobile-link">Avis</a>
+      <a href="#pricing" class="mobile-link" style="color: var(--gold)"
+        >Commencer →</a
+      >
+    </div>
+
+    <!-- ══════════════════════════
+     HERO
+══════════════════════════ -->
+    <section class="contact-hero">
+      <div class="hero-ambient"></div>
+      <div class="hero-grain"></div>
+      <span class="hero-deco-note" aria-hidden="true">♪</span>
+
+      <div class="container contact-hero-content">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-line"></span>
+          <span class="label">Yanick Coderre</span>
+        </div>
+        <h1 class="hero-title">
+          Parlons
+          <span class="hero-title-serif">ensemble.</span>
+        </h1>
+        <p class="hero-sub">
+          Une question sur les formations, un projet de musique live pour votre
+          événement, ou simplement l'envie d'échanger — je réponds
+          personnellement à chaque message.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════
+     CORPS CONTACT
+══════════════════════════ -->
+    <section class="contact-body" id="form">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- ── INFOS GAUCHE ── -->
+          <div class="contact-info">
+            <div class="info-block reveal">
+              <div class="info-block-label">Formations en ligne</div>
+              <div class="info-value">yanickcoderresaxophone.com</div>
+              <p class="info-note">
+                Pour toute question sur les cours, abonnements ou accès à votre
+                compte.
+              </p>
+              <div class="availability-badge" style="margin-top: 1rem">
+                <div class="avail-dot"></div>
+                <span class="avail-text"
+                  >aucune place dispo pour l’instant</span
+                >
+              </div>
+            </div>
+
+            <div class="info-block reveal d1">
+              <div class="info-block-label">Musique live & événements</div>
+              <a href="mailto:info@yanickcoderre.com" class="info-value"
+                >info@yanickcoderre.com</a
+              >
+              <p class="info-note">
+                Réservations, devis et disponibilités pour vos événements
+                corporatifs, galas et soirées privées.
+              </p>
+            </div>
+
+            <div class="info-block reveal d2">
+              <div class="info-block-label">Délai de réponse</div>
+              <div
+                class="info-value"
+                style="font-size: 1rem; color: var(--gray-3)"
+              >
+                24 à 48 heures
+              </div>
+              <p class="info-note">
+                Toutes les demandes reçoivent une réponse personnelle. Aucun
+                robot, aucun copier-coller.
+              </p>
+            </div>
+
+            <div class="info-block reveal d2">
+              <div class="info-block-label">Réseaux sociaux</div>
+              <div class="social-links">
+                <a href="#" class="social-link" target="_blank" rel="noopener">
+                  <div class="social-link-left">
+                    <div class="social-icon">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="social-name">YouTube</div>
+                      <div class="social-handle">Yanick Coderre</div>
+                    </div>
+                  </div>
+                  <span class="social-arrow">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FORMULAIRE DROITE ── -->
+          <form
+            class="form-fields"
+            id="contactForm"
+            action="https://submit-form.com/ABC123"
+            method="POST"
+          >
+            <!-- Anti-spam -->
+            <input
+              type="hidden"
+              name="_subject"
+              value="Nouveau message - Yanick Coderre"
+            />
+            <input type="text" name="_gotcha" style="display: none" />
+            <!-- Tabs -->
+            <div class="form-tabs">
+              <button
+                type="button"
+                class="form-tab active"
+                data-tab="formations"
+              >
+                Formations
+              </button>
+              <button type="button" class="form-tab" data-tab="live">
+                Musique live
+              </button>
+              <button type="button" class="form-tab" data-tab="coaching">
+                Coaching
+              </button>
+              <button type="button" class="form-tab" data-tab="autre">
+                Autre
+              </button>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Prénom</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  name="prenom"
+                  id="f-prenom"
+                  placeholder="Votre prénom"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nom</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  name="nom"
+                  id="f-nom"
+                  placeholder="Votre nom"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-spacer"></div>
+
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Courriel</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  name="email"
+                  id="f-email"
+                  placeholder="votre@courriel.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-spacer"></div>
+
+            <!-- EVENT -->
+            <div class="form-row" id="row-event" style="display: none">
+              <div class="form-group">
+                <label class="form-label">Type d'événement</label>
+                <select
+                  class="form-select form-input"
+                  name="event"
+                  id="f-event"
+                >
+                  <option value="">Choisir…</option>
+                  <option>Cocktail / Réception</option>
+                  <option>Gala corporatif</option>
+                  <option>Mariage</option>
+                  <option>Lancement de produit</option>
+                  <option>Festival / Scène</option>
+                  <option>Autre événement</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date envisagée</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  name="date"
+                  id="f-date"
+                  placeholder="ex. : 15 juin 2025"
+                />
+              </div>
+            </div>
+
+            <div
+              id="spacer-event"
+              style="display: none"
+              class="form-spacer"
+            ></div>
+
+            <!-- NIVEAU -->
+            <div class="form-row full" id="row-niveau">
+              <div class="form-group">
+                <label class="form-label">Votre niveau</label>
+                <select
+                  class="form-select form-input"
+                  name="niveau"
+                  id="f-niveau"
+                >
+                  <option value="">Niveau actuel…</option>
+                  <option>Débutant — je n'ai jamais joué</option>
+                  <option>Débutant — quelques bases</option>
+                  <option>Intermédiaire</option>
+                  <option>Avancé</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-spacer"></div>
+
+            <div class="form-row full">
+              <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea
+                  class="form-textarea"
+                  name="message"
+                  id="f-message"
+                  placeholder="Décrivez votre demande…"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- CHECKBOX -->
+            <label class="form-check">
+              <input type="checkbox" id="f-consent" name="consent" required />
+              <div class="check-box"></div>
+              <span class="check-label">
+                J'accepte de recevoir une réponse par courriel.
+                <span>Aucun spam.</span>
+              </span>
+            </label>
+
+            <!-- BOUTON -->
+            <button class="form-submit" type="submit">
+              <span>Envoyer le message</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════
+     FAQ RAPIDE
+══════════════════════════ -->
+    <section class="faq-strip">
+      <div class="container">
+        <div class="faq-header">
+          <span
+            class="label reveal"
+            style="display: block; margin-bottom: 0.9rem"
+            >Questions fréquentes</span
+          >
+          <h2 class="faq-title reveal d1">
+            Avant d'écrire, <em>peut-être la réponse est ici.</em>
+          </h2>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item reveal">
+            <h3 class="faq-q">Puis-je changer de forfait à tout moment ?</h3>
+            <p class="faq-a">
+              Oui, sans frais ni pénalité. Vous pouvez passer du Pass Complet au
+              Pass Complet + Coaching (ou l'inverse) directement depuis votre
+              espace personnel.
+            </p>
+          </div>
+          <div class="faq-item reveal d1">
+            <h3 class="faq-q">
+              Les sessions de coaching sont-elles enregistrées ?
+            </h3>
+            <p class="faq-a">
+              Les sessions de coaching privé de 15 minutes ne sont pas
+              enregistrées par défaut. Elles sont valides pour le mois en cours
+              et ne sont pas cumulables.
+            </p>
+          </div>
+          <div class="faq-item reveal d2">
+            <h3 class="faq-q">Quel niveau faut-il pour commencer ?</h3>
+            <p class="faq-a">
+              Aucun niveau requis. Les formations débutent à la toute base —
+              vous n'avez jamais touché un saxophone ? C'est le point de départ
+              idéal.
+            </p>
+          </div>
+          <div class="faq-item reveal d1">
+            <h3 class="faq-q">Combien de temps faut-il pour progresser ?</h3>
+            <p class="faq-a">
+              Avec 15 à 30 minutes par jour de pratique régulière, la plupart
+              des élèves jouent leurs premières mélodies en 4 à 8 semaines.
+            </p>
+          </div>
+          <div class="faq-item reveal d2">
+            <h3 class="faq-q">
+              Dans quelles régions offrez-vous de la musique live ?
+            </h3>
+            <p class="faq-a">
+              Yanick se produit partout au Québec et au Canada, et peut se
+              déplacer à l'international selon le projet. Décrivez votre
+              événement et nous trouverons une formule adaptée.
+            </p>
+          </div>
+          <div class="faq-item reveal d3">
+            <h3 class="faq-q">
+              Quel est le délai pour réserver un spectacle ?
+            </h3>
+            <p class="faq-a">
+              Il est recommandé de contacter Yanick au moins 4 à 6 semaines à
+              l'avance pour les événements corporatifs, et 2 à 3 mois pour les
+              galas ou mariages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <div class="footer-brand-name">Yanick <span>Coderre</span></div>
+            <p class="footer-brand-desc">
+              L'académie en ligne qui transforme votre passion pour le saxophone
+              en véritable maîtrise musicale.
+            </p>
+            <br />
+            <img
+              src="https://assets.teachablecdn.com/teachable-branding-2025/badges/badge-powered-by-teachable.svg"
+              alt=""
+            />
+          </div>
+          <div>
+            <div class="footer-col-title">Informations</div>
+            <ul class="footer-links">
+              <li><a href="#featured">Formations</a></li>
+              <li><a href="#">Spectacles</a></li>
+              <li><a href="#pricing">Tarifs</a></li>
+              <li><a href="#">Espace client</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Légal</div>
+            <ul class="footer-links">
+              <li><a href="#">Mentions légales</a></li>
+              <li><a href="#">Confidentialité</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            © 2026 <span>Yanick Coderre</span>. Tous droits réservés.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.youtube.com/channel/UC8rPYjr5lL9T5eLg9zcdZ7w"
+              >YouTube</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ══ Google Translate — widget caché, contrôle 100% custom ══ -->
+
+    <script>
+      /* ── Initialisation du widget Google Translate ── */
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "fr",
+            includedLanguages: "fr,en,es,pt,de",
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+
+      /* ── Fonction de traduction ── */
+      function setLanguage(targetLang) {
+        // Attendre que le select interne de Google soit prêt
+        const tryTranslate = (attempts) => {
+          const select = document.querySelector(".goog-te-combo");
+          if (select) {
+            select.value = targetLang;
+            select.dispatchEvent(new Event("change"));
+
+            // Mettre à jour les boutons actifs
+            document.querySelectorAll(".lang-btn").forEach((btn) => {
+              btn.classList.toggle("active", btn.dataset.lang === targetLang);
+            });
+          } else if (attempts > 0) {
+            // Réessayer si le widget n'est pas encore chargé
+            setTimeout(() => tryTranslate(attempts - 1), 300);
+          }
+        };
+        tryTranslate(10);
+      }
+
+      /* ── Attacher les événements aux boutons de langue ── */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+          btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+        });
+      });
+
+      /* ── Supprimer la barre Google dès qu'elle apparaît ── */
+      const killGoogleBar = setInterval(() => {
+        const bar = document.querySelector(".goog-te-banner-frame");
+        if (bar) {
+          bar.style.display = "none";
+          document.body.style.top = "0";
+        }
+      }, 500);
+      setTimeout(() => clearInterval(killGoogleBar), 8000);
+    </script>
+    <script
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      async
+      defer
+    ></script>
+
+    <script>
+      /* ── Nav scroll ── */
+      const nav = document.getElementById("nav");
+      window.addEventListener(
+        "scroll",
+        () => nav.classList.toggle("scrolled", window.scrollY > 40),
+        { passive: true },
+      );
+
+      /* ── Mobile menu ── */
+      document
+        .getElementById("burger")
+        .addEventListener("click", () =>
+          document.getElementById("mobileMenu").classList.add("open"),
+        );
+      document
+        .getElementById("mobileClose")
+        .addEventListener("click", () =>
+          document.getElementById("mobileMenu").classList.remove("open"),
+        );
+      document
+        .querySelectorAll(".mobile-link")
+        .forEach((l) =>
+          l.addEventListener("click", () =>
+            document.getElementById("mobileMenu").classList.remove("open"),
+          ),
+        );
+
+      /* ── Scroll reveal ── */
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      /* ── Smooth anchors ── */
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const t = document.querySelector(a.getAttribute("href"));
+          if (t) {
+            e.preventDefault();
+            t.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      /* ── Hero scroll fade ── */
+      const heroScroll = document.querySelector(".hero-scroll");
+      if (heroScroll)
+        window.addEventListener(
+          "scroll",
+          () => {
+            heroScroll.style.opacity = Math.max(0, 1 - window.scrollY / 180);
+          },
+          { passive: true },
+        );
+
+      /* ── Newsletter ── */
+      const newsBtn = document.querySelector(".newsletter-submit");
+      if (newsBtn) {
+        newsBtn.addEventListener("click", () => {
+          const input = document.querySelector(".newsletter-input");
+          if (!input.value.includes("@")) {
+            input.style.borderColor = "#c0392b";
+            setTimeout(() => (input.style.borderColor = ""), 1500);
+            return;
+          }
+          newsBtn.textContent = "✓ Envoyé !";
+          newsBtn.style.background = "#3a7a3a";
+          input.value = "";
+          setTimeout(() => {
+            newsBtn.textContent = "Recevoir →";
+            newsBtn.style.background = "";
+          }, 3000);
+        });
+      }
+
+      /* ── Toggle tarifs mensuel/annuel ── */
+      document.addEventListener("DOMContentLoaded", () => {
+        const checkbox = document.getElementById("pricing-checkbox");
+        if (!checkbox) return;
+        checkbox.addEventListener("change", () => {
+          const yearly = checkbox.checked;
+          document
+            .querySelectorAll(".price-value")
+            .forEach(
+              (p) =>
+                (p.textContent = yearly ? p.dataset.yearly : p.dataset.monthly),
+            );
+          document
+            .querySelectorAll(".price-period")
+            .forEach((p) => (p.textContent = yearly ? "/ année" : "/ mois"));
+          document.querySelectorAll(".pricing-button").forEach((b) => {
+            const link = yearly ? b.dataset.linkYearly : b.dataset.linkMonthly;
+            if (link) b.setAttribute("href", link);
+          });
+          document
+            .querySelectorAll(".pricing-price-note")
+            .forEach(
+              (n) =>
+                (n.textContent = yearly
+                  ? "Facturé annuellement"
+                  : "Facturé mensuellement"),
+            );
+        });
+      });
+
+      /* ── Modale vidéo ── */
+      function openModal(title, videoUrl) {
+        document.getElementById("vtModalCaption").innerText = title;
+        document.getElementById("vtIframe").src = videoUrl;
+        document.getElementById("vtModal").classList.add("open");
+      }
+      function closeModal(event) {
+        const modal = document.getElementById("vtModal");
+        if (
+          event.target === modal ||
+          event.target.classList.contains("vt-modal-close")
+        ) {
+          modal.classList.remove("open");
+          document.getElementById("vtIframe").src = "";
+        }
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape")
+          closeModal({ target: document.getElementById("vtModal") });
+      });
+
+      /* ── Tabs formulaire ── */
+      const tabs = document.querySelectorAll(".form-tab");
+      const rowEvent = document.getElementById("row-event");
+      const spacerEvent = document.getElementById("spacer-event");
+      const rowNiveau = document.getElementById("row-niveau");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", (e) => {
+          e.preventDefault(); // IMPORTANT (sinon bouton submit possible)
+
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          const type = tab.dataset.tab;
+
+          if (type === "live") {
+            rowEvent.style.display = "grid";
+            spacerEvent.style.display = "block";
+            rowNiveau.style.display = "none";
+          } else if (type === "formations" || type === "coaching") {
+            rowEvent.style.display = "none";
+            spacerEvent.style.display = "none";
+            rowNiveau.style.display = "grid";
+          } else {
+            rowEvent.style.display = "none";
+            spacerEvent.style.display = "none";
+            rowNiveau.style.display = "none";
+          }
+        });
+      });
+
+      /* ── Checkbox (version propre) ── */
+      const checkInput = document.getElementById("f-consent");
+      const checkBox = document.querySelector(".check-box");
+
+      checkInput.addEventListener("change", () => {
+        checkBox.classList.toggle("checked", checkInput.checked);
+      });
+
+      /* ── Submit Formspark ── */
+      const form = document.getElementById("contactForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = new FormData(form);
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: data,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (response.ok) {
+            document.querySelector(".form-fields").style.display = "none";
+            document.getElementById("formSuccess").classList.add("show");
+          } else {
+            alert("Erreur lors de l'envoi.");
+          }
+        } catch (error) {
+          alert("Erreur réseau.");
+        }
+      });
+    </script>
+  </body>
+</html>

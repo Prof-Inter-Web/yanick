@@ -63,47 +63,145 @@
       color: var(--gold);
     }
 
-    /* ══════════════════════════════════════
-       NAV (identique au projet)
-    ══════════════════════════════════════ */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1.4rem 0;
-      transition: background .4s, backdrop-filter .4s;
-    }
-    nav.scrolled {
-      background: rgba(10,10,10,.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,.04);
-      padding: 1rem 0;
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-inline: 6%;
-    }
-    .nav-logo {
-      font-family: var(--ff-display);
-      font-size: 1.3rem; font-weight: 400; letter-spacing: .05em;
-    }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-    .nav-links a {
-      font-size: .72rem; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--gray-3);
-      font-weight: 400; transition: color .25s;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); }
-    .nav-cta {
-      font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--gold); border: 1px solid var(--gold-dim);
-      padding: .5rem 1.2rem; transition: all .3s;
-    }
-    .nav-cta:hover { background: var(--gold); color: var(--black); }
-    .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
-    .nav-burger span { display: block; width: 22px; height: 1px; background: var(--white); }
+   /* ════════════════════════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════════════════════════ */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.4rem 0;
+        transition:
+          background 0.4s,
+          padding 0.4s;
+      }
+      nav.scrolled {
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 1rem 0;
+      }
+      .nav-inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-inline: 6%;
+        gap: 2rem;
+      }
+      .nav-logo {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+      }
+      .nav-logo span {
+        color: var(--gold);
+        font-weight: 900;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-3);
+        font-weight: 500;
+        transition: color 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--white);
+      }
+      .nav-cta {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid var(--gold-dim);
+        padding: 0.55rem 1.3rem;
+        transition: all 0.3s;
+      }
+      .nav-cta:hover {
+        background: var(--gold);
+        color: var(--black);
+      }
+      .nav-cta2 {
+        background-color: var(--gold-dim);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--black);
+        font-weight: 800;
+        border: 1px solid var(--gold-dim);
+        padding: 0.55rem 1.3rem;
+        transition: all 0.3s;
+      }
+      .nav-cta2:hover {
+        background: var(--gold);
+        color: var(--black);
+      }
+
+      /* Hamburger */
+      .nav-burger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .nav-burger span {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background: var(--white);
+        transition: all 0.3s;
+      }
+
+      /* Menu mobile — une seule déclaration consolidée */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-family: var(--ff-display);
+        font-size: 2.2rem;
+        color: var(--white);
+        letter-spacing: 0.04em;
+        font-weight: 300;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-close {
+        position: absolute;
+        top: 1.8rem;
+        right: 1.8rem;
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 1.8rem;
+        cursor: pointer;
+      }
 
     /* ══════════════════════════════════════
        HERO — PAGE SERVICES
@@ -680,6 +778,105 @@
   border: none;
 }
 
+.contact-submit {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all .3s ease;
+}
+
+.contact-submit .loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #c9a84c;
+  border-radius: 50%;
+  display: none;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* loading state */
+.contact-form.loading .loader {
+  display: inline-block;
+}
+
+.contact-form.loading .btn-text {
+  opacity: .6;
+}
+
+/* success message */
+.form-success {
+  margin-top: 1rem;
+  color: #c9a84c;
+  font-size: .9rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all .4s ease;
+}
+
+.form-success.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* button disabled state */
+.contact-submit:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+
+ /* ── Sélecteur de langue custom ── */
+      .lang-switcher {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .lang-btn {
+        font-family: var(--ff-body);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-4);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0.45rem;
+        transition: color 0.25s;
+        line-height: 1;
+      }
+      .lang-btn:hover {
+        color: var(--white);
+      }
+      .lang-btn.active {
+        color: var(--gold);
+      }
+      .lang-sep {
+        color: rgba(255, 255, 255, 0.15);
+        font-size: 0.6rem;
+        user-select: none;
+      }
+
+      /* Masque complètement tout élément natif de Google Translate */
+      .goog-te-banner-frame,
+      .skiptranslate,
+      #goog-gt-tt,
+      .goog-te-balloon-frame {
+        display: none !important;
+      }
+      body {
+        top: 0 !important;
+      }
+
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .project-inner { grid-template-columns: 1fr; gap: 3rem; direction: ltr !important; }
@@ -701,11 +898,34 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo">Yanick <span>Coderre</span></a>
     <ul class="nav-links">
-      <li><a href="./teachbanner.html">Accueil</a></li>
+      <li><a href="./saxophonev5.html">Accueil</a></li>
       <li><a href="#lounge">Lounge Factory</a></li>
       <li><a href="#gentleman">Gentleman</a></li>
       <li><a href="#jazz">Jazz Trio</a></li>
       <li><a href="#urbeat">Ürbeat</a></li>
+    
+          <li>
+            <div class="lang-switcher" id="langSwitcher">
+              <button class="lang-btn active" data-lang="fr">FR</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="en">EN</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="es">ES</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="pt">PT</button>
+              <span class="lang-sep">|</span>
+              <button class="lang-btn" data-lang="de">DE</button>
+            </div>
+            <!-- Widget Google Translate caché — nécessaire au fonctionnement -->
+            <div
+              id="google_translate_element"
+              style="
+                display: none !important;
+                visibility: hidden;
+                position: absolute;
+              "
+            ></div>
+          </li>
     </ul>
     <a href="#contact" class="nav-cta">Réserver</a>
     <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
@@ -744,7 +964,7 @@
           Demander un devis
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
-        <a href="#lounge" class="btn btn--outline">Découvrir les projets</a>
+        <a href="#urbeat" class="btn btn--outline">Découvrir les projets</a>
       </div>
     </div>
   </div>
@@ -760,6 +980,109 @@
      PROJETS
 ══════════════════════════════════════ -->
 <section class="projects" id="projects">
+
+    <!-- ── 04 · ÜRBEAT ── -->
+  <div class="project-scene" id="urbeat">
+    <div class="container">
+      <span class="project-num-bg">04</span>
+      <div class="project-inner">
+
+        <!-- Texte -->
+        <div>
+          <div class="project-tag reveal">
+            <span class="project-tag-line"></span>
+            <span class="label">Projet 04</span>
+          </div>
+          <h2 class="project-name reveal d1">
+            <span class="project-name-serif" style="font-size:clamp(2.5rem,5vw,4.5rem)">Ürbeat</span>
+          </h2>
+          <div class="project-divider reveal d1"></div>
+          <p class="project-desc reveal d2">
+            Un projet musical électronique et expérimental où le saxophone rencontre les textures sonores les plus modernes. Ürbeat repousse les frontières de la performance live en fusionnant l'organique et le numérique.
+          </p>
+          <p class="project-desc reveal d2">
+            Pour les événements qui veulent marquer les esprits avec une <strong style="color:var(--white);font-weight:400">expérience sonore unique et avant-gardiste</strong>.
+          </p>
+          <div class="project-vibes reveal d3">
+            <span class="project-vibe">Électronique</span>
+            <span class="project-vibe">Expérimental</span>
+            <span class="project-vibe">Avant-garde</span>
+            <span class="project-vibe">Live electronics</span>
+            <span class="project-vibe">Immersif</span>
+          </div>
+          <a href="#contact" class="project-cta reveal d3">
+            Réserver ce projet
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Vidéo -->
+        <div class="project-media reveal d2">
+           <div class="video-embed-wrap">
+           <iframe 
+            src="https://player.hotmart.com/embed/4qXga56lRv?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  !-- ── 03 · JAZZ SESSIONS TRIO ── -->
+  <div class="project-scene" id="jazz">
+    <div class="container">
+      <span class="project-num-bg">03</span>
+      <div class="project-inner">
+
+        <!-- Texte -->
+        <div>
+          <div class="project-tag reveal">
+            <span class="project-tag-line"></span>
+            <span class="label">Projet 03</span>
+          </div>
+          <h2 class="project-name reveal d1">
+            Jazz Sessions
+            <span class="project-name-serif">Trio</span>
+          </h2>
+          <div class="project-divider reveal d1"></div>
+          <p class="project-desc reveal d2">
+            Une formation intimiste à trois voix pour des événements où l'authenticité du jazz prend toute sa place. Saxophone, piano et contrebasse s'entrelacent pour créer une atmosphère chaleureuse, raffinée et intemporelle.
+          </p>
+          <p class="project-desc reveal d2">
+            Idéal pour les <strong style="color:var(--white);font-weight:400">dîners de prestige, réceptions privées</strong> et tout événement où l'élégance musicale s'impose naturellement.
+          </p>
+          <div class="project-vibes reveal d3">
+            <span class="project-vibe">Jazz acoustique</span>
+            <span class="project-vibe">Trio live</span>
+            <span class="project-vibe">Dîner prestige</span>
+            <span class="project-vibe">Réception privée</span>
+            <span class="project-vibe">Standards jazz</span>
+          </div>
+          <a href="#contact" class="project-cta reveal d3">
+            Réserver ce projet
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Vidéo -->
+        <div class="project-media reveal d2">
+          <div class="video-embed-wrap">
+           <iframe 
+            src="https://player.hotmart.com/embed/1LVg85xlZw?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- ── 01 · LOUNGE FACTORY PROJECT ── -->
   <div class="project-scene" id="lounge">
@@ -868,109 +1191,8 @@
   </div>
 
 
-  <!-- ── 03 · JAZZ SESSIONS TRIO ── -->
-  <div class="project-scene" id="jazz">
-    <div class="container">
-      <span class="project-num-bg">03</span>
-      <div class="project-inner">
+  <
 
-        <!-- Texte -->
-        <div>
-          <div class="project-tag reveal">
-            <span class="project-tag-line"></span>
-            <span class="label">Projet 03</span>
-          </div>
-          <h2 class="project-name reveal d1">
-            Jazz Sessions
-            <span class="project-name-serif">Trio</span>
-          </h2>
-          <div class="project-divider reveal d1"></div>
-          <p class="project-desc reveal d2">
-            Une formation intimiste à trois voix pour des événements où l'authenticité du jazz prend toute sa place. Saxophone, piano et contrebasse s'entrelacent pour créer une atmosphère chaleureuse, raffinée et intemporelle.
-          </p>
-          <p class="project-desc reveal d2">
-            Idéal pour les <strong style="color:var(--white);font-weight:400">dîners de prestige, réceptions privées</strong> et tout événement où l'élégance musicale s'impose naturellement.
-          </p>
-          <div class="project-vibes reveal d3">
-            <span class="project-vibe">Jazz acoustique</span>
-            <span class="project-vibe">Trio live</span>
-            <span class="project-vibe">Dîner prestige</span>
-            <span class="project-vibe">Réception privée</span>
-            <span class="project-vibe">Standards jazz</span>
-          </div>
-          <a href="#contact" class="project-cta reveal d3">
-            Réserver ce projet
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-        </div>
-
-        <!-- Vidéo -->
-        <div class="project-media reveal d2">
-          <div class="video-embed-wrap">
-           <iframe 
-            src="https://player.hotmart.com/embed/1LVg85xlZw?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ── 04 · ÜRBEAT ── -->
-  <div class="project-scene" id="urbeat">
-    <div class="container">
-      <span class="project-num-bg">04</span>
-      <div class="project-inner">
-
-        <!-- Texte -->
-        <div>
-          <div class="project-tag reveal">
-            <span class="project-tag-line"></span>
-            <span class="label">Projet 04</span>
-          </div>
-          <h2 class="project-name reveal d1">
-            <span class="project-name-serif" style="font-size:clamp(2.5rem,5vw,4.5rem)">Ürbeat</span>
-          </h2>
-          <div class="project-divider reveal d1"></div>
-          <p class="project-desc reveal d2">
-            Un projet musical électronique et expérimental où le saxophone rencontre les textures sonores les plus modernes. Ürbeat repousse les frontières de la performance live en fusionnant l'organique et le numérique.
-          </p>
-          <p class="project-desc reveal d2">
-            Pour les événements qui veulent marquer les esprits avec une <strong style="color:var(--white);font-weight:400">expérience sonore unique et avant-gardiste</strong>.
-          </p>
-          <div class="project-vibes reveal d3">
-            <span class="project-vibe">Électronique</span>
-            <span class="project-vibe">Expérimental</span>
-            <span class="project-vibe">Avant-garde</span>
-            <span class="project-vibe">Live electronics</span>
-            <span class="project-vibe">Immersif</span>
-          </div>
-          <a href="#contact" class="project-cta reveal d3">
-            Réserver ce projet
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-        </div>
-
-        <!-- Vidéo -->
-        <div class="project-media reveal d2">
-           <div class="video-embed-wrap">
-           <iframe 
-            src="https://player.hotmart.com/embed/4qXga56lRv?metadata=%5B%7B%22key%22%3A%22page_id%22%2C%22value%22%3A%2216496714%22%7D%5D" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
 </section>
 
@@ -988,15 +1210,34 @@
       <p class="contact-cta-sub reveal d2">
         Chaque événement est unique. Décrivez-moi votre projet et je vous proposerai la formule musicale la plus adaptée.
       </p>
+    <form class="contact-form reveal d2"
+          id="contactForm"
+          action="https://submit-form.com/TON_ID_FORMSPARK"
+          method="POST">
 
-      <div class="contact-form reveal d2">
-        <input type="text"  class="contact-input" placeholder="Votre nom" />
-        <input type="email" class="contact-input" placeholder="Votre courriel" />
-        <input type="text"  class="contact-input" placeholder="Type d'événement" />
-        <input type="text"  class="contact-input" placeholder="Date envisagée" />
-        <textarea class="contact-textarea" placeholder="Décrivez votre événement, le lieu, le nombre d'invités, l'ambiance souhaitée…"></textarea>
-        <button class="contact-submit">Envoyer ma demande →</button>
-      </div>
+      <input type="text" name="nom" class="contact-input" placeholder="Votre nom" required>
+      <input type="email" name="email" class="contact-input" placeholder="Votre courriel" required>
+      <input type="text" name="type_evenement" class="contact-input" placeholder="Type d'événement" required>
+      <input type="text" name="date_evenement" class="contact-input" placeholder="Date envisagée">
+      
+      <textarea name="message" class="contact-textarea"
+        placeholder="Décrivez votre événement, le lieu, le nombre d'invités, l'ambiance souhaitée…"
+        required></textarea>
+
+      <input type="text" name="_gotcha" style="display:none">
+
+      <!-- BUTTON -->
+      <button type="submit" class="contact-submit" id="submitBtn">
+        <span class="btn-text">Envoyer ma demande →</span>
+
+        <!-- loader -->
+        <div class="loader"></div>
+      </button>
+
+      <!-- SUCCESS -->
+      <p class="form-success" id="successMsg">✔ Message envoyé avec succès</p>
+
+    </form>
       <p class="contact-note reveal">Réponse sous 24–48h · Devis gratuit et sans engagement</p>
     </div>
   </div>
@@ -1009,14 +1250,72 @@
     <div class="footer-bottom">
       <p class="footer-copy">© 2025 <span>Yanick Coderre</span>. Tous droits réservés.</p>
       <div class="footer-nav-links">
-        <a href="#">Formations</a>
-        <a href="#">Services live</a>
-        <a href="#">Contact</a>
+        <a href="https://yanickcoderresaxophone.com/courses">Formations</a>
+        <a href="#urbeat">Services live</a>
+        <a href="#contact">Contact</a>
       </div>
     </div>
   </div>
 </footer>
 
+ <!-- ══ Google Translate — widget caché, contrôle 100% custom ══ -->
+
+    <script>
+      /* ── Initialisation du widget Google Translate ── */
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "fr",
+            includedLanguages: "fr,en,es,pt,de",
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+
+      /* ── Fonction de traduction ── */
+      function setLanguage(targetLang) {
+        // Attendre que le select interne de Google soit prêt
+        const tryTranslate = (attempts) => {
+          const select = document.querySelector(".goog-te-combo");
+          if (select) {
+            select.value = targetLang;
+            select.dispatchEvent(new Event("change"));
+
+            // Mettre à jour les boutons actifs
+            document.querySelectorAll(".lang-btn").forEach((btn) => {
+              btn.classList.toggle("active", btn.dataset.lang === targetLang);
+            });
+          } else if (attempts > 0) {
+            // Réessayer si le widget n'est pas encore chargé
+            setTimeout(() => tryTranslate(attempts - 1), 300);
+          }
+        };
+        tryTranslate(10);
+      }
+
+      /* ── Attacher les événements aux boutons de langue ── */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+          btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+        });
+      });
+
+      /* ── Supprimer la barre Google dès qu'elle apparaît ── */
+      const killGoogleBar = setInterval(() => {
+        const bar = document.querySelector(".goog-te-banner-frame");
+        if (bar) {
+          bar.style.display = "none";
+          document.body.style.top = "0";
+        }
+      }, 500);
+      setTimeout(() => clearInterval(killGoogleBar), 8000);
+    </script>
+    <script
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      async
+      defer
+    ></script>
 
 <script>
   /* Nav scroll */
