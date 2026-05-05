@@ -1016,7 +1016,7 @@ body                    { top: 0 !important; }
             <p class="fc-desc">Les techniques indispensables pour transformer votre sonorité. Apprenez à produire un son riche, stable et expressif au saxophone.</p>
             <div class="fc-footer">
               <div class="fc-stars" style="font-size:.7rem">★★★★★</div>
-              <a href="hhttps://yanickcoderresaxophone.com/p/son-et-interpretation" class="fc-btn">Voir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+              <a href="https://yanickcoderresaxophone.com/p/son-et-interpretation" class="fc-btn">Voir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
             </div>
           </div>
           <div class="fc-popularity"><div class="fc-popularity-bar" style="width:55%"></div></div>
@@ -1589,7 +1589,7 @@ body                    { top: 0 !important; }
       checkbox.addEventListener('change', () => {
         const yearly = checkbox.checked;
         document.querySelectorAll('.price-value').forEach(p => p.textContent = yearly ? p.dataset.yearly : p.dataset.monthly);
-        document.querySelectorAll('.price-period').forEach(p => p.textContent = yearly ? '/ année' : '/ mois');
+        document.querySelectorAll('.price-period').forEach(p => p.textContent = yearly ? '/ mois' : '/ mois');
         document.querySelectorAll('.pricing-button').forEach(b => {
           const link = yearly ? b.dataset.linkYearly : b.dataset.linkMonthly;
           if (link) b.setAttribute('href', link);
