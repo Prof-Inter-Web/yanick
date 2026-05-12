@@ -491,6 +491,15 @@
     .catalog-reassurance span { display: flex; align-items: center; gap: .4rem; }
     .catalog-reassurance svg { width: 12px; height: 12px; color: var(--gold); }
 
+    .titre-formation {
+      font-family: var(--ff-display); font-weight: 500;
+      line-height: 1; letter-spacing: -.02em; margin-bottom: 3.5rem;
+      font-size: clamp(2.6rem, 1.8vw, 1.5rem);
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      font-weight: 800;
+    }
+
     /* ════════════════════════════════════════════════════
        TARIFS (PRICING)
     ════════════════════════════════════════════════════ */
@@ -737,6 +746,20 @@
     .newsletter-submit:hover { background: var(--gold-lt); }
     .newsletter-note { font-size: 1rem; color: var(--gray-3);font-weight: 500; }
 
+    .pricing-button {
+      transition: all .3s ease;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .pricing-button:hover {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201,168,76,0.25);
+    }
+
     /* ════════════════════════════════════════════════════
        FOOTER
     ════════════════════════════════════════════════════ */
@@ -758,36 +781,36 @@
 
 
 
-/* ── Sélecteur de langue custom ── */
-.lang-switcher {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.lang-btn {
-  font-family: var(--ff-body);
-  font-size: .68rem;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--gray-4);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: .25rem .45rem;
-  transition: color .25s;
-  line-height: 1;
-}
-.lang-btn:hover          { color: var(--white); }
-.lang-btn.active         { color: var(--gold); }
-.lang-sep                { color: rgba(255,255,255,.15); font-size: .6rem; user-select: none; }
+    /* ── Sélecteur de langue custom ── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-btn {
+      font-family: var(--ff-body);
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .25rem .45rem;
+      transition: color .25s;
+      line-height: 1;
+    }
+    .lang-btn:hover          { color: var(--white); }
+    .lang-btn.active         { color: var(--gold); }
+    .lang-sep                { color: rgba(255,255,255,.15); font-size: .6rem; user-select: none; }
 
-/* Masque complètement tout élément natif de Google Translate */
-.goog-te-banner-frame,
-.skiptranslate,
-#goog-gt-tt,
-.goog-te-balloon-frame { display: none !important; }
-body                    { top: 0 !important; }
+    /* Masque complètement tout élément natif de Google Translate */
+    .goog-te-banner-frame,
+    .skiptranslate,
+    #goog-gt-tt,
+    .goog-te-balloon-frame { display: none !important; }
+    body                    { top: 0 !important; }
 
 
     /* ════════════════════════════════════════════════════
@@ -817,6 +840,14 @@ body                    { top: 0 !important; }
       .footer-bottom { flex-direction: column; text-align: center; }
       .fc-footer { flex-direction: column; align-items: center; }
       .toggle-label small { display: none; }
+         .titre-formation {
+      font-family: var(--ff-display); font-weight: 500;
+      line-height: 1.2; letter-spacing: -.02em; margin-bottom: 1.5rem;
+      font-size: clamp(1.6rem, 1.8vw, 1.5rem);
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      font-weight: 800;
+    }
     }
     @media (max-width: 640px) {
       .fc-image-container { height: 150px; }
@@ -912,6 +943,7 @@ body                    { top: 0 !important; }
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
+      <div class="titre-formation">Découvrez quelques formations populaires</div>
 
       <div class="catalog-bottom">
 
@@ -1065,7 +1097,7 @@ body                    { top: 0 !important; }
           <div class="fc-body">
             <div class="fc-tags"><span class="fc-tag">LICKS</span><span class="fc-tag">IMPROVISATION</span><span class="fc-tag">PHRASÉ</span></div>
             <h3 class="fc-title">20 <em>licks</em></h3>
-            <p class="fc-desc">ntégrez le vocabulaire des légendes du Jazz à votre jeu. 20 phrases clés pour booster votre improvisation immédiatement dans toutes les tonalités
+            <p class="fc-desc">Intégrez le vocabulaire des légendes du Jazz à votre jeu. 20 phrases clés pour booster votre improvisation immédiatement dans toutes les tonalités
 </p>
             <div class="fc-footer">
               <div class="fc-stars" style="font-size:.7rem">★★★★★</div>
@@ -1144,7 +1176,7 @@ body                    { top: 0 !important; }
           <div class="fc-body">
             <div class="fc-tags"><span class="fc-tag">SOLFÈGE</span><span class="fc-tag">TERNAIRE</span><span class="fc-tag">TECHNIQUE</span></div>
             <h3 class="fc-title">Maîtriser l’art du<br><em>rythme</em></h3>
-            <p class="fc-desc">Dominez les mesures composées. Une explication simple et interactive pour enfin "ressentir" le ternaire et le jouer avec naturel.</p>
+            <p class="fc-desc">Si le rythme te donne des maux de tête, la formation "Maîtrise de l'art du rythme", appréciée par plusieurs, te sera très utile pour comprendre, pratiquer, améliorer et solidifier ton rythme. Cette formation est pour tous les niveaux!</p>
             <div class="fc-footer">
               <div class="fc-stars" style="font-size:.7rem">★★★★★</div>
               <a href="https://yanickcoderresaxophone.com/p/l-art-du-rythme" class="fc-btn">Voir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
@@ -1212,7 +1244,7 @@ body                    { top: 0 !important; }
             <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Annulation de ton plan mensuel à tout moment et/ou revenir après une pause. (Plan mensuel seulement)</div>
             <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Cours privés personnalisés, 30 minutes par mois</div>
           </div>
-          <a href="https://yanickcoderresaxophone.com/purchase?product_id=6463530" class="btn btn--outline pricing-button" data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6463530" data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549447" style="width:100%;justify-content:center">JE M'ABONNE</a>
+          <a href="https://yanickcoderresaxophone.com/purchase?product_id=6463530" class="btn btn--outline pricing-button" data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6463530" data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549447" style="width:100%;justify-content:center; border: 1px solid var(--gold-dim); padding: 15px">JE M'ABONNE</a>
         </div>
         <!-- CAD -->
         <div class="pricing-card reveal reveal-delay-1">
@@ -1231,7 +1263,7 @@ body                    { top: 0 !important; }
             <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Annulation de ton plan mensuel à tout moment et/ou revenir après une pause. (Plan mensuel seulement)</div>
             <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Cours privés personnalisés, 30 minutes par mois</div>
           </div>
-          <a href="https://yanickcoderresaxophone.com/purchase?product_id=6692551" class="btn btn--outline pricing-button" data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6692551" data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549449" style="width:100%;justify-content:center">JE M'ABONNE</a>
+          <a href="https://yanickcoderresaxophone.com/purchase?product_id=6692551" class="btn btn--outline pricing-button" data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6692551" data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549449" style="width:100%;justify-content:center; border: 1px solid var(--gold-dim); padding: 15px">JE M'ABONNE</a>
         </div>
         <!-- USD -->
         <div class="pricing-card reveal reveal-delay-2">
@@ -1250,7 +1282,7 @@ body                    { top: 0 !important; }
             <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Annulation de ton plan mensuel à tout moment et/ou revenir après une pause. (Plan mensuel seulement)</div>
             <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Cours privés personnalisés, 30 minutes par mois</div>
           </div>
-          <a href="https://yanickcoderresaxophone.com/purchase?product_id=6463534" class="btn btn--outline pricing-button" data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6463534" data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549451" style="width:100%;justify-content:center">JE M'ABONNE</a>
+          <a href="https://yanickcoderresaxophone.com/purchase?product_id=6463534" class="btn btn--outline pricing-button" data-link-monthly="https://yanickcoderresaxophone.com/purchase?product_id=6463534" data-link-yearly="https://yanickcoderresaxophone.com/purchase?product_id=6549451" style="width:100%;justify-content:center; border: 1px solid var(--gold-dim); padding: 15px">JE M'ABONNE</a>
         </div>
       </div>
       <p class="reveal" style="text-align:center;margin-top:2.5rem;font-size:1rem;color:var(--gray-3)">
