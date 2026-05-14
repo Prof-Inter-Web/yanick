@@ -461,18 +461,16 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-position: 80% 100%;
-       /* opacity: 0.15; Ajustez l'opacité pour le look sombre/premium */
-  }
+        /* opacity: 0.15; Ajustez l'opacité pour le look sombre/premium */
+      }
 
-        .hero-image {
-          position: absolute;
-          /* top: 0; */
-          right: 10%;
-          /* width: 100%; */
-          height: 100%;
-
-   
-        }
+      .hero-image {
+        position: absolute;
+        /* top: 0; */
+        right: 10%;
+        /* width: 100%; */
+        height: 100%;
+      }
 
       /* On ajoute un fondu noir radial par-dessus l'image pour un look cinématographique */
       /* .hero-image-bg::after {
@@ -485,7 +483,6 @@
           var(--black) 80%
         );
       } */
-
 
       /* Lignes verticales */
       .contact-hero::before,
@@ -1378,101 +1375,96 @@
         .toggle-label small {
           display: none;
         }
-          .faq-grid {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        gap: 1px;
+        .faq-grid {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+          gap: 1px;
         }
 
         .info-block {
-        margin-bottom: 1rem;
-        padding-bottom: 0;
+          margin-bottom: 1rem;
+          padding-bottom: 0;
         }
 
         .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        align-items: start;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 3rem;
+          align-items: start;
         }
 
-        .footer-top{
-        text-align: center;
-      }
-      
-      .footer-brand-desc {
-        font-size: 1rem;
-        color: var(--gray-4);
-        line-height: 1.5;
-        max-width: 100%;
-    }
-    .contact-hero {
-        display: flex;
-        flex-direction: column;
-        padding: 0 !important; /* 👈 important */
-        min-height: auto;
-      }
+        .footer-top {
+          text-align: center;
+        }
 
+        .footer-brand-desc {
+          font-size: 1rem;
+          color: var(--gray-4);
+          line-height: 1.5;
+          max-width: 100%;
+        }
+        .contact-hero {
+          display: flex;
+          flex-direction: column;
+          padding: 0 !important; /* 👈 important */
+          min-height: auto;
+        }
 
+        /*image réelle en haut */
+        .hero-image {
+          padding-top: 15%;
+          display: block !important;
+          width: 100%;
+          height: 360px; /* ajuste si tu veux */
+          object-fit: cover;
+        }
 
-      /*image réelle en haut */
-      .hero-image {
-        padding-top: 15%;
-        display: block !important;
-        width: 100%;
-        height: 360px; /* ajuste si tu veux */
-        object-fit: cover;
-      }
-
-      /* texte en dessous */
-      .contact-hero-content {
-        padding: 15rem 1.5rem  2rem 1.5rem !important;
-      }
+        /* texte en dessous */
+        .contact-hero-content {
+          padding: 15rem 1.5rem 2rem 1.5rem !important;
+        }
 
         .container {
-        max-width: 100%;
-      }
+          max-width: 100%;
+        }
 
-      .contact-info,
-      .info-block,
-      .info-note,
-      .info-value {
-        max-width: 100%;
-        overflow-wrap: break-word;
-        word-break: break-word;
-      }
+        .contact-info,
+        .info-block,
+        .info-note,
+        .info-value {
+          max-width: 100%;
+          overflow-wrap: break-word;
+          word-break: break-word;
+        }
 
         .info-value {
-        word-break: break-all;
-      }
+          word-break: break-all;
+        }
 
-      .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-      }
-
-      @media (max-width: 900px) {
         .contact-grid {
-          grid-template-columns: 1fr;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+
+        @media (max-width: 900px) {
+          .contact-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+          width: 100%;
+          max-width: 100%;
         }
       }
-
-      .form-input,
-      .form-textarea,
-      .form-select {
-        width: 100%;
-        max-width: 100%;
-      }
-    }
-
-
 
       @media (max-width: 640px) {
         .fc-image-container {
           height: 150px;
         }
-
       }
     </style>
   </head>
@@ -1484,7 +1476,9 @@
         <a href="#" class="nav-logo">Yanick <span>Coderre</span></a>
         <ul class="nav-links">
           <li><a href="./saxophonev5.html">Accueil</a></li>
-          <li><a href="https://yanickcoderresaxophone.com/courses">Formations</a></li>
+          <li>
+            <a href="https://yanickcoderresaxophone.com/courses">Formations</a>
+          </li>
           <li><a href="./spectacles.html">Spectacles</a></li>
           <li><a href="./saxophonev5.html#pricing">Tarifs</a></li>
           <li><a href="#">Contact</a></li>
@@ -1538,7 +1532,7 @@
      HERO
 ══════════════════════════ -->
     <section class="contact-hero">
-        <div class="hero-image-bg"></div>
+      <div class="hero-image-bg"></div>
       <div class="hero-ambient"></div>
       <div class="hero-grain"></div>
 
@@ -1557,7 +1551,11 @@
           personnellement à chaque message.
         </p>
       </div>
-      <img class="hero-image" src="./img/sax5.jpg" alt="Yanick Coderre jouant du saxophone" />
+      <img
+        class="hero-image"
+        src="./img/sax5.jpg"
+        alt="Yanick Coderre jouant du saxophone"
+      />
     </section>
 
     <!-- ══════════════════════════
@@ -1573,9 +1571,11 @@
               <p class="info-note">
                 Pour toute question sur les cours, abonnements ou accès à votre
                 compte.
-              </p><br>
+              </p>
+              <br />
               <a href="mailto:info@yanickcoderre.com" class="info-value"
-                >info@yanickcoderre.com</a>
+                >info@yanickcoderre.com</a
+              >
             </div>
 
             <div class="info-block reveal d1">
@@ -1606,7 +1606,12 @@
             <div class="info-block reveal d2">
               <div class="info-block-label">Réseaux sociaux</div>
               <div class="social-links">
-                <a href="https://www.youtube.com/channel/UC8rPYjr5lL9T5eLg9zcdZ7w" class="social-link" target="_blank" rel="noopener">
+                <a
+                  href="https://www.youtube.com/channel/UC8rPYjr5lL9T5eLg9zcdZ7w"
+                  class="social-link"
+                  target="_blank"
+                  rel="noopener"
+                >
                   <div class="social-link-left">
                     <div class="social-icon">
                       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1630,7 +1635,7 @@
           <form
             class="form-fields"
             id="contactForm"
-            action="https://submit-form.com/ABC123"
+            action="https://submit-form.com/gCkyaUQkq"
             method="POST"
           >
             <!-- Anti-spam -->
@@ -1891,8 +1896,16 @@
           <div>
             <div class="footer-col-title">Légal</div>
             <ul class="footer-links">
-              <li><a href="https://yanickcoderresaxophone.com/p/terms">Mentions légales</a></li>
-              <li><a href="https://yanickcoderresaxophone.com/p/privacy">Confidentialité</a></li>
+              <li>
+                <a href="https://yanickcoderresaxophone.com/p/terms"
+                  >Mentions légales</a
+                >
+              </li>
+              <li>
+                <a href="https://yanickcoderresaxophone.com/p/privacy"
+                  >Confidentialité</a
+                >
+              </li>
               <li><a href="#">Contact</a></li>
             </ul>
           </div>
