@@ -1702,31 +1702,47 @@
           { passive: true },
         );
 
-      /* Contact form */
-      const submitBtn = document.querySelector(".contact-submit");
-      if (submitBtn) {
-        submitBtn.addEventListener("click", () => {
-          const inputs = document.querySelectorAll(
-            ".contact-input, .contact-textarea",
-          );
-          let valid = true;
-          inputs.forEach((i) => {
-            if (!i.value.trim()) {
-              i.style.borderColor = "rgba(180,60,60,.5)";
-              valid = false;
-            } else {
-              i.style.borderColor = "";
-            }
-          });
-          if (valid) {
-            submitBtn.textContent = "✓ Message envoyé !";
-            submitBtn.style.background = "#2d6a2d";
-            setTimeout(() => {
-              submitBtn.textContent = "Envoyer ma demande →";
-              submitBtn.style.background = "";
-            }, 3000);
-          }
-        });
+     const form = document.querySelector("#contactForm");
+const submitBtn = document.querySelector(".contact-submit");
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const inputs = document.querySelectorAll(
+      ".contact-input, .contact-textarea"
+    );
+
+    let valid = true;
+
+    inputs.forEach((i) => {
+      if (!i.value.trim()) {
+        i.style.borderColor = "rgba(180,60,60,.5)";
+        valid = false;
+      } else {
+        i.style.borderColor = "";
+      }
+    });
+
+    if (!valid) return;
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+      });
+
+      if (response.ok) {
+        submitBtn.textContent = "✓ Message envoyé !";
+        submitBtn.style.background = "#2d6a2d";
+        form.reset();
+      } else {
+        alert("Erreur envoi");
+      }
+    } catch (err) {
+      alert("Erreur réseau");
+    }
+  });
       }
     </script>
   </body>
