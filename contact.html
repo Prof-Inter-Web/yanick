@@ -1632,6 +1632,7 @@
           </div>
 
           <!-- ── FORMULAIRE DROITE ── -->
+        <div class="form-inner">  
           <form
             class="form-fields"
             id="contactForm"
@@ -1794,6 +1795,7 @@
           <div id="formSuccess" class="form-success">
             Merci ! Votre message a été envoyé.
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -2160,32 +2162,44 @@
       });
 
       /* ── Submit Formspark ── */
-      const form = document.getElementById("contactForm");
+      /* ── Submit Formspark ── */
+const form = document.getElementById("contactForm");
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-        const data = new FormData(form);
+  const submitBtn = form.querySelector(".form-submit");
 
-        try {
-          const response = await fetch(form.action, {
-            method: "POST",
-            body: data,
-            headers: {
-              Accept: "application/json",
-            },
-          });
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = "<span>Envoi...</span>";
 
-          if (response.ok) {
-            document.querySelector(".form-fields").style.display = "none";
-            document.getElementById("formSuccess").classList.add("show");
-          } else {
-            alert("Erreur lors de l'envoi.");
-          }
-        } catch (error) {
-          alert("Erreur réseau.");
-        }
-      });
+  try {
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (response.ok) {
+      form.style.display = "none";
+
+      document
+        .getElementById("formSuccess")
+        .classList.add("show");
+    } else {
+      alert("Erreur lors de l'envoi.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Erreur réseau.");
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.innerHTML =
+    "<span>Envoyer le message</span>";
+});
     </script>
   </body>
 </html>
