@@ -1636,7 +1636,7 @@
           <form
             class="form-fields"
             id="contactForm"
-            action="https://submit-form.com/gCkyaUQkq"
+            action="https://submit-form.com/3TrLtfGYZ"
             method="POST"
           >
             <!-- Anti-spam -->
@@ -2051,25 +2051,7 @@
           { passive: true },
         );
 
-      /* ── Newsletter ── */
-      const newsBtn = document.querySelector(".newsletter-submit");
-      if (newsBtn) {
-        newsBtn.addEventListener("click", () => {
-          const input = document.querySelector(".newsletter-input");
-          if (!input.value.includes("@")) {
-            input.style.borderColor = "#c0392b";
-            setTimeout(() => (input.style.borderColor = ""), 1500);
-            return;
-          }
-          newsBtn.textContent = "✓ Envoyé !";
-          newsBtn.style.background = "#3a7a3a";
-          input.value = "";
-          setTimeout(() => {
-            newsBtn.textContent = "Recevoir →";
-            newsBtn.style.background = "";
-          }, 3000);
-        });
-      }
+
 
       /* ── Toggle tarifs mensuel/annuel ── */
       document.addEventListener("DOMContentLoaded", () => {
@@ -2185,7 +2167,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      "https://submit-form.com/gCkyaUQkq",
+      "https://submit-form.com/3TrLtfGYZ",
       {
         method: "POST",
         headers: {

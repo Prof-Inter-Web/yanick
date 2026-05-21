@@ -1460,7 +1460,7 @@
       <div class="reveal reveal-delay-1">
         <form 
           class="newsletter-form"
-          action="https://submit-form.com/TON_ID"
+          action="https://submit-form.com/H1oOwyLJ3"
           method="POST"
         >
 
@@ -1604,15 +1604,59 @@
     if (heroScroll) window.addEventListener('scroll', () => { heroScroll.style.opacity = Math.max(0, 1 - window.scrollY / 180); }, { passive: true });
 
     /* ── Newsletter ── */
-    const newsBtn = document.querySelector('.newsletter-submit');
-    if (newsBtn) {
-      newsBtn.addEventListener('click', () => {
-        const input = document.querySelector('.newsletter-input');
-        if (!input.value.includes('@')) { input.style.borderColor = '#c0392b'; setTimeout(() => input.style.borderColor = '', 1500); return; }
-        newsBtn.textContent = '✓ Envoyé !'; newsBtn.style.background = '#3a7a3a'; input.value = '';
-        setTimeout(() => { newsBtn.textContent = 'Recevoir →'; newsBtn.style.background = ''; }, 3000);
+const newsletterForm = document.querySelector('.newsletter-form');
+
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Empêche le rechargement de la page
+
+    const input = newsletterForm.querySelector('.newsletter-input');
+    const newsBtn = newsletterForm.querySelector('.newsletter-submit');
+
+    // Désactive le bouton pendant l'envoi
+    newsBtn.disabled = true;
+    const originalText = newsBtn.textContent;
+    newsBtn.textContent = 'Envoi...';
+
+    try {
+      // Conversion et envoi des données à Formspark
+      const formData = Object.fromEntries(new FormData(newsletterForm));
+      
+      const response = await fetch(newsletterForm.action, {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
       });
+
+      if (response.ok) {
+        // Succès : Votre animation existante
+        newsBtn.textContent = '✓ Envoyé !'; 
+        newsBtn.style.background = '#3a7a3a'; 
+        input.value = '';
+
+        // Remise à zéro après 3 secondes
+        setTimeout(() => { 
+          newsBtn.textContent = originalText; 
+          newsBtn.style.background = ''; 
+          newsBtn.disabled = false;
+        }, 3000);
+
+      } else {
+        alert("Erreur lors de l'inscription.");
+        newsBtn.disabled = false;
+        newsBtn.textContent = originalText;
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur réseau.");
+      newsBtn.disabled = false;
+      newsBtn.textContent = originalText;
     }
+  });
+}
 
     /* ── Toggle tarifs mensuel/annuel ── */
     document.addEventListener('DOMContentLoaded', () => {
