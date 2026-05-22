@@ -813,6 +813,19 @@
     body                    { top: 0 !important; }
 
 
+
+    /* ── Carte catalogue entièrement cliquable ── */
+.fc {
+  position: relative;
+  cursor: pointer;
+}
+.fc::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+}
+
     /* ════════════════════════════════════════════════════
        RESPONSIVE — consolidé en 3 breakpoints propres
     ════════════════════════════════════════════════════ */
@@ -1706,6 +1719,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({ target: document.getElementById('vtModal') }); });
     
+
+
+
+
+/* ── Fix Safari/Brave iframe — cartes catalogue ── */
+document.querySelectorAll('.fc').forEach(card => {
+  card.addEventListener('click', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.fc-btn');
+    const url = btn ? btn.getAttribute('href') : null;
+    if (url) {
+      try { window.top.location.href = url; }
+      catch(err) { window.open(url, '_blank'); }
+    }
+  });
+});
   </script>
   
 </body>
