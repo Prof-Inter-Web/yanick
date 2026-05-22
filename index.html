@@ -1658,24 +1658,39 @@ if (newsletterForm) {
   });
 }
 
-    /* ── Toggle tarifs mensuel/annuel ── */
-    document.addEventListener('DOMContentLoaded', () => {
-      const checkbox = document.getElementById('pricing-checkbox');
-      if (!checkbox) return;
-      checkbox.addEventListener('change', () => {
-        const yearly = checkbox.checked;
-        document.querySelectorAll('.price-value').forEach(p => p.textContent = yearly ? p.dataset.yearly : p.dataset.monthly);
-        document.querySelectorAll('.price-period').forEach(p => p.textContent = yearly ? '/ mois' : '/ mois');
-        document.querySelectorAll('.pricing-button').forEach(b => {
-          const link = yearly ? b.dataset.linkYearly : b.dataset.linkMonthly;
-          if (link) b.setAttribute('href', link);
-        });
-           document.querySelectorAll('.pricing-price-note')
-      .forEach(n => n.textContent = yearly ? 'Facturé annuellement' : 'Facturé mensuellement');
-        });
-
+/* ── Toggle tarifs mensuel/annuel ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const checkbox = document.getElementById('pricing-checkbox');
+  if (checkbox) {
+    checkbox.addEventListener('change', () => {
+      const yearly = checkbox.checked;
+      document.querySelectorAll('.price-value').forEach(p => p.textContent = yearly ? p.dataset.yearly : p.dataset.monthly);
+      document.querySelectorAll('.price-period').forEach(p => p.textContent = yearly ? '/ mois' : '/ mois');
+      document.querySelectorAll('.pricing-button').forEach(b => {
+        const link = yearly ? b.dataset.linkYearly : b.dataset.linkMonthly;
+        if (link) b.setAttribute('href', link);
+      });
+      document.querySelectorAll('.pricing-price-note')
+        .forEach(n => n.textContent = yearly ? 'Facturé annuellement' : 'Facturé mensuellement');
     });
+  }
 
+  /* ── Fix Safari/Brave iframe SSO : forcer la navigation dans window.top ── */
+  document.querySelectorAll('.pricing-button').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const url = this.getAttribute('href');
+      if (url) {
+        try {
+          window.top.location.href = url;
+        } catch(err) {
+          // Fallback si window.top est inaccessible (cross-origin strict)
+          window.open(url, '_blank');
+        }
+      }
+    });
+  });
+});
     /* ── Modale vidéo ── */
     function openModal(title, videoUrl) {
       document.getElementById('vtModalCaption').innerText = title;
@@ -1690,6 +1705,7 @@ if (newsletterForm) {
       }
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({ target: document.getElementById('vtModal') }); });
+    
   </script>
   
 </body>
