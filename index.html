@@ -220,9 +220,11 @@
 
     /* Menu mobile — une seule déclaration consolidée */
     .mobile-menu {
-      display: none; position: fixed; inset: 0; z-index: 99;
+      display: flex; position: fixed; inset: 0; z-index: 99;
       background: rgba(10,10,10,.97); backdrop-filter: blur(20px);
       flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .3s ease, visibility .3s ease;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
@@ -1743,24 +1745,19 @@ document.querySelectorAll('.fc').forEach(card => {
   });
 });
 
-     const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileClose = document.getElementById('mobileClose');
+/*Mobile Menu*/
+    document.getElementById('burger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.add('open');
+});
 
-  burger.addEventListener('click', function () {
-    mobileMenu.classList.add('open');
+document.getElementById('mobileClose').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.remove('open');
+});
+
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.remove('open');
   });
-
-  mobileClose.addEventListener('click', function () {
-    mobileMenu.classList.remove('open');
-  });
-
-  document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', function () {
-      mobileMenu.classList.remove('open');
-    });
-  });
-
 });
   </script>
   
