@@ -230,14 +230,14 @@
 
     /* Menu mobile — une seule déclaration consolidée */
     .mobile-menu {
-      display: flex; position: fixed; inset: 0; z-index: 99;
-      background: rgba(10,10,10,.97); backdrop-filter: blur(20px);
+      display: flex; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,10,10,.97); 
       flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
-      opacity: 0; pointer-events: none;
-      transform: translateY(-20px); transition: all 0.4s var(--ease-out);
+      opacity: 0; pointer-events: none; visibility: hidden;
+      transform: translateY(-10px); transition: opacity .3s ease, transform .3s ease, visibility .3s;
     }
     .mobile-menu.active {
-      opacity: 1; pointer-events: auto; transform: translateY(0);
+      opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
@@ -835,10 +835,7 @@
   cursor: pointer;
 }
 .fc::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 20;
+  pointer-events: none;
 }
 
     /* ════════════════════════════════════════════════════
@@ -1622,10 +1619,7 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
 
-    /* ── Mobile menu ── */
-    document.getElementById('burger').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
-    document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
-    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open')));
+    
 
     /* ── Scroll reveal ── */
     const io = new IntersectionObserver((entries) => {
@@ -1793,6 +1787,25 @@ document.querySelectorAll('.fc').forEach(card => {
       nav.classList.remove('scrolled');
     }
   });
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const burger = document.querySelector('.nav-burger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+  }
+
+  document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger?.classList.remove('active');
+      mobileMenu?.classList.remove('active');
+    });
+  });
+});
   </script>
   
 </body>
