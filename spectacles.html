@@ -186,6 +186,7 @@
         display: none;
         flex-direction: column;
         gap: 5px;
+        argin-right: 1rem;
         background: none;
         border: none;
         cursor: pointer;
@@ -226,7 +227,7 @@
       .mobile-menu a:hover {
         color: var(--gold);
       }
-      .mobile-close {
+      .nav-close {
         position: absolute;
         top: 1.8rem;
         right: 1.8rem;
@@ -1156,6 +1157,7 @@
       <div class="nav-inner">
         <a href="#" class="nav-logo">Yanick <span>Coderre</span></a>
         <ul class="nav-links">
+          <button class="nav-close" id="navClose">×</button>
           <li><a href="https://yanickcoderresaxophone.com/p/home">Accueil</a></li>
           <li><a href="#lounge">Lounge Factory</a></li>
           <li><a href="#gentleman">Gentleman</a></li>
@@ -1815,6 +1817,15 @@ if (burger && navLinks) {
       burger.classList.remove("active");
       navLinks.classList.remove("active");
     });
+  });
+}
+
+      const navClose = document.getElementById("navClose");
+
+if (navClose) {
+  navClose.addEventListener("click", () => {
+    burger.classList.remove("active");
+    navLinks.classList.remove("active");
   });
 }
     </script>
