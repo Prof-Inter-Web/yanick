@@ -1130,7 +1130,7 @@
     display: flex;
   }
 
-  .nav {
+  .nav-links {
     position: fixed;
     top: 0;
     right: -100%;
@@ -1143,10 +1143,14 @@
     transition: right 0.4s var(--ease);
   }
 
-  .nav.active {
+  .nav-links.active {
     right: 0;
   }
 
+  .nav-burger {
+    display: flex;
+  }
+  
   /* animation burger -> X */
   .burger.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
@@ -1205,7 +1209,7 @@
     </nav>
 
     <!-- Burger button -->
-      <button class="burger" id="burger" aria-label="Menu">
+      <button class="burger" aria-label="Menu">
         <span></span>
         <span></span>
         <span></span>
@@ -1810,19 +1814,22 @@ if (form) {
 
 }
 
-        const burger = document.getElementById("burger");
-  const nav = document.getElementById("nav");
+  
+      
+      
+  const burger = document.getElementById("burger");
+  const navLinks = document.getElementById("nav-links");
 
   burger.addEventListener("click", () => {
     burger.classList.toggle("active");
-    nav.classList.toggle("active");
+    navLinks.classList.toggle("active");
   });
 
   // fermer le menu en cliquant sur un lien
-  document.querySelectorAll(".nav a").forEach((link) => {
+  document.querySelectorAll(".nav-links a").forEach((link) => {
     link.addEventListener("click", () => {
       burger.classList.remove("active");
-      nav.classList.remove("active");
+      navLinks.classList.remove("active");
     });
   });
     </script>
