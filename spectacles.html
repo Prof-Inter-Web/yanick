@@ -183,7 +183,8 @@
 
       /* Hamburger */
       .nav-burger {
-        display: none;
+        display: flex;
+        z-index: 1001;
         flex-direction: column;
         gap: 5px;
         argin-right: 1rem;
@@ -1115,6 +1116,11 @@
     flex-direction: column;
     gap: 5px;
     margin-right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1000;
   }
 
   .nav-links {
@@ -1136,14 +1142,14 @@
   .nav-links.active {
     right: 0;
   }
-
+/* 
   .nav-burger {
     .nav-burger {
       display: none;
       flex-direction: column;
       gap: 5px;
       margin-right: 1rem;
-  }
+  } */
   
   /* animation burger -> X */
 .nav-burger.active span:nth-child(1) {
