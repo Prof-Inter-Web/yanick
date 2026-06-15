@@ -382,11 +382,16 @@
         justify-content: center;
         align-items: center;
         gap: 2.5rem;
-        transition: translateY(-10px); transition: opacity .3s ease, transform .3s ease, visibility .3s;
+        transition: translateY(-10px); 
+        transition: 
+          opacity .3s ease, 
+          transform .3s ease, 
+          visibility .3s;
       }
       .mobile-menu.open {
         display: flex;
         opacity: 1;
+        visibility: visible;
         pointer-events: all;
         transform: translateY(0);
       }
@@ -2028,13 +2033,7 @@ window.addEventListener("load", () => {
     }
   });
 });
-  // Fermer si clic outside (IMPORTANT UX)
-  mobileMenu.addEventListener("click", (e) => {
-    if (e.target === mobileMenu) {
-      mobileMenu.classList.remove("open");
-      burger.classList.remove("active");
-    }
-  });
+  
 
       /* ── Scroll reveal ── */
       const io = new IntersectionObserver(
@@ -2227,12 +2226,6 @@ form.addEventListener("submit", async (e) => {
     "<span>Envoyer le message</span>";
 });
 
-
-
-
-
-  document.getElementById("burger")
-});
     </script>
   </body>
 </html>
