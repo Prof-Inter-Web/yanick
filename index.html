@@ -1622,12 +1622,23 @@
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
     /* ── Smooth anchors ── */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-      });
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener("click", (e) => {
+    const href = a.getAttribute("href");
+
+    // ❌ ignore les href vides ou "#"
+    if (!href || href === "#") return;
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    e.preventDefault();
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     });
+  });
+});
 
     /* ── Hero scroll fade ── */
     const heroScroll = document.querySelector('.hero-scroll');
