@@ -1107,23 +1107,6 @@
       }
 
 
-      /* ── BURGER BUTTON ── */
-.burger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.burger span {
-  width: 28px;
-  height: 2px;
-  background: var(--white);
-  transition: 0.3s ease;
-}
-
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .burger {
@@ -1132,6 +1115,7 @@
 
   .nav-links {
     position: fixed;
+    z-index: 999;
     top: 0;
     right: -100%;
     width: 70%;
@@ -1817,21 +1801,22 @@ if (form) {
   
       
       
-  const burger = document.getElementById("burger");
-  const navLinks = document.getElementById("nav-links");
+ const burger = document.getElementById("burger");
+const navLinks = document.querySelector(".nav-links");
 
+if (burger && navLinks) {
   burger.addEventListener("click", () => {
     burger.classList.toggle("active");
     navLinks.classList.toggle("active");
   });
 
-  // fermer le menu en cliquant sur un lien
   document.querySelectorAll(".nav-links a").forEach((link) => {
     link.addEventListener("click", () => {
       burger.classList.remove("active");
       navLinks.classList.remove("active");
     });
   });
+}
     </script>
   </body>
 </html>
