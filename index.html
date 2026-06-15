@@ -1754,34 +1754,41 @@ document.querySelectorAll('.fc').forEach(card => {
 });
 
 /*Mobile Menu*/
-  document.addEventListener('DOMContentLoaded', () => {
+const burger = document.querySelector('.nav-burger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+});
+
+mobileLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+    document.addEventListener('DOMContentLoaded', () => {
   const burger = document.querySelector('.nav-burger');
   const mobileMenu = document.querySelector('.mobile-menu');
-  const links = document.querySelectorAll('.mobile-menu a');
-  const nav = document.querySelector('nav');
 
-  if (!burger || !mobileMenu) return;
-
-  // toggle menu
-  burger.addEventListener('click', () => {
-    burger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-  });
-
-  // close on link click
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      burger.classList.remove('active');
-      mobileMenu.classList.remove('active');
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
     });
-  });
-
-  // scroll nav
-  window.addEventListener('scroll', () => {
-    if (nav) {
-      nav.classList.toggle('scrolled', window.scrollY > 50);
-    }
-  });
+  }
 });
     
 
